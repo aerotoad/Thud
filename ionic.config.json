@@ -1,0 +1,7 @@
+{
+  "name": "Thud",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
