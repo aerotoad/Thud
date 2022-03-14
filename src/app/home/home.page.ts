@@ -7,6 +7,10 @@ import { Component } from '@angular/core';
 })
 export class HomePage {
 
-  constructor() {}
+  constructor() {
+    setTimeout(() => {
+      document.getElementsByTagName('body')[0].classList.add('dark');
+    }, 2000)
+  }
 
 }
