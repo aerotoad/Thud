@@ -1,4 +1,6 @@
 import { Component, Input, OnChanges, OnInit } from '@angular/core';
+import { ToastController } from '@ionic/angular';
+import SearchQuery, { SearchResult } from 'src/app/models/SearchQuery';
 import { FeedlyService } from 'src/app/services/feedly/feedly.service';
 
 @Component({
@@ -10,16 +12,35 @@ export class SearchResultsComponent implements OnInit, OnChanges {
 
   @Input() searchQuery: string;
 
+  public searchResults: SearchResult[];
+
   constructor(
-    private feedlyService: FeedlyService
+    private feedlyService: FeedlyService,
+    private toastCtrl: ToastController
   ) { }
 
   ngOnInit() {}
 
   ngOnChanges() {
     if (this.searchQuery) {
-      this.feedlyService.search(this.searchQuery);
+      this.feedlyService.search(this.searchQuery)
+        .then((data: SearchQuery) => {
+          this.searchResults = data.results;
+        })
+        .catch((error) => {
+          this.showToast('Error fetching data, try again.', 'danger');
+        });
     }
+  }
+  
+  async showToast(message: string, color?: string) {
+    const toast = await this.toastCtrl.create({
+      message: message,
+      duration: 2000,
+      color: color,
+      position: 'bottom'
+    });
+    await toast.present();
   }
 
 }
