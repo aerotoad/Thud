@@ -52,7 +52,6 @@ export class MainPage implements OnInit {
   }
 
   selectTab(url: string) {
-    console.log(url);
     this.tabs.forEach(tab => {
       if (tab.url === url) {
         tab.isActive = true;
