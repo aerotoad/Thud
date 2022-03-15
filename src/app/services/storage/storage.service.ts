@@ -31,6 +31,14 @@ export class StorageService {
     });
   }
 
+  getCollectionByFeedId(feedId: string): Promise<Collection> {
+    return new Promise(async (resolve) => {
+      const collections = await this.getCollections();
+      const collection: Collection = collections.find(item => item.feedIds.includes(feedId));
+      resolve(collection);
+    });
+  }
+
   setCollections(collections: Collection[]): Promise<Collection[]> {
     return new Promise(async (resolve) => {
       await Storage.set({ key: 'collections', value: JSON.stringify(collections) });
