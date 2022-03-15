@@ -15,7 +15,7 @@ export class FeedlyService {
   search(query: string, count: number = 15, locale?: string): Promise<SearchQuery> {
     return new Promise(async (resolve, reject) => {
       const response = await Http.get({
-        url: `${this.BASE_URL}/v3/search/feeds?query=${query}&count=${count}&locale=${locale}`,
+        url: `${this.BASE_URL}/v3/search/feeds?query=${encodeURIComponent(query)}&count=${count}&locale=${locale}`,
       });
       if (response.status !== 200) {
         reject(response.data);
@@ -27,7 +27,7 @@ export class FeedlyService {
   getFeedStream(feedId: string, count: number = 15): Promise<Stream> {
     return new Promise(async (resolve, reject) => {
       const response = await Http.get({
-        url: `${this.BASE_URL}/v3/streams/contents?streamId=${feedId}&count=${count}`,
+        url: `${this.BASE_URL}/v3/streams/contents?streamId=${encodeURIComponent(feedId)}&count=${count}`,
       });
       if (response.status !== 200) {
         reject(response.data);
