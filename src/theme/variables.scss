@@ -76,6 +76,10 @@
   --ion-color-light-tint: #f5f6f9;
 }
 
+body {
+  --main-toolbar-background: #263238;
+}
+
 body.dark {
   /*
    * Dark Colors
