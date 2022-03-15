@@ -12,12 +12,18 @@
           <div class="h-full w-full flex items-center justify-center text-2xl hover:bg-slate-800 rounded-full" *ngIf="!query">
             <ion-icon name="search"></ion-icon>
           </div>
-          <div class="h-full w-full flex items-center justify-center text-2xl hover:bg-slate-800 rounded-full" *ngIf="query" (click)="searchQuery$.next(null);query=null">
+          <div class="h-full w-full flex items-center justify-center text-2xl hover:bg-slate-800 rounded-full" *ngIf="query"
+          (click)="searchQuery$.next(null);query=null">
             <ion-icon name="close"></ion-icon>
           </div>
         </div>
         <div class="h-full w-full pl-14 pr-5">
-          <input type="text" class="w-full h-full bg-transparent outline-none placeholder-white" placeholder="Search feeds" [value]="query??null" (input)="searchQuery$.next($event.target.value)">
+          <input
+          type="text"
+          class="w-full h-full bg-transparent outline-none placeholder-white" 
+          placeholder="Search feeds"
+          [value]="query??null"
+          (input)="searchQuery$.next($event.target.value)">
         </div>
       </div>
     </div>

@@ -23,8 +23,4 @@ export class SearchPage {
     });
   }
 
-  debounceSearch() {
-
-  }
-
 }
