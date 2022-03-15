@@ -1,11 +1,39 @@
 <ion-header>
   <ion-toolbar class="main-toolbar">
     <ion-title>
-      <span class="font-bold text-white drop-shadow-sm">Search</span>
+      <span class="font-bold text-white drop-shadow-sm">Discover</span>
     </ion-title>
+  </ion-toolbar>
+  <ion-toolbar class="main-toolbar h-20 flex items-center justify-center">
+    <!-- Custom searchbar -->
+    <div class="w-full px-3">
+      <div class="bg-slate-700 w-full h-14 rounded-lg text-white">
+        <div class="h-full w-10 absolute left-5 top-0">
+          <div class="h-full w-full flex items-center justify-center text-2xl hover:bg-slate-800 rounded-full" *ngIf="!query">
+            <ion-icon name="search"></ion-icon>
+          </div>
+          <div class="h-full w-full flex items-center justify-center text-2xl hover:bg-slate-800 rounded-full" *ngIf="query" (click)="searchQuery$.next(null);query=null">
+            <ion-icon name="close"></ion-icon>
+          </div>
+        </div>
+        <div class="h-full w-full pl-14 pr-5">
+          <input type="text" class="w-full h-full bg-transparent outline-none placeholder-white" placeholder="Search feeds" [value]="query??null" (input)="searchQuery$.next($event.target.value)">
+        </div>
+      </div>
+    </div>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
+  
+  <!-- Search results -->
+  <ng-container *ngIf="query">
+    Search results for: {{ searchQuery$ | async }}
+  </ng-container>
+
+  <!-- Discover content -->
+  <ng-container *ngIf="!query">
+    Discover content
+  </ng-container>
 
 </ion-content>
