@@ -15,9 +15,21 @@ const routes: Routes = [
       {
         path: 'collection',
         loadChildren: () => import('./pages/collection/collection.module').then( m => m.CollectionPageModule)
-      }
+      },
+      {
+        path: 'search',
+        loadChildren: () => import('./pages/search/search.module').then( m => m.SearchPageModule)
+      },
+      {
+        path: 'settings',
+        loadChildren: () => import('./pages/settings/settings.module').then( m => m.SettingsPageModule)
+      },
+      {
+        path: 'bookmarks',
+        loadChildren: () => import('./pages/bookmarks/bookmarks.module').then( m => m.BookmarksPageModule)
+      },
     ]
-  }
+  },
 ];
 
 @NgModule({
