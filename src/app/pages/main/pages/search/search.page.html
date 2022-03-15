@@ -34,7 +34,7 @@
   
   <!-- Search results -->
   <ng-container *ngIf="query">
-    Search results for: {{ searchQuery$ | async }}
+    <app-search-results [searchQuery]="query"></app-search-results>
   </ng-container>
 
   <!-- Discover content -->
