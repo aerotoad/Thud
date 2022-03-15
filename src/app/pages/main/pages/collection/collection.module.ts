@@ -7,6 +7,7 @@ import { IonicModule } from '@ionic/angular';
 import { CollectionPageRoutingModule } from './collection-routing.module';
 
 import { CollectionPage } from './collection.page';
+import { StreamComponent } from './components/stream/stream.component';
 
 @NgModule({
   imports: [
@@ -15,6 +16,9 @@ import { CollectionPage } from './collection.page';
     IonicModule,
     CollectionPageRoutingModule
   ],
-  declarations: [CollectionPage]
+  declarations: [
+    CollectionPage,
+    StreamComponent
+  ]
 })
 export class CollectionPageModule {}
