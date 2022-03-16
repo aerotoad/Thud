@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
 import { ToastController } from '@ionic/angular';
 import SearchQuery, { SearchResult } from 'src/app/models/SearchQuery';
 import { FeedlyService } from 'src/app/services/feedly/feedly.service';
@@ -7,9 +7,11 @@ import { SwiperOptions } from 'swiper';
 @Component({
   selector: 'app-discover',
   templateUrl: './discover.component.html',
-  styleUrls: ['./discover.component.scss'],
+  styleUrls: ['./discover.component.scss']
 })
 export class DiscoverComponent implements OnInit {
+
+  @Input() feedIds: string[];
 
   public swiperConfig: SwiperOptions = {
     slidesPerView: 1,

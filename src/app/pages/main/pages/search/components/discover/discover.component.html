@@ -16,7 +16,7 @@
               </div>
               <div class="w-1/6">
                 <div class="w-8 h-8 active:bg-slate-500 rounded-full flex items-center justify-center -mt-1">
-                  <ion-icon name="add" class="text-2xl"></ion-icon>
+                  <app-add-feed-button [feedId]="feed.id" [feedsIds]="feedIds" color="light"></app-add-feed-button>
                 </div>
               </div>
             </div>
@@ -60,6 +60,9 @@
         <h2>{{feed.title}}</h2>
         <p>{{feed.description}}</p>
       </ion-label>
+      <ion-buttons slot="end">
+        <app-add-feed-button [feedId]="feed.id" [feedsIds]="feedIds"></app-add-feed-button>
+      </ion-buttons>
     </ion-item>
   </ion-list>
 

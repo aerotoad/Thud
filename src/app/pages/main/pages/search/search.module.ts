@@ -10,6 +10,9 @@ import { SearchPage } from './search.page';
 import { SearchResultsComponent } from './components/search-results/search-results.component';
 import { DiscoverComponent } from './components/discover/discover.component';
 import { SwiperModule } from 'swiper/angular';
+import { ComponentsModule } from 'src/app/components/components.module';
+import { PipesModule } from 'src/app/pipes/pipes.module';
+import { AddFeedButtonComponent } from './components/add-feed-button/add-feed-button.component';
 
 @NgModule({
   imports: [
@@ -17,12 +20,15 @@ import { SwiperModule } from 'swiper/angular';
     FormsModule,
     IonicModule,
     SearchPageRoutingModule,
-    SwiperModule
+    SwiperModule,
+    ComponentsModule,
+    PipesModule
   ],
   declarations: [
     SearchPage,
     SearchResultsComponent,
-    DiscoverComponent
+    DiscoverComponent,
+    AddFeedButtonComponent
   ]
 })
 export class SearchPageModule {}

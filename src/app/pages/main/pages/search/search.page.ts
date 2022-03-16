@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { ReplaySubject, Subject } from 'rxjs';
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
+import { StorageService } from 'src/app/services/storage/storage.service';
 
 @Component({
   selector: 'app-search',
@@ -12,7 +13,11 @@ export class SearchPage {
   public searchQuery$: Subject<string> = new ReplaySubject();
   public query: string;
 
-  constructor() { }
+  public feedIds: string[];
+
+  constructor(
+    private storageService: StorageService
+  ) { }
 
   ionViewWillEnter() {
     this.searchQuery$.pipe(
@@ -21,6 +26,12 @@ export class SearchPage {
     ).subscribe(term => {
       this.query = term;
     });
+
+    this.getExistingFeedIds();
+  }
+
+  async getExistingFeedIds() {
+    this.feedIds = await this.storageService.getAllFeedIds();
   }
 
 }

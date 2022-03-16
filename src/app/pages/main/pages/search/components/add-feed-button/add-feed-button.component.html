@@ -1,0 +1,5 @@
+
+<ion-button fill="clear" (click)="handleButtonAction()" [color]="color">
+  <ion-icon slot="icon-only" name="add" *ngIf="!(feedId | inArray : feedIds)"></ion-icon>
+  <span *ngIf="feedId | inArray : feedIds">Added!</span>
+</ion-button>

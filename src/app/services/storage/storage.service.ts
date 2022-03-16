@@ -75,6 +75,19 @@ export class StorageService {
     });
   }
 
+  getAllFeedIds(): Promise<string[]> {
+    return new Promise(async (resolve) => {
+      const collections = await this.getCollections();
+      const feedIds: string[] = [];
+      collections.forEach(collection => {
+        collection.feedIds.forEach(feedId => {
+          if (!feedIds.includes(feedId)) feedIds.push(feedId);
+        });
+      });
+      resolve(feedIds);
+    });
+  }
+
   getCacheByFeedId(feedId: string): Promise<FeedCache> {
     return new Promise(async (resolve) => {
       const cache = await Storage.get({ key: 'cache' });

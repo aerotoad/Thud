@@ -11,6 +11,7 @@ import { FeedlyService } from 'src/app/services/feedly/feedly.service';
 export class SearchResultsComponent implements OnInit, OnChanges {
 
   @Input() searchQuery: string;
+  @Input() feedIds: string[];
 
   public searchResults: SearchResult[];
 

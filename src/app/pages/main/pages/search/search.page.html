@@ -34,12 +34,12 @@
   
   <!-- Search results -->
   <ng-container *ngIf="query">
-    <app-search-results [searchQuery]="query"></app-search-results>
+    <app-search-results [feedIds]="feedIds" [searchQuery]="query"></app-search-results>
   </ng-container>
 
   <!-- Discover content -->
   <ng-container *ngIf="!query">
-    <app-discover></app-discover>
+    <app-discover [feedIds]="feedIds"></app-discover>
   </ng-container>
 
 </ion-content>
