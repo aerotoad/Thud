@@ -23,4 +23,6 @@ export interface SearchResult {
   logo?: string; // url a small (square) icon URL with transparency
   contentType?: string // the auto-detected type of entries this feed publishes. Values include “article” (most common), “longform” (for longer article), “videos” (for YouTube, Vimeo and other video-centric feeds), and “audio” (for podcast feeds etc).
   coverColor?: string // hex color the background cover color
+  score?: number; // a score indicating how relevant this feed is to the search query.
+  estimatedEngagement?: number; // estimated number of users who will read this feed.
 }

@@ -9,13 +9,15 @@ import { SearchPageRoutingModule } from './search-routing.module';
 import { SearchPage } from './search.page';
 import { SearchResultsComponent } from './components/search-results/search-results.component';
 import { DiscoverComponent } from './components/discover/discover.component';
+import { SwiperModule } from 'swiper/angular';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    SearchPageRoutingModule
+    SearchPageRoutingModule,
+    SwiperModule
   ],
   declarations: [
     SearchPage,

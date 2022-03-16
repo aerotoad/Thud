@@ -1,3 +1,85 @@
-<p>
-  discover works!
-</p>
+<!-- Header -->
+<div class="header w-full h-42 border-b-1 border-slate-500 shadow-sm">
+  <swiper [config]="swiperConfig" (slideChange)="onSlideChange($event)" class="h-full w-full">
+    <ng-template swiperSlide *ngFor="let feed of featured">
+      <div class="w-full h-full flex p-5">
+        <div class="w-1/2 h-full flex items-center justify-center">
+          <img [src]="feed.visualUrl" class="h-full w-full rounded-lg ml-1 mr-4 shadow-md">
+        </div>
+        <div class="w-1/2 h-full text-white flex items-center justify-center">
+          <div class="w-full">
+            <div class="flex w-full mb-2">
+              <div class="w-5/6">
+                <div class="bg-slate-500 text-slate-200 font-bold rounded-full px-2 shadow-md h-fit w-fit">
+                  <span class="text-xs uppercase tracking-widest">Featured</span>
+                </div>
+              </div>
+              <div class="w-1/6">
+                <div class="w-8 h-8 active:bg-slate-500 rounded-full flex items-center justify-center -mt-1">
+                  <ion-icon name="add" class="text-2xl"></ion-icon>
+                </div>
+              </div>
+            </div>
+            <h1 class="font-bold line-clamp-2 text-xl drop-shadow-md">{{ feed.title }}</h1>
+            <div class="flex flex-wrap w-full">
+              <div class="rounded-full bg-slate-600 text-slate-100 py-1 px-2 m-1 font-normal text-xs shadow-sm" *ngFor="let topic of feed.topics | slice:0:2">
+                {{ topic }}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </ng-template>
+  </swiper>
+</div>
+
+<!-- Paginator -->
+<div class="w-full h-4 flex items-center justify-center mt-2">
+  <div class="w-fit flex flex-row">
+    <div
+    *ngFor="let item of featured; let i = index" 
+    [ngClass]="{'paginator-active': currentSlide === i}"
+    class="w-2 h-2 rounded-full bg-slate-200 mx-1"></div>
+  </div> 
+</div>
+
+<!-- Trending content -->
+
+<div class="w-full mb-14">
+  <ion-list-header mode="ios">
+    Trending
+  </ion-list-header>
+  
+  <ion-list>
+    <ion-item *ngFor="let feed of trending" lines="none">
+      <ion-thumbnail slot="start">
+        <img [src]="feed.visualUrl ?? feed.iconUrl">
+        <ion-skeleton-text *ngIf="!feed.visualUrl && !feed.iconUrl"></ion-skeleton-text>
+      </ion-thumbnail>
+      <ion-label>
+        <h2>{{feed.title}}</h2>
+        <p>{{feed.description}}</p>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+
+  <!-- Skeleton items (for loading) -->
+  <ion-list *ngIf="!trending">
+    <ion-item *ngFor="let skeleton of [1,2,3,4]">
+      <ion-thumbnail slot="start">
+        <ion-skeleton-text animated></ion-skeleton-text>
+      </ion-thumbnail>
+      <ion-label>
+        <h3>
+          <ion-skeleton-text animated style="width: 50%"></ion-skeleton-text>
+        </h3>
+        <p>
+          <ion-skeleton-text animated style="width: 80%"></ion-skeleton-text>
+        </p>
+        <p>
+          <ion-skeleton-text animated style="width: 60%"></ion-skeleton-text>
+        </p>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+</div>

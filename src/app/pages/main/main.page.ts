@@ -40,15 +40,17 @@ export class MainPage implements OnInit {
   ) { }
 
   ngOnInit() {
-    const startUrl: string = this.router.url;
-    this.selectTab(startUrl);
-
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
         this.selectTab(event.url);
       }
     });
     //document.getElementsByTagName('body')[0].classList.add('dark');
+  }
+
+  ionViewWillEnter() {
+    const startUrl: string = this.router.url;
+    this.selectTab(startUrl);
   }
 
   selectTab(url: string) {
