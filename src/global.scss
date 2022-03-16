@@ -29,3 +29,12 @@
 @import 'tailwindcss/base';
 @import 'tailwindcss/components';
 @import 'tailwindcss/utilities';
+
+// Fix styles for add collection modal
+.add-collection-modal {
+  &::part(content) {
+    height: 280px;
+    position: absolute;
+    bottom: 0px;
+  }
+}

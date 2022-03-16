@@ -1,5 +1,6 @@
 export default interface Collection {
-  id: string;
-  name: string;
-  feedIds: string[];
+  id: string; // UUID
+  name: string; // collection name
+  description?: string; // Description is optional
+  feedIds: string[]; // Array of feed ids
 }
