@@ -53,7 +53,6 @@ export class DiscoverComponent implements OnInit {
         //alert(JSON.stringify(this.featured, null, 2));
       })
       .catch((error) => {
-        alert(JSON.stringify(error));
         this.showToast('Error loading featured', 'danger');
       });
   }
@@ -65,7 +64,6 @@ export class DiscoverComponent implements OnInit {
         this.trending = sorted;
       })
       .catch((error) => {
-        alert(JSON.stringify(error));
         this.showToast('Error loading trending', 'danger');
       });
   }
