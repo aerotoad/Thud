@@ -29,6 +29,10 @@ export class ViewWebsiteModalComponent {
     this.safeUrl = this.sanitizer.bypassSecurityTrustResourceUrl(this.url);
   }
 
+  openExternal() {
+    window.open(this.url, '_system', 'location=yes');
+  }
+
   close() {
     this.modalCtrl.dismiss();
   }
