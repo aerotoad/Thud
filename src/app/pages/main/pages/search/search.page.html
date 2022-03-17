@@ -39,7 +39,7 @@
 
   <!-- Discover content -->
   <ng-container *ngIf="!query">
-    <app-discover [feedIds]="feedIds"></app-discover>
+    <app-discover [feedIds]="feedIds" (updateFeedIds)="getExistingFeedIds()"></app-discover>
   </ng-container>
 
 </ion-content>

@@ -1,3 +1,43 @@
-<p>
-  add-feed-modal works!
-</p>
+<ion-header mode="ios">
+  <ion-toolbar class="h-12">
+    <ion-title class="mt-1">Add feed to collection</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list-header mode="ios" class="mt-2">
+    Collections
+  </ion-list-header>
+
+  <div class="pt-1" *ngIf="collections && collections.length > 0">
+    <ion-list>
+      <ion-item *ngFor="let collection of collections" lines="full">
+        <ion-icon name="file-tray-full" slot="start"></ion-icon>
+        <ion-label>
+          <h2>{{ collection.name }}</h2>
+          <p>{{ collection.description }}</p>
+        </ion-label>
+        <ion-note slot="end">
+          <ion-label>
+            <h2 class="!text-xs !font-bold">{{collection.feedIds.length}}/10</h2>
+            <p class="!text-xs">Feeds</p>
+          </ion-label>
+        </ion-note>
+        <ion-button slot="end" color="dark" class="normal-case" (click)="addFeedToCollection(collection)" [disabled]="collection.feedIds.length >= 10">
+          <span class="py-1 px-3">
+            Add
+          </span>
+        </ion-button>
+      </ion-item>
+    </ion-list>
+  </div>
+
+  <div class="mb-4 mt-8 px-6 text-center text-slate-600" *ngIf="!collections || collections.length === 0">
+    <h1 class="text-2xl font-semibold">Oops!</h1>
+    <p class="text-base font-normal mb-5">You don't have any collections</p>
+    <ion-button color="dark" (click)="createCollection()" class="normal-case">
+      Create collection
+      <ion-icon name="add-circle" slot="end"></ion-icon>
+    </ion-button>
+  </div>
+</ion-content>

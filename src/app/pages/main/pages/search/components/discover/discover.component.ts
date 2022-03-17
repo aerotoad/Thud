@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { ToastController } from '@ionic/angular';
 import SearchQuery, { SearchResult } from 'src/app/models/SearchQuery';
 import { FeedlyService } from 'src/app/services/feedly/feedly.service';
@@ -12,6 +12,8 @@ import { SwiperOptions } from 'swiper';
 export class DiscoverComponent implements OnInit {
 
   @Input() feedIds: string[];
+
+  @Output() updateFeedIds: EventEmitter<boolean> = new EventEmitter();
 
   public swiperConfig: SwiperOptions = {
     slidesPerView: 1,
@@ -66,6 +68,10 @@ export class DiscoverComponent implements OnInit {
       .catch((error) => {
         this.showToast('Error loading trending', 'danger');
       });
+  }
+
+  doUpdateFeedIds() {
+    this.updateFeedIds.emit(true);
   }
 
   async showToast(message: string, color?: string) {
