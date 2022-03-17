@@ -34,7 +34,7 @@
   
   <!-- Search results -->
   <ng-container *ngIf="query">
-    <app-search-results [feedIds]="feedIds" [searchQuery]="query"></app-search-results>
+    <app-search-results [feedIds]="feedIds" [searchQuery]="query" (updateFeedIds)="getExistingFeedIds()"></app-search-results>
   </ng-container>
 
   <!-- Discover content -->

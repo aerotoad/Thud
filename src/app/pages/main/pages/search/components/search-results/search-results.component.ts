@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output } from '@angular/core';
 import { ToastController } from '@ionic/angular';
 import SearchQuery, { SearchResult } from 'src/app/models/SearchQuery';
 import { FeedlyService } from 'src/app/services/feedly/feedly.service';
@@ -12,6 +12,8 @@ export class SearchResultsComponent implements OnInit, OnChanges {
 
   @Input() searchQuery: string;
   @Input() feedIds: string[];
+
+  @Output() updateFeedIds: EventEmitter<boolean> = new EventEmitter();
 
   public searchResults: SearchResult[];
 
@@ -32,6 +34,10 @@ export class SearchResultsComponent implements OnInit, OnChanges {
           this.showToast('Error fetching data, try again.', 'danger');
         });
     }
+  }
+
+  doUpdateFeedIds() {
+    this.updateFeedIds.emit(true);
   }
   
   async showToast(message: string, color?: string) {
