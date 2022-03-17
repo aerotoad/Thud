@@ -1,3 +1,11 @@
 .main-toolbar {
   --background: var(--main-toolbar-background);
 }
+
+ion-content {
+  --background: var(--ion-color-light-shade);
+
+  .dakr {
+    --background: var(--ion-background-color);
+  }
+}

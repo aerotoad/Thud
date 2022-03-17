@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { InArrayPipe } from './in-array/in-array.pipe';
+import { EpochTimeagoPipe } from './epoch-timeago/epoch-timeago.pipe';
 
 
 
@@ -9,10 +10,12 @@ import { InArrayPipe } from './in-array/in-array.pipe';
     CommonModule
   ],
   declarations: [
-    InArrayPipe
+    InArrayPipe,
+    EpochTimeagoPipe
   ],
   exports: [
-    InArrayPipe
+    InArrayPipe,
+    EpochTimeagoPipe
   ]
 })
 export class PipesModule { }

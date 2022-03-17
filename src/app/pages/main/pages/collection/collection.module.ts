@@ -8,13 +8,15 @@ import { CollectionPageRoutingModule } from './collection-routing.module';
 
 import { CollectionPage } from './collection.page';
 import { StreamComponent } from './components/stream/stream.component';
+import { PipesModule } from 'src/app/pipes/pipes.module';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    CollectionPageRoutingModule
+    CollectionPageRoutingModule,
+    PipesModule
   ],
   declarations: [
     CollectionPage,
