@@ -38,6 +38,7 @@ export class AddCollectionComponent implements OnInit {
         message: 'Creating collection...',
       });
       await loading.present();
+      // Create collection
       const collection: Collection = {
         id: uuidv4(),
         name: this.collectionName,
@@ -46,6 +47,7 @@ export class AddCollectionComponent implements OnInit {
       };
       await this.storageService.addCollection(collection);
       await loading.dismiss();
+      // Close modal and return collection
       this.modalCtrl.dismiss({
         collection: collection,
       });
@@ -60,10 +62,12 @@ export class AddCollectionComponent implements OnInit {
         message: 'Saving collection...',
       });
       await loading.present();
+      // Update collection
       this.collection.name = this.collectionName;
       this.collection.description = this.collectionDescription;
       await this.storageService.updateCollection(this.collection);
       await loading.dismiss();
+      // Close modal and return collection
       this.modalCtrl.dismiss({
         collection: this.collection,
       });
