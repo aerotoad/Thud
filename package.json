@@ -31,6 +31,7 @@
     "rxjs": "~6.6.0",
     "swiper": "^8.0.7",
     "tslib": "^2.2.0",
+    "uuid": "^8.3.2",
     "zone.js": "~0.11.4"
   },
   "devDependencies": {
