@@ -24,11 +24,11 @@ export class AddFeedButtonComponent implements OnInit {
   ngOnInit() {}
 
   ngOnChanges() {
-    this.exists = this.feedsIds.indexOf(this.feedId) !== -1;
+    this.exists = this.feedsIds?.indexOf(this.feedId) !== -1;
   }
 
   handleButtonAction() {
-    if (this.feedsIds.indexOf(this.feedId) === -1) {
+    if (this.feedsIds?.indexOf(this.feedId) === -1) {
       this.handleAddFeed();
     }
   }

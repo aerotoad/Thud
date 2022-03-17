@@ -38,4 +38,17 @@ export class FeedlyService {
     });
   }
 
+  getEntry(entryId: string): Promise<any> {
+    return new Promise(async (resolve, reject) => {
+      const encodedId = encodeURIComponent(entryId);
+      const response = await Http.get({
+        url: `${this.BASE_URL}/v3/entries/${encodedId}`,
+      });
+      if (response.status !== 200) {
+        reject(response.data);
+      }
+      resolve(response.data);
+    });
+  }
+
 }

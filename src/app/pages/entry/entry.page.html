@@ -1,0 +1,54 @@
+<ion-content [class]="contentClass">
+
+  <div *ngIf="entry" class="mx-6">
+    <!-- Entry header -->
+    <div class="mt-8" *ngIf="entry.visual && entry.visual?.url !== 'none'">
+      <img [src]="entry.visual.url" class="w-full rounded-xl shadow-sm">
+    </div>
+
+    <!-- Entry origin -->
+    <h3 *ngIf="entry.origin.title" class="!text-blue-500 text-sm font-semibold mt-7 mb-2 truncate uppercase">
+      {{ entry.origin.title }}
+    </h3>
+
+    <!-- Entry title -->
+    <div class="text-2xl font-bold">
+      <p>{{ entry.title }}</p>
+    </div>
+
+    <!-- Metadata container -->
+    <div class="bg-white w-full rounded-md h-fit flex flex-col border border-slate-50 shadow-sm py-2 px-4 mt-3 mb-7">
+      <h2 class="text-slate-800">
+        <span class="text-base font-medium">{{ entry.author }}</span>
+      </h2>
+      <p class="text-slate-500 text-sm">
+        {{ entry.published | epochTimeago }}
+      </p>
+    </div>
+
+    <!-- Entry content -->
+    <div class="mb-5">
+      <p [innerHTML]="content"></p>
+    </div>
+  </div>
+
+  <div *ngIf="!entry">
+    Loading...
+  </div>
+
+  <div class="w-full text-center mb-5">
+    <ion-button fill="outline" color="dark" (click)="openOrigin()">
+      Open website
+    </ion-button>
+  </div>
+
+</ion-content>
+<ion-footer>
+  <ion-toolbar color="light">
+    <ion-buttons slot="start">
+      <ion-button (click)="goBack()">
+        <ion-icon slot="icon-only" name="arrow-back-sharp"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-footer>

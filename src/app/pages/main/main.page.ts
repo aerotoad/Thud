@@ -42,14 +42,14 @@ export class MainPage implements OnInit {
   ngOnInit() {
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
-        this.selectTab(event.url);
+        this.selectTab(event.url.split('?')[0]); 
       }
     });
     //document.getElementsByTagName('body')[0].classList.add('dark');
   }
 
   ionViewWillEnter() {
-    const startUrl: string = this.router.url;
+    const startUrl: string = this.router.url.split('?')[0]; // remove query params
     this.selectTab(startUrl);
   }
 

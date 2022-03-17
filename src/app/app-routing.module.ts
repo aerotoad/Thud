@@ -11,6 +11,10 @@ const routes: Routes = [
     path: 'main',
     loadChildren: () => import('./pages/main/main.module').then( m => m.MainPageModule)
   },
+  {
+    path: 'entry',
+    loadChildren: () => import('./pages/entry/entry.module').then( m => m.EntryPageModule)
+  },
 ];
 
 @NgModule({

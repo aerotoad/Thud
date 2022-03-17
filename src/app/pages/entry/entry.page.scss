@@ -1,0 +1,35 @@
+ion-content {
+  &::part(scroll) {
+    height: 100%;
+  }
+  &.default {
+    --background: #f9f9f9 !important;
+    h1, h2, h3, h4, h5, h6, p, a, span, button, input, textarea, select {
+      color: var(--ion-text-color);
+    }
+  }
+  &.lightbrown {
+    --background: #d8cdbd !important;
+    h1, h2, h3, h4, h5, h6, p, a, span, button, input, textarea, select {
+      color: var(--ion-text-color);
+    }
+  }
+  &.lightgrey {
+    --background: #bebebe !important;
+    h1, h2, h3, h4, h5, h6, p, a, span, button, input, textarea, select {
+      color: var(--ion-text-color);
+    }
+  }
+  &.mediumgrey {
+    --background: #838383 !important;
+    h1, h2, h3, h4, h5, h6, p, a, span, button, input, textarea, select {
+      color: #fff;
+    }
+  }
+  &.darkgrey {
+    --background: #303030 !important;
+    h1, h2, h3, h4, h5, h6, p, a, span, button, input, textarea, select {
+      color: #fff;
+    }
+  }
+}

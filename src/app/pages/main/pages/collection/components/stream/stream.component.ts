@@ -6,6 +6,7 @@ import { StorageService } from 'src/app/services/storage/storage.service';
 import Stream from 'src/app/models/Stream';
 import * as moment from 'moment';
 import { EpochTimeagoPipe } from 'src/app/pipes/epoch-timeago/epoch-timeago.pipe';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-stream',
@@ -15,6 +16,7 @@ import { EpochTimeagoPipe } from 'src/app/pipes/epoch-timeago/epoch-timeago.pipe
 export class StreamComponent implements OnInit {
 
   @Input() feedId: string;
+  @Input() collectionId: string;
   
   public stream: Stream;
 
@@ -22,7 +24,8 @@ export class StreamComponent implements OnInit {
 
   constructor(
     private feedlyService: FeedlyService,
-    private storageService: StorageService
+    private storageService: StorageService,
+    private router: Router
   ) { }
 
   ngOnInit() {}
@@ -68,6 +71,10 @@ export class StreamComponent implements OnInit {
         this.error = true;
         console.error(error);
       });
+  }
+
+  openEntry(entryId: string) {
+    this.router.navigate(['/entry'], { queryParams: { entryId: entryId, collectionId: this.collectionId } });
   }
 
 }
