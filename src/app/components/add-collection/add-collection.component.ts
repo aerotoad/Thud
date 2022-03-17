@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { LoadingController, ModalController } from '@ionic/angular';
+import { LoadingController, ModalController, ToastController } from '@ionic/angular';
 import Collection from 'src/app/models/Collection';
 import { StorageService } from 'src/app/services/storage/storage.service';
 import { v4 as uuidv4 } from 'uuid';
@@ -20,6 +20,7 @@ export class AddCollectionComponent implements OnInit {
     private modalCtrl: ModalController,
     private storageService: StorageService,
     private loadingCtrl: LoadingController,
+    private toastCtrl: ToastController
   ) { }
 
   ngOnInit() {}
@@ -32,35 +33,58 @@ export class AddCollectionComponent implements OnInit {
   }
 
   async createCollection() {
-    const loading = await this.loadingCtrl.create({
-      message: 'Creating collection...',
-    });
-    await loading.present();
-    const collection: Collection = {
-      id: uuidv4(),
-      name: this.collectionName,
-      description: this.collectionDescription,
-      feedIds: [],
-    };
-    await this.storageService.addCollection(collection);
-    await loading.dismiss();
-    this.modalCtrl.dismiss({
-      collection: collection,
-    });
+    if (this.collectionName) {
+      const loading = await this.loadingCtrl.create({
+        message: 'Creating collection...',
+      });
+      await loading.present();
+      const collection: Collection = {
+        id: uuidv4(),
+        name: this.collectionName,
+        description: this.collectionDescription,
+        feedIds: [],
+      };
+      await this.storageService.addCollection(collection);
+      await loading.dismiss();
+      this.modalCtrl.dismiss({
+        collection: collection,
+      });
+    } else {
+      this.showToast('Collection name cannot be empty');
+    }
   }
 
   async saveCollection() {
-    const loading = await this.loadingCtrl.create({
-      message: 'Saving collection...',
+    if (this.collectionName) {
+      const loading = await this.loadingCtrl.create({
+        message: 'Saving collection...',
+      });
+      await loading.present();
+      this.collection.name = this.collectionName;
+      this.collection.description = this.collectionDescription;
+      await this.storageService.updateCollection(this.collection);
+      await loading.dismiss();
+      this.modalCtrl.dismiss({
+        collection: this.collection,
+      });
+    } else {
+      this.showToast('Collection name cannot be empty');
+    }
+  }
+
+  async showToast(message: string) {
+    const toast = await this.toastCtrl.create({
+      message: message,
+      duration: 2000,
+      position: 'bottom',
+      buttons: [
+        {
+          text: 'OK',
+          role: 'cancel',
+        }
+      ]
     });
-    await loading.present();
-    this.collection.name = this.collectionName;
-    this.collection.description = this.collectionDescription;
-    await this.storageService.updateCollection(this.collection);
-    await loading.dismiss();
-    this.modalCtrl.dismiss({
-      collection: this.collection,
-    });
+    await toast.present();
   }
 
 }
