@@ -25,11 +25,82 @@ ion-content {
     h1, h2, h3, h4, h5, h6, p, a, span, button, input, textarea, select {
       color: #fff;
     }
+    .metadata {
+      background-color: rgb(51 65 85 / 0.2);
+    }
+    .open-external-button {
+      --border-color: #fff;
+      --color: #fff;
+    }
+    .entry-origin {
+      color: rgb(30, 64, 175) !important;
+    }
   }
   &.darkgrey {
     --background: #303030 !important;
     h1, h2, h3, h4, h5, h6, p, a, span, button, input, textarea, select {
       color: #fff;
     }
+    .metadata {
+      background-color: rgb(51 65 85 / var(--tw-bg-opacity));
+    }
+    .open-external-button {
+      --border-color: #fff;
+      --color: #fff;
+    }
+  }
+
+  &.font-10 {
+    .content-wrapper {
+      font-size: 0.75rem !important; /* 12px */
+      line-height: 1rem !important; /* 16px */
+    }
+  }
+  &.font-11 {
+    .content-wrapper {
+      font-size: 0.875rem !important; /* 14px */
+      line-height: 1.25rem !important; /* 20px */
+    }
+  }
+  &.font-12 {
+    .content-wrapper {
+      font-size: 1rem !important; /* 16px */
+      line-height: 1.5rem !important; /* 24px */
+    }
+  }
+  &.font-13 {
+    .content-wrapper {
+      font-size: 1.125rem !important; /* 18px */
+      line-height: 1.75rem !important; /* 28px */
+    }
+  }
+  &.font-14 {
+    .content-wrapper {
+      font-size: 1.25rem !important; /* 20px */
+      line-height: 1.75rem !important; /* 28px */
+    }
+  }
+  &.font-15 {
+    .content-wrapper {
+      font-size: 1.5rem !important; /* 24px */
+      line-height: 2rem !important; /* 32px */
+    }
+  }
+
+  &.font-sans {
+    font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  }
+
+  &.font-serif {
+    font-family: ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
+  }
+
+  &.font-mono {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  }
+
+  .open-external-button {
+    --border-color: var(--ion-color-dark);
+    --color: var(--ion-color-dark);
   }
 }

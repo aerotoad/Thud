@@ -1,4 +1,19 @@
-<ion-content [class]="contentClass">
+<ion-content [ngClass]="{
+  'default': articleSettings?.background === 'default' || !articleSettings?.background,
+  'lightbrown': articleSettings?.background === 'lightbrown',
+  'lightgrey': articleSettings?.background === 'lightgrey',
+  'mediumgrey': articleSettings?.background === 'mediumgrey',
+  'darkgrey': articleSettings?.background === 'darkgrey',
+  'font-10': articleSettings?.fontSize === 10,
+  'font-11': articleSettings?.fontSize === 11,
+  'font-12': articleSettings?.fontSize === 12 || !articleSettings?.fontSize,
+  'font-13': articleSettings?.fontSize === 13,
+  'font-14': articleSettings?.fontSize === 14,
+  'font-15': articleSettings?.fontSize === 15,
+  'font-sans': articleSettings?.fontFamily === 'sans' || !articleSettings?.fontFamily,
+  'font-serif': articleSettings?.fontFamily === 'serif',
+  'font-mono': articleSettings?.fontFamily === 'mono'
+}">
 
   <div *ngIf="entry" class="mx-6">
     <!-- Entry header -->
@@ -7,7 +22,7 @@
     </div>
 
     <!-- Entry origin -->
-    <h3 *ngIf="entry.origin.title" class="!text-blue-500 text-sm font-semibold mt-7 mb-2 truncate uppercase">
+    <h3 *ngIf="entry.origin.title" class="!text-blue-500 text-sm font-semibold mt-7 mb-2 truncate uppercase entry-origin">
       {{ entry.origin.title }}
     </h3>
 
@@ -17,7 +32,7 @@
     </div>
 
     <!-- Metadata container -->
-    <div class="bg-white dark:bg-slate-700 w-full rounded-md h-fit flex flex-col border border-slate-50 dark:border-slate-800 shadow-sm py-2 px-4 mt-3 mb-7">
+    <div class="bg-white dark:bg-slate-700 metadata w-full rounded-md h-fit flex flex-col border border-slate-50 dark:border-slate-800 shadow-sm py-2 px-4 mt-3 mb-7">
       <h2 class="text-slate-800 dark:text-slate-100">
         <span class="text-base font-medium">{{ entry.author }}</span>
       </h2>
@@ -28,7 +43,7 @@
 
     <!-- Entry content -->
     <div class="mb-5">
-      <p [innerHTML]="content"></p>
+      <p [innerHTML]="content" class="content-wrapper"></p>
     </div>
   </div>
 
@@ -37,7 +52,7 @@
   </div>
 
   <div class="w-full text-center mb-5">
-    <ion-button fill="outline" color="dark" (click)="openOrigin()">
+    <ion-button fill="outline" class="open-external-button" (click)="openOrigin()">
       Open website
     </ion-button>
   </div>
@@ -48,6 +63,11 @@
     <ion-buttons slot="start">
       <ion-button (click)="goBack()">
         <ion-icon slot="icon-only" name="arrow-back-sharp"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-buttons slot="end">
+      <ion-button (click)="openArticleSettings()">
+        <ion-icon slot="icon-only" name="settings-outline"></ion-icon>
       </ion-button>
     </ion-buttons>
   </ion-toolbar>

@@ -3,6 +3,7 @@ import { DomSanitizer, SafeHtml, SafeResourceUrl, SafeUrl } from '@angular/platf
 import { ActivatedRoute, Router } from '@angular/router';
 import { ModalController, ToastController } from '@ionic/angular';
 import { Subscription } from 'rxjs';
+import { ArticleSettingsModalComponent } from 'src/app/components/article-settings-modal/article-settings-modal.component';
 import { ViewWebsiteModalComponent } from 'src/app/components/view-website-modal/view-website-modal.component';
 import Entry from 'src/app/models/Entry';
 import { ArticleSettings } from 'src/app/models/Settings';
@@ -25,8 +26,6 @@ export class EntryPage {
 
   public paramsSubscription: Subscription;
 
-  public contentClass: string = 'default';
-
   constructor(
     private feedlyService: FeedlyService,
     private route: ActivatedRoute,
@@ -48,8 +47,11 @@ export class EntryPage {
         }
       });
 
+    this.loadSettings();
+  }
+
+  async loadSettings() {
     this.articleSettings = (await this.storageService.getSettings()).articleSettings;
-    this.contentClass = this.articleSettings.background;
   }
 
   ionViewWillLeave() {
@@ -77,7 +79,21 @@ export class EntryPage {
     } else if (this.entry.summary) {
       content = this.entry.summary.content;
     }
-    const contentHtml = this.sanitizer.bypassSecurityTrustHtml(content);
+
+    const parser = new DOMParser();
+    const doc = parser.parseFromString(content, 'text/html');
+    const images = doc.getElementsByTagName('img');
+    const firstImg = images[0];
+    if (firstImg?.src === this.entry.visual?.url) {
+      firstImg.remove();
+    }
+    for(let i = 0; i<images.length; i++) {
+      const img = images[i];
+      img.style.marginTop = '10px';
+      img.style.marginBottom = '10px';
+    }
+
+    const contentHtml = this.sanitizer.bypassSecurityTrustHtml(doc.documentElement.innerHTML);
     this.content = contentHtml;
   }
 
@@ -87,6 +103,18 @@ export class EntryPage {
       componentProps: {
         url: this.entry.alternate[0].href
       },
+    });
+    await modal.present();
+  }
+
+  async openArticleSettings() {
+    const modal = await this.modalCtrl.create({
+      component: ArticleSettingsModalComponent,
+      breakpoints: [0, 0.5, 0.7, 1],
+      initialBreakpoint: 0.7,
+    });
+    modal.onDidDismiss().then(() => {
+      this.loadSettings();
     });
     await modal.present();
   }
