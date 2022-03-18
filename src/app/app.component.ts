@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import Settings from './models/Settings';
 import { StorageService } from './services/storage/storage.service';
 
 @Component({
@@ -12,7 +13,11 @@ export class AppComponent implements OnInit {
     private storageService: StorageService
   ) {}
 
-  ngOnInit() {
-    this.storageService.initialize();
+  async ngOnInit() {
+    await this.storageService.initialize();
+    const settings: Settings = await this.storageService.getSettings();
+    if (settings.theme === 'dark') {
+      document.body.classList.add('dark');
+    } 
   }
 }

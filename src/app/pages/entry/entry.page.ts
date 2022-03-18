@@ -5,7 +5,9 @@ import { ModalController, ToastController } from '@ionic/angular';
 import { Subscription } from 'rxjs';
 import { ViewWebsiteModalComponent } from 'src/app/components/view-website-modal/view-website-modal.component';
 import Entry from 'src/app/models/Entry';
+import { ArticleSettings } from 'src/app/models/Settings';
 import { FeedlyService } from 'src/app/services/feedly/feedly.service';
+import { StorageService } from 'src/app/services/storage/storage.service';
 
 @Component({
   selector: 'app-entry',
@@ -16,6 +18,8 @@ export class EntryPage {
 
   public entry: Entry;
   public content: SafeHtml;
+
+  public articleSettings: ArticleSettings;
   
   public collectionId: string;
 
@@ -30,9 +34,10 @@ export class EntryPage {
     private toastCtrl: ToastController,
     private sanitizer: DomSanitizer,
     private modalCtrl: ModalController,
+    private storageService: StorageService
   ) { }
   
-  ionViewWillEnter() {
+  async ionViewWillEnter() {
     this.paramsSubscription = this.route.queryParams
       .subscribe(params => {
         if (params.entryId) {
@@ -42,6 +47,9 @@ export class EntryPage {
           this.collectionId = params.collectionId;
         }
       });
+
+    this.articleSettings = (await this.storageService.getSettings()).articleSettings;
+    this.contentClass = this.articleSettings.background;
   }
 
   ionViewWillLeave() {

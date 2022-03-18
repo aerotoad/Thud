@@ -3,6 +3,7 @@ import { Storage } from '@capacitor/storage';
 import FeedCache from '../../models/FeedCache';
 import * as moment from 'moment';
 import Collection from 'src/app/models/Collection';
+import Settings from 'src/app/models/Settings';
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +14,10 @@ export class StorageService {
 
   initialize(): Promise<any> {
     return new Promise(async (resolve) => {
-      console.log('Initializing...');
+      console.log('Initializing storage...');
+      const settings = await Storage.get({ key: 'settings' });
+      if (!settings.value) await Storage.set({ key: 'settings', value: JSON.stringify({}) });
+
       const collections = await Storage.get({ key: 'collections' });
       if (!collections.value) await Storage.set({ key: 'collections', value: JSON.stringify([]) });
       
@@ -21,6 +25,20 @@ export class StorageService {
       if (!cache.value) await Storage.set({ key: 'cache', value: JSON.stringify([]) });
 
       resolve(true);
+    });
+  }
+
+  getSettings(): Promise<Settings> {
+    return new Promise(async (resolve) => {
+      const settings = await Storage.get({ key: 'settings' });
+      resolve(JSON.parse(settings.value));
+    });
+  }
+
+  setSettings(settings: Settings): Promise<Settings> {
+    return new Promise(async (resolve) => {
+      await Storage.set({ key: 'settings', value: JSON.stringify(settings) });
+      resolve(settings);
     });
   }
 

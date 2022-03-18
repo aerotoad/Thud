@@ -2,6 +2,7 @@ export default interface Settings {
   collectionLastReloads: CollectionLastReload[];
   theme: 'light' | 'dark' | 'auto' | undefined;
   articleSettings: ArticleSettings;
+  cacheTimeout: number;
 }
 
 export interface CollectionLastReload {
