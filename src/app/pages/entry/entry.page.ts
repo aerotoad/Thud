@@ -63,7 +63,6 @@ export class EntryPage {
     this.feedlyService.getEntry(entryId)
       .then((entry) => {
         this.entry = entry[0];
-        console.log(this.entry);
         this.processContent();
       })
       .catch((error) => {
