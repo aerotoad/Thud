@@ -10,6 +10,7 @@ import { ArticleSettings } from 'src/app/models/Settings';
 import { FeedlyService } from 'src/app/services/feedly/feedly.service';
 import { StorageService } from 'src/app/services/storage/storage.service';
 import { Share } from '@capacitor/share';
+import { Browser } from '@capacitor/browser';
 
 @Component({
   selector: 'app-entry',
@@ -99,17 +100,7 @@ export class EntryPage {
   }
 
   async openOrigin() {
-    const modal = await this.modalCtrl.create({
-      component: ViewWebsiteModalComponent,
-      componentProps: {
-        url: this.entry.alternate[0].href
-      },
-    });
-    await modal.present();
-  }
-
-  openExternal(url: string) {
-    window.open(url, '_system', 'location=yes');
+    Browser.open({ url: this.entry.alternate[0].href });
   }
 
   async openArticleSettings() {
