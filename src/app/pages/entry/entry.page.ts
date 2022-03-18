@@ -4,7 +4,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ModalController, ToastController } from '@ionic/angular';
 import { Subscription } from 'rxjs';
 import { ArticleSettingsModalComponent } from 'src/app/components/article-settings-modal/article-settings-modal.component';
-import { ViewWebsiteModalComponent } from 'src/app/components/view-website-modal/view-website-modal.component';
 import Entry from 'src/app/models/Entry';
 import { ArticleSettings } from 'src/app/models/Settings';
 import { FeedlyService } from 'src/app/services/feedly/feedly.service';
