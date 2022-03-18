@@ -38,12 +38,17 @@ export class AddCollectionComponent implements OnInit {
         message: 'Creating collection...',
       });
       await loading.present();
+      
+      // Get all collections to get the index
+      const collections = await this.storageService.getCollections();
+
       // Create collection
       const collection: Collection = {
         id: uuidv4(),
         name: this.collectionName,
         description: this.collectionDescription,
         feedList: [],
+        index: collections.length,
       };
       await this.storageService.addCollection(collection);
       await loading.dismiss();
