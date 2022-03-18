@@ -18,13 +18,22 @@
 <ion-content>
 
   <ion-list-header mode="ios" class="mt-3">
-    Collections
+    <ion-label>
+      Collections
+    </ion-label>
+    <ion-button (click)="startReorder()" *ngIf="!reorder">
+      Reorder
+    </ion-button>
+    <ion-button (click)="endReorder()" *ngIf="reorder">
+      Save order
+    </ion-button>
   </ion-list-header>
 
   <div class="pt-1" *ngIf="collections && collections.length > 0">
-    <ion-list>
-      <ion-item *ngFor="let collection of collections" lines="full">
-        <ion-icon name="file-tray-full" slot="start"></ion-icon>
+    <ion-reorder-group [disabled]="!reorder" (ionItemReorder)="drop($event)">
+      <ion-item *ngFor="let collection of (collections | orderByIndex)" lines="full">
+        <ion-icon name="file-tray-full" slot="start" *ngIf="!reorder"></ion-icon>
+        <ion-reorder slot="start"></ion-reorder>
         <ion-label>
           <h2>{{ collection.name }}</h2>
           <p>
@@ -42,7 +51,7 @@
           <ion-icon class="py-1" slot="icon-only" name="trash"></ion-icon>
         </ion-button>
       </ion-item>
-    </ion-list>
+    </ion-reorder-group>
   </div>
 
 </ion-content>

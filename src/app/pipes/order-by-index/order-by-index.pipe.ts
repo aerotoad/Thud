@@ -1,14 +1,14 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { CollectionFeed } from 'src/app/models/Collection';
+import Collection, { CollectionFeed } from 'src/app/models/Collection';
 
 @Pipe({
   name: 'orderByIndex'
 })
 export class OrderByIndexPipe implements PipeTransform {
 
-  transform(feedList: CollectionFeed[]): CollectionFeed[] {
-    if (feedList) {
-      return feedList.sort((a, b) => a.index - b.index);
+  transform(array: CollectionFeed[] | Collection[]): CollectionFeed[] | Collection[] {
+    if (array) {
+      return array.sort((a, b) => a.index - b.index);
     } else {
       return [];
     }

@@ -13,6 +13,8 @@ export class CollectionsPage {
 
   public collections: Collection[] = [];
 
+  public reorder: boolean = false;
+
   constructor(
     private storageService: StorageService,
     private modalCtrl: ModalController,
@@ -96,6 +98,31 @@ export class CollectionsPage {
       if (currentCollection.id !== collection.id) return currentCollection;
     });
     await this.storageService.deleteCollection(collection);
+
+    // Fix collection indexes
+    this.collections.forEach((collection: Collection, index: number) => {
+      collection.index = index;
+    });
+    this.storageService.setCollections(this.collections);
+  }
+
+  startReorder() {
+    this.reorder = true;
+  }
+
+  endReorder() {
+    this.reorder = false;
+    this.collections = this.collections.map((collection: Collection, index: number) => {
+      collection.index = index;
+      return collection;
+    });
+    this.storageService.setCollections(this.collections);
+  }
+
+  drop(event) {
+    const itemMove = this.collections.splice(event.detail.from, 1)[0];
+    this.collections.splice(event.detail.to, 0, itemMove);
+    event.target.complete();
   }
 
 

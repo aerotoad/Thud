@@ -3,6 +3,7 @@ export default interface Collection {
   name: string; // collection name
   description?: string; // Description is optional
   feedList: CollectionFeed[] // Array of feed ids with index
+  index: number; // Index of collection in the list
 }
 
 export interface CollectionFeed {

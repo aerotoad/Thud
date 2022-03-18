@@ -12,7 +12,7 @@
 <ion-content>
   <!-- Collections scrollable list -->
   <div class="w-full h-12 overflow-x-auto overflow-y-hidden flex flex-row pt-3 px-7">
-    <div *ngFor="let collection of collections" class="mr-7 shrink-0 relative active:text-sky-500" (click)="navigateToCollection(collection)">
+    <div *ngFor="let collection of (collections | orderByIndex)" class="mr-7 shrink-0 relative active:text-sky-500" (click)="navigateToCollection(collection)">
       <p class="font-bold text-2xl">{{ collection.name }}</p>
       <span class="absolute bottom-0 w-1/3 h-0 border-b-4 border-sky-500 rounded-full" *ngIf="selectedCollection?.id === collection.id"></span>
     </div>
