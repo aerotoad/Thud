@@ -38,3 +38,8 @@
     bottom: 0px;
   }
 }
+
+// Add helper class to style alert buttons
+.alert-danger-button {
+  color: var(--ion-color-danger) !important;
+}
