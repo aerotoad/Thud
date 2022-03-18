@@ -1,0 +1,16 @@
+<ion-router-outlet id="main"></ion-router-outlet>
+
+<!-- Tabs -->
+<div class="absolute bottom-4 le w-full h-fit pointer-events-none flex justify-center">
+  <div class="bg-white dark:!bg-slate-800 shadow-lg border border-slate-100 dark:!border-slate-900 rounded-2xl flex pointer-events-auto overflow-hidden">
+    <div 
+    class="w-16 py-2 flex justify-center items-center relative cursor-pointer" 
+    *ngFor="let tab of tabs"
+    [routerLink]="[tab.url]">
+      <div class="w-fit h-fit text-center text-slate-500 dark:!text-slate-500 text-xl -mb-1" 
+      [ngClass]="{'active drop-shadow-md !text-2xl': tab.isActive}">
+        <ion-icon class="m-auto" [name]="tab.icon"></ion-icon>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,21 @@
+.main-toolbar {
+  --background: var(--main-toolbar-background);
+}
+
+.article-color-palette {
+  &.default {
+    background: #f9f9f9 !important;
+  }
+  &.lightbrown {
+    background: #d8cdbd !important;
+  }
+  &.lightgrey {
+    background: #bebebe !important;
+  }
+  &.mediumgrey {
+    background: #838383 !important;
+  }
+  &.darkgrey {
+    background: #303030 !important;
+  }
+}

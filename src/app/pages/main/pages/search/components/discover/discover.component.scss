@@ -1,0 +1,22 @@
+@import 'swiper/scss';
+@import 'swiper/scss/navigation';
+@import 'swiper/scss/pagination';
+
+.header {
+  background-color: var(--main-toolbar-background);
+
+  .swiper {
+    height: 100%;
+    display:inline-flex;
+    ::ng-deep.swiper-wrapper {
+      height: 100%;
+      display:inline-flex;
+      .swiper-slide {
+        height: 100% !important;
+      }
+    }
+  }
+}
+.paginator-active {
+  background-color: rgb(148 163 184) !important;
+}

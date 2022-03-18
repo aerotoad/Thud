@@ -1,0 +1,9 @@
+ion-content{
+  &::part(scroll) {
+    height: 100%;
+  }
+}
+
+.fix-bottom-button {
+  margin-bottom: -1px;
+}
