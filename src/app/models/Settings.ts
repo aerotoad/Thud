@@ -13,6 +13,6 @@ export interface CollectionLastReload {
 export interface ArticleSettings {
   fontSize?: number;
   brightness?: number;
-  fontFamily?: 'serif' | 'sans-serif' | 'monospace';
+  fontFamily?: 'serif' | 'sans' | 'mono';
   background?: 'default' | 'lightbrown' | 'lightgrey' | 'mediumgrey' | 'darkgrey';
 }

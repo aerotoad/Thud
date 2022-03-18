@@ -12,14 +12,22 @@ export class SettingsPage {
   public settings: Settings;
   public articleSettings: ArticleSettings;
 
+  public cacheTimeoutMinutes: number = 60;
+
   constructor(
     private storageService: StorageService
   ) { }
 
   async ionViewWillEnter() {
     this.settings = await this.storageService.getSettings();
+    this.cacheTimeoutMinutes = this.settings.cacheTimeout / 60;
     this.articleSettings = this.settings.articleSettings;
-    if (!this.articleSettings) this.articleSettings = {} as ArticleSettings;
+    if (!this.articleSettings) this.articleSettings = {
+      fontSize: 12,
+      brightness: 0,
+      fontFamily: 'sans',
+      background: 'default'
+    } as ArticleSettings;
   }
 
   async setTheme(theme: 'light' | 'dark') {
@@ -36,6 +44,12 @@ export class SettingsPage {
 
   async setArticleTheme(theme: 'default' | 'lightbrown' | 'lightgrey' | 'mediumgrey' | 'darkgrey') {
     this.articleSettings.background = theme;
+    this.settings.articleSettings = this.articleSettings;
+    await this.storageService.setSettings(this.settings);
+  }
+
+  async saveSettings() {
+    this.settings.cacheTimeout = this.cacheTimeoutMinutes * 60;
     this.settings.articleSettings = this.articleSettings;
     await this.storageService.setSettings(this.settings);
   }

@@ -28,7 +28,8 @@
         </ion-label>
       </ion-item>
       <ion-item lines="full">
-        <ion-range min="10" max="120" step="10" snaps="true" color="primary" [pin]="true" [debounce]="400">
+        <ion-range min="10" max="120" step="10" snaps="true" color="primary" [pin]="true" 
+        [debounce]="400" [(ngModel)]="cacheTimeoutMinutes" (ionChange)="saveSettings()">
           <ion-label slot="start">
             <ion-icon slot="icon-only" name="hourglass-outline"></ion-icon>
           </ion-label>
@@ -134,8 +135,9 @@
           <h2>Font size</h2>
         </ion-label>
       </ion-item>
-      <ion-item lines="full">
-        <ion-range min="10" max="15" step="1" snaps="true" color="primary" [pin]="true" [debounce]="400">
+      <ion-item lines="full" *ngIf="articleSettings">
+        <ion-range min="10" max="15" step="1" snaps="true" color="primary" [pin]="true" 
+        [debounce]="400" [(ngModel)]="articleSettings.fontSize" (ionChange)="saveSettings()">
           <ion-label slot="start">
             <span class="text-xs font-bold">A</span>
           </ion-label>
@@ -149,15 +151,15 @@
         <ion-icon slot="start" name="text-outline"></ion-icon>
         <ion-label>Font family</ion-label>
       </ion-item>
-      <div class="w-full px-3 py-2">
-        <ion-segment mode="ios">
-          <ion-segment-button>
+      <div class="w-full px-3 py-2" *ngIf="articleSettings" (ionChange)="saveSettings()">
+        <ion-segment mode="ios" [(ngModel)]="articleSettings.fontFamily">
+          <ion-segment-button value="serif">
             <span class="font-serif font-medium">Serif</span>
           </ion-segment-button>
-          <ion-segment-button>
+          <ion-segment-button value="sans">
             <span class="font-sans font-medium">Sans-Serif</span>
           </ion-segment-button>
-          <ion-segment-button>
+          <ion-segment-button value="mono">
             <span class="font-mono font-medium">
               Monospace
             </span>

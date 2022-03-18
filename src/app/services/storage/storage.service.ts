@@ -16,7 +16,11 @@ export class StorageService {
     return new Promise(async (resolve) => {
       console.log('Initializing storage...');
       const settings = await Storage.get({ key: 'settings' });
-      if (!settings.value) await Storage.set({ key: 'settings', value: JSON.stringify({}) });
+      if (!settings.value) await Storage.set({ key: 'settings', value: JSON.stringify({
+        theme: 'light',
+        cacheTimeout: 3600,
+        collectionLastReloads: [],
+      }) });
 
       const collections = await Storage.get({ key: 'collections' });
       if (!collections.value) await Storage.set({ key: 'collections', value: JSON.stringify([]) });
