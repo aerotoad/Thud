@@ -45,16 +45,26 @@
     <div class="mb-5">
       <p [innerHTML]="content" class="content-wrapper"></p>
     </div>
+
+    <!-- Open in app button-->
+    <div class="w-full text-center mb-5" *ngIf="entry?.alternate[0].href">
+      <ion-button fill="outline" class="open-external-button" (click)="openOrigin()">
+        Open website
+      </ion-button>
+    </div>
   </div>
 
-  <div *ngIf="!entry">
-    Loading...
-  </div>
-
-  <div class="w-full text-center mb-5" *ngIf="entry?.alternate[0].href">
-    <ion-button fill="outline" class="open-external-button" (click)="openOrigin()">
-      Open website
-    </ion-button>
+  <!-- Skeleton -->
+  <div *ngIf="!entry" class="w-full h-full px-6 animate-pulse overflow-hidden">
+    <div class="w-full h-44 bg-black bg-opacity-20 mt-8 rounded-lg"></div>
+    <p class="w-1/2 h-5 mt-7 mb-4 bg-black bg-opacity-20"></p>
+    <p class="w-full h-8 bg-black bg-opacity-20"></p>
+    <p class="w-2/3 h-8 mt-2 bg-black bg-opacity-20"></p>
+    <div class="w-full h-20 bg-black bg-opacity-20 rounded-md shadow-sm mt-5 mb-7"></div>
+    <p class="w-full h-4 mt-2 bg-black bg-opacity-20" *ngFor="let skeleton of [1,2,3]"></p>
+    <p class="w-2/3 h-4 mt-2 bg-black bg-opacity-20"></p>
+    <p class="w-full h-4 mt-2 bg-black bg-opacity-20" *ngFor="let skeleton of [1,2,3]"></p>
+    <p class="w-1/2 h-4 mt-2 bg-black bg-opacity-20"></p>
   </div>
 
 </ion-content>
