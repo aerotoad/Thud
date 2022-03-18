@@ -9,6 +9,7 @@ import Entry from 'src/app/models/Entry';
 import { ArticleSettings } from 'src/app/models/Settings';
 import { FeedlyService } from 'src/app/services/feedly/feedly.service';
 import { StorageService } from 'src/app/services/storage/storage.service';
+import { Share } from '@capacitor/share';
 
 @Component({
   selector: 'app-entry',
@@ -121,6 +122,14 @@ export class EntryPage {
       this.loadSettings();
     });
     await modal.present();
+  }
+ 
+  async shareEntry() {
+    await Share.share({
+      text: `[Via Thud.] ${this.entry.title}`,
+      url: this.entry.alternate[0].href,
+      dialogTitle: 'Share with buddies',
+    });
   }
 
   goBack() {
