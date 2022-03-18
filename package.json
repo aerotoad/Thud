@@ -21,6 +21,7 @@
     "@angular/router": "~13.2.2",
     "@capacitor-community/http": "^1.4.1",
     "@capacitor/app": "1.1.1",
+    "@capacitor/browser": "^1.0.7",
     "@capacitor/core": "3.4.3",
     "@capacitor/haptics": "1.1.4",
     "@capacitor/keyboard": "1.2.2",
