@@ -1,0 +1,38 @@
+<ion-header>
+  <ion-toolbar class="main-toolbar">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/" color="light"></ion-back-button>
+    </ion-buttons>
+    <ion-title>
+      <span class="font-bold text-white drop-shadow-sm">Manage collections</span>
+    </ion-title>
+    <ion-buttons slot="end">
+      <ion-button color="light" (click)="openAddCollection()">
+        <ion-label>Add</ion-label>
+        <ion-icon slot="end" name="add-circle-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <div class="pt-2" *ngIf="collections && collections.length > 0">
+    <ion-list>
+      <ion-item *ngFor="let collection of collections" lines="full">
+        <ion-icon name="file-tray-full" slot="start"></ion-icon>
+        <ion-label>
+          <h2>{{ collection.name }}</h2>
+          <p>{{ collection.description }}</p>
+        </ion-label>
+        <ion-button slot="end" color="dark">
+          <ion-icon class="py-1 px-3" slot="icon-only" name="edit"></ion-icon>
+        </ion-button>
+        <ion-button slot="end" color="danger">
+          <ion-icon class="py-1 px-3" slot="icon-only" name="trash"></ion-icon>
+        </ion-button>
+      </ion-item>
+    </ion-list>
+  </div>
+
+</ion-content>
