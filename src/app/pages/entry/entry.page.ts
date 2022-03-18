@@ -107,6 +107,10 @@ export class EntryPage {
     await modal.present();
   }
 
+  openExternal(url: string) {
+    window.open(url, '_system', 'location=yes');
+  }
+
   async openArticleSettings() {
     const modal = await this.modalCtrl.create({
       component: ArticleSettingsModalComponent,

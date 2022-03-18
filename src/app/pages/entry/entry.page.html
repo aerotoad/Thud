@@ -51,7 +51,7 @@
     Loading...
   </div>
 
-  <div class="w-full text-center mb-5">
+  <div class="w-full text-center mb-5" *ngIf="entry?.alternate[0].href">
     <ion-button fill="outline" class="open-external-button" (click)="openOrigin()">
       Open website
     </ion-button>
@@ -66,6 +66,12 @@
       </ion-button>
     </ion-buttons>
     <ion-buttons slot="end">
+      <ion-button>
+        <ion-icon slot="icon-only" name="share-social-outline"></ion-icon>
+      </ion-button>
+      <ion-button *ngIf="entry?.alternate[0].href" (click)="openExternal(entry.alternate[0].href)">
+        <ion-icon slot="icon-only" name="share-outline"></ion-icon>
+      </ion-button>
       <ion-button (click)="openArticleSettings()">
         <ion-icon slot="icon-only" name="settings-outline"></ion-icon>
       </ion-button>
