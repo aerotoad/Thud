@@ -4,12 +4,12 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ModalController, ToastController } from '@ionic/angular';
 import { Subscription } from 'rxjs';
 import { ArticleSettingsModalComponent } from 'src/app/components/article-settings-modal/article-settings-modal.component';
-import { ViewWebsiteModalComponent } from 'src/app/components/view-website-modal/view-website-modal.component';
 import Entry from 'src/app/models/Entry';
 import { ArticleSettings } from 'src/app/models/Settings';
 import { FeedlyService } from 'src/app/services/feedly/feedly.service';
 import { StorageService } from 'src/app/services/storage/storage.service';
 import { Share } from '@capacitor/share';
+import { Browser } from '@capacitor/browser';
 
 @Component({
   selector: 'app-entry',
@@ -99,17 +99,7 @@ export class EntryPage {
   }
 
   async openOrigin() {
-    const modal = await this.modalCtrl.create({
-      component: ViewWebsiteModalComponent,
-      componentProps: {
-        url: this.entry.alternate[0].href
-      },
-    });
-    await modal.present();
-  }
-
-  openExternal(url: string) {
-    window.open(url, '_system', 'location=yes');
+    Browser.open({ url: this.entry.alternate[0].href });
   }
 
   async openArticleSettings() {
