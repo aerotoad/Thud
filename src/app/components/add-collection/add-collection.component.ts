@@ -43,7 +43,7 @@ export class AddCollectionComponent implements OnInit {
         id: uuidv4(),
         name: this.collectionName,
         description: this.collectionDescription,
-        feedIds: [],
+        feedList: [],
       };
       await this.storageService.addCollection(collection);
       await loading.dismiss();

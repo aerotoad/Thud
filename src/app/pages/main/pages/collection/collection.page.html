@@ -20,7 +20,7 @@
 
   <!-- Collection Streams -->
   <div class="w-full h-fit mt-5 mb-20">
-    <app-stream *ngFor="let feedId of selectedCollection?.feedIds" [feedId]="feedId" [collectionId]="selectedCollection.id"></app-stream>
+    <app-stream *ngFor="let feed of (selectedCollection?.feedList | orderByIndex)" [feedId]="feed.feedId" [collectionId]="selectedCollection.id"></app-stream>
   </div>
 
 </ion-content>

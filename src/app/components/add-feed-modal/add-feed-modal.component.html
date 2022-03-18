@@ -19,11 +19,11 @@
         </ion-label>
         <ion-note slot="end">
           <ion-label>
-            <h2 class="!text-xs !font-bold">{{collection.feedIds.length}}/10</h2>
+            <h2 class="!text-xs !font-bold">{{collection.feedList.length}}/10</h2>
             <p class="!text-xs">Feeds</p>
           </ion-label>
         </ion-note>
-        <ion-button slot="end" color="dark" class="normal-case" (click)="addFeedToCollection(collection)" [disabled]="collection.feedIds.length >= 10">
+        <ion-button slot="end" color="dark" class="normal-case" (click)="addFeedToCollection(collection)" [disabled]="collection.feedList.length >= 10">
           <span class="py-1 px-3">
             Add
           </span>

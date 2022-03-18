@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { InArrayPipe } from './in-array/in-array.pipe';
 import { EpochTimeagoPipe } from './epoch-timeago/epoch-timeago.pipe';
+import { OrderByIndexPipe } from './order-by-index/order-by-index.pipe';
 
 
 
@@ -11,11 +12,13 @@ import { EpochTimeagoPipe } from './epoch-timeago/epoch-timeago.pipe';
   ],
   declarations: [
     InArrayPipe,
-    EpochTimeagoPipe
+    EpochTimeagoPipe,
+    OrderByIndexPipe
   ],
   exports: [
     InArrayPipe,
-    EpochTimeagoPipe
+    EpochTimeagoPipe,
+    OrderByIndexPipe
   ]
 })
 export class PipesModule { }

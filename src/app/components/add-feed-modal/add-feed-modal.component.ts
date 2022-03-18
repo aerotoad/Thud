@@ -31,9 +31,13 @@ export class AddFeedModalComponent {
 
   async addFeedToCollection(collection: Collection) {
     // Check if feed is already in collection
-    if (collection.feedIds.includes(this.feedId) === false) {
-      collection.feedIds.push(this.feedId);
+    if (!collection.feedList.some(feed => feed.feedId === this.feedId)) {
+      collection.feedList.push({
+        feedId: this.feedId,
+        index: collection.feedList.length
+      });
     }
+
     // Save collection
     await this.storageService.updateCollection(collection);
     // Show toast
