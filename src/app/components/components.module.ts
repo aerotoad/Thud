@@ -5,18 +5,22 @@ import { AddFeedModalComponent } from './add-feed-modal/add-feed-modal.component
 import { AddCollectionComponent } from './add-collection/add-collection.component';
 import { ArticleSettingsModalComponent } from './article-settings-modal/article-settings-modal.component';
 import { IonicModule } from '@ionic/angular';
+import { CollectionFeedsModalComponent } from './collection-feeds-modal/collection-feeds-modal.component';
+import { PipesModule } from '../pipes/pipes.module';
 
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
-    IonicModule
+    IonicModule,
+    PipesModule
   ],
   declarations: [
     AddFeedModalComponent,
     AddCollectionComponent,
-    ArticleSettingsModalComponent
+    ArticleSettingsModalComponent,
+    CollectionFeedsModalComponent
   ],
 })
 export class ComponentsModule { }

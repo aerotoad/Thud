@@ -51,7 +51,7 @@ export class FeedlyService {
     });
   }
 
-  getFeedInformation(feedId: string) {
+  getFeedInformation(feedId: string): Promise<any> {
     return new Promise(async (resolve, reject) => {
       const encodedId = encodeURIComponent(feedId);
       const response = await Http.get({

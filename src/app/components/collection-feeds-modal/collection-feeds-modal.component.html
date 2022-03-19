@@ -1,3 +1,41 @@
-<p>
-  collection-feeds-modal works!
-</p>
+<ion-header>
+  <ion-toolbar class="main-toolbar">
+    <ion-buttons slot="start">
+      <ion-button (click)="close()">
+        <ion-icon name="close" slot="icon-only"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>
+      <span class="font-bold text-white drop-shadow-sm">Manage collections</span>
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <ion-list-header mode="ios" class="mt-3">
+    <ion-label>
+      Feeds
+    </ion-label>
+    <ion-button (click)="startReorder()" *ngIf="!reorder && collection.feedList && collection.feedList.length > 1">
+      Reorder
+    </ion-button>
+    <ion-button (click)="endReorder()" *ngIf="reorder && collection.feedList && collection.feedList.length > 1">
+      Save order
+    </ion-button>
+  </ion-list-header>
+
+  <ion-reorder-group [disabled]="!reorder" class="pt-5 mb-20" (ionItemReorder)="drop($event)">
+    <ion-item *ngFor="let feed of (collection.feedList | orderByIndex)" lines="full">
+      <ion-reorder slot="start"></ion-reorder>
+      <ion-thumbnail slot="start">
+        <img [src]="feed.visualUrl ?? feed.iconUrl" class="rounded-md">
+      </ion-thumbnail>
+      <ion-label>
+        {{ feed.title }}
+      </ion-label>
+      
+    </ion-item>
+  </ion-reorder-group>
+
+</ion-content>

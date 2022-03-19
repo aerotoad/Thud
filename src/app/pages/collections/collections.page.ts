@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { AlertController, ModalController } from '@ionic/angular';
 import { AddCollectionComponent } from 'src/app/components/add-collection/add-collection.component';
+import { CollectionFeedsModalComponent } from 'src/app/components/collection-feeds-modal/collection-feeds-modal.component';
 import Collection from 'src/app/models/Collection';
 import { StorageService } from 'src/app/services/storage/storage.service';
 
@@ -104,6 +105,16 @@ export class CollectionsPage {
       collection.index = index;
     });
     this.storageService.setCollections(this.collections);
+  }
+
+  async openCollectionFeeds(collection: Collection) {
+    const modal = await this.modalCtrl.create({
+      component: CollectionFeedsModalComponent,
+      componentProps: {
+        collection
+      }
+    });
+    await modal.present();
   }
 
   startReorder() {

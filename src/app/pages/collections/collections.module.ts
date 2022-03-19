@@ -8,6 +8,7 @@ import { CollectionsPageRoutingModule } from './collections-routing.module';
 
 import { CollectionsPage } from './collections.page';
 import { PipesModule } from 'src/app/pipes/pipes.module';
+import { ComponentsModule } from 'src/app/components/components.module';
 
 @NgModule({
   imports: [
@@ -15,7 +16,8 @@ import { PipesModule } from 'src/app/pipes/pipes.module';
     FormsModule,
     IonicModule,
     CollectionsPageRoutingModule,
-    PipesModule
+    PipesModule,
+    ComponentsModule
   ],
   declarations: [CollectionsPage]
 })
