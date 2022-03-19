@@ -28,6 +28,9 @@ export class StorageService {
       const cache = await Storage.get({ key: 'cache' });
       if (!cache.value) await Storage.set({ key: 'cache', value: JSON.stringify([]) });
 
+      const readEntries = await Storage.get({ key: 'readEntries' });
+      if (!readEntries.value) await Storage.set({ key: 'readEntries', value: JSON.stringify([]) });
+
       resolve(true);
     });
   }
@@ -152,6 +155,34 @@ export class StorageService {
     return new Promise(async (resolve) => {
       await Storage.set({ key: 'cache', value: JSON.stringify([]) });
       resolve(true);
+    });
+  }
+
+  getReadEntries(): Promise<string[]> {
+    return new Promise(async (resolve) => {
+      const readEntries = await Storage.get({ key: 'readEntries' });
+      resolve(JSON.parse(readEntries.value));
+    });
+  }
+
+  setReadEntries(readEntries: string[]): Promise<string[]> {
+    return new Promise(async (resolve) => {
+      await Storage.set({ key: 'readEntries', value: JSON.stringify(readEntries) });
+      resolve(readEntries);
+    });
+  }
+
+  addReadEntry(entryId: string): Promise<string[]> {
+    return new Promise(async (resolve) => {
+      const readEntries = await this.getReadEntries();
+      if (!readEntries.includes(entryId)) {
+        // Add entry
+        readEntries.push(entryId);
+        // If readEntries is more than 100, remove the oldest entry
+        if (readEntries.length > 100) readEntries.shift();
+        await this.setReadEntries(readEntries);
+      }
+      resolve(readEntries);
     });
   }
 
