@@ -10,6 +10,7 @@ import { FeedlyService } from 'src/app/services/feedly/feedly.service';
 import { StorageService } from 'src/app/services/storage/storage.service';
 import { Share } from '@capacitor/share';
 import { Browser } from '@capacitor/browser';
+import Bookmark from 'src/app/models/Bookmark';
 
 @Component({
   selector: 'app-entry',
@@ -24,6 +25,9 @@ export class EntryPage {
   public articleSettings: ArticleSettings;
   
   public collectionId: string;
+  public fromBookmarks: boolean;
+
+  public bookmarked: boolean = false;
 
   public paramsSubscription: Subscription;
 
@@ -46,6 +50,9 @@ export class EntryPage {
         if (params.collectionId) {
           this.collectionId = params.collectionId;
         }
+        if (params.fromBookmarks) {
+          this.fromBookmarks = true;
+        }
       });
 
     this.loadSettings();
@@ -59,6 +66,10 @@ export class EntryPage {
     await this.storageService.addReadEntry(this.entry.id);
   }
 
+  async getBookmark() {
+    this.bookmarked = await this.storageService.bookmarkExists(this.entry.id);
+  }
+
   ionViewWillLeave() {
     this.paramsSubscription.unsubscribe();
   }
@@ -68,6 +79,7 @@ export class EntryPage {
       .then((entry) => {
         this.entry = entry[0];
         this.processContent();
+        this.getBookmark();
         this.markAsRead();
       })
       .catch((error) => {
@@ -126,19 +138,40 @@ export class EntryPage {
     });
   }
 
+  async bookmarkEntry() {
+    if (!this.bookmarked) {
+      const bookmark: Bookmark = {
+        entryId: this.entry.id,
+        title: this.entry.title,
+        visualUrl: this.entry.visual.url,
+        published: this.entry.published
+      }
+      await this.storageService.addBookmark(bookmark);
+      this.bookmarked = true;
+      this.showToast('Bookmark added', null, 'top');
+    } else {
+      await this.storageService.deleteBookmarkByEntryId(this.entry.id);
+      this.bookmarked = false;
+      this.showToast('Bookmark removed', null, 'top');
+    }
+  }
+
   goBack() {
     if (this.collectionId) {
       this.router.navigate(['/main/collection'], { replaceUrl: true, queryParams: { collectionId: this.collectionId } });
+    } else if (this.fromBookmarks) {
+      this.router.navigate(['/main/bookmarks'], { replaceUrl: true });
     } else {
       this.router.navigate(['/main/collection'], { replaceUrl: true });
     }
   }
 
-  async showToast(message: string, color: string) {
+  async showToast(message: string, color?: string, position?: 'top' | 'bottom') {
     const toast = await this.toastCtrl.create({
       message: message,
       duration: 2000,
-      color: color
+      color: color,
+      position: position ?? 'bottom'
     });
     toast.present();
   }
