@@ -13,7 +13,7 @@
 
 <ion-content>
 
-  <ion-list-header mode="ios" class="mt-3">
+  <ion-list-header mode="ios" class="mt-1">
     <ion-label>
       Feeds
     </ion-label>
@@ -34,7 +34,9 @@
       <ion-label>
         {{ feed.title }}
       </ion-label>
-      
+      <ion-button slot="end" color="danger" fill="clear" (click)="confirmDeleteFeed(feed)">
+        <ion-icon name="trash"></ion-icon>
+      </ion-button>
     </ion-item>
   </ion-reorder-group>
 
