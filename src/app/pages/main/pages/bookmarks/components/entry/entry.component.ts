@@ -1,14 +1,19 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import Bookmark from 'src/app/models/Bookmark';
 
 @Component({
   selector: 'app-entry-card',
   templateUrl: './entry.component.html',
   styleUrls: ['./entry.component.scss'],
 })
-export class EntryComponent implements OnInit {
+export class EntryComponent {
+
+  @Input() bookmark: Bookmark;
 
   constructor() { }
 
-  ngOnInit() {}
+  ngOnInit() {
+    console.log(this.bookmark);
+  }
 
 }

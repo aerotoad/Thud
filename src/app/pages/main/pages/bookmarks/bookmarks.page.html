@@ -8,4 +8,12 @@
 
 <ion-content>
 
+  <div class="mt-2 mb-20">
+    <div class="h-full w-full flex flex-col">
+      <div *ngFor="let bookmark of bookmarks" class="w-full h-44">
+        <app-entry-card [bookmark]="bookmark" (click)="openEntry(bookmark.entryId)"></app-entry-card>
+      </div>
+    </div>
+  </div>
+
 </ion-content>

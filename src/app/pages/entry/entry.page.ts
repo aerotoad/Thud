@@ -25,6 +25,7 @@ export class EntryPage {
   public articleSettings: ArticleSettings;
   
   public collectionId: string;
+  public fromBookmarks: boolean;
 
   public bookmarked: boolean = false;
 
@@ -48,6 +49,9 @@ export class EntryPage {
         }
         if (params.collectionId) {
           this.collectionId = params.collectionId;
+        }
+        if (params.fromBookmarks) {
+          this.fromBookmarks = true;
         }
       });
 
@@ -139,7 +143,8 @@ export class EntryPage {
       const bookmark: Bookmark = {
         entryId: this.entry.id,
         title: this.entry.title,
-        visualUrl: this.entry.visual.url
+        visualUrl: this.entry.visual.url,
+        published: this.entry.published
       }
       await this.storageService.addBookmark(bookmark);
       this.bookmarked = true;
@@ -154,6 +159,8 @@ export class EntryPage {
   goBack() {
     if (this.collectionId) {
       this.router.navigate(['/main/collection'], { replaceUrl: true, queryParams: { collectionId: this.collectionId } });
+    } else if (this.fromBookmarks) {
+      this.router.navigate(['/main/bookmarks'], { replaceUrl: true });
     } else {
       this.router.navigate(['/main/collection'], { replaceUrl: true });
     }

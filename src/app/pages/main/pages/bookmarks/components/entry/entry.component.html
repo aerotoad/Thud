@@ -1,3 +1,19 @@
-<p>
-  entry works!
-</p>
+<div class="w-full h-full shrink-0 relative p-2 flex items-center justify-center">
+  <div class="rounded-lg shadow-md w-full h-full overflow-hidden relative">
+    <!-- Background image -->
+    <div class="absolute w-full h-full z-10 bg-slate-700 dark:!bg-slate-800">
+      <img [src]="bookmark?.visualUrl" *ngIf="bookmark?.visualUrl && bookmark?.visualUrl !== 'none'"
+        class="w-full h-full aspect-square">
+    </div>
+    <!-- Title -->
+    <div
+      class="absolute w-full h-2/3 left-0 bottom-0 p-3 z-20 bg-gradient-to-t from-slate-900/80 via-slate-800/60 to-transparent overflow-hidden backdrop-blur-[2px]">
+      <p class="text-base text-white line-clamp-3">
+        {{ bookmark?.title }}
+      </p>
+      <p class="text-sm text-white truncate mt-[2px]">
+        {{ bookmark.published | epochTimeago }}
+      </p>
+    </div>
+  </div>
+</div>
