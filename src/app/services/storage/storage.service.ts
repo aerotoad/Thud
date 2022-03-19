@@ -56,7 +56,7 @@ export class StorageService {
   getCollectionByFeedId(feedId: string): Promise<Collection> {
     return new Promise(async (resolve) => {
       const collections = await this.getCollections();
-      const collection: Collection = collections.find(item => item.feedIds.includes(feedId));
+      const collection: Collection = collections.find(collection => collection.feedList.some(feedIdItem => feedIdItem.feedId === feedId));
       resolve(collection);
     });
   }
@@ -102,8 +102,8 @@ export class StorageService {
       const collections = await this.getCollections();
       const feedIds: string[] = [];
       collections.forEach(collection => {
-        collection.feedIds.forEach(feedId => {
-          if (!feedIds.includes(feedId)) feedIds.push(feedId);
+        collection.feedList.forEach((collectionFeed) => {
+          if (!feedIds.includes(collectionFeed.feedId)) feedIds.push(collectionFeed.feedId)
         });
       });
       resolve(feedIds);

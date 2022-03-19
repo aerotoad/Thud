@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 import Settings, { ArticleSettings } from 'src/app/models/Settings';
 import { StorageService } from 'src/app/services/storage/storage.service';
 
@@ -15,7 +16,8 @@ export class SettingsPage {
   public cacheTimeoutMinutes: number = 60;
 
   constructor(
-    private storageService: StorageService
+    private storageService: StorageService,
+    private router: Router,
   ) { }
 
   async ionViewWillEnter() {

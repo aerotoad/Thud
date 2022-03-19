@@ -10,7 +10,7 @@
         <p>{{searchResult.description}}</p>
       </ion-label>
       <ion-buttons slot="end">
-        <app-add-feed-button [feedId]="searchResult.id" [feedsIds]="feedIds" (updateFeedIds)="doUpdateFeedIds()"></app-add-feed-button>
+        <app-add-feed-button [feed]="searchResult" [feedsIds]="feedIds" (updateFeedIds)="doUpdateFeedIds()"></app-add-feed-button>
       </ion-buttons>
     </ion-item>
   </ion-list>
