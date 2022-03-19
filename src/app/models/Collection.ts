@@ -9,4 +9,7 @@ export default interface Collection {
 export interface CollectionFeed {
   feedId: string; // Feedly feed id
   index: number; // Index in feedList
+  title: string; // Feed title
+  visualUrl?: string; // Feed visual url
+  iconUrl?: string; // Feed icon url
 }

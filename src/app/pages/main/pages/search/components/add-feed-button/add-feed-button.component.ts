@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { AddFeedModalComponent } from 'src/app/components/add-feed-modal/add-feed-modal.component';
+import { SearchResult } from 'src/app/models/SearchQuery';
 
 @Component({
   selector: 'app-add-feed-button',
@@ -9,7 +10,7 @@ import { AddFeedModalComponent } from 'src/app/components/add-feed-modal/add-fee
 })
 export class AddFeedButtonComponent implements OnInit {
 
-  @Input() feedId: string;
+  @Input() feed: SearchResult;
   @Input() feedsIds: string[] = [];
   @Input() color: string;
 
@@ -24,11 +25,11 @@ export class AddFeedButtonComponent implements OnInit {
   ngOnInit() {}
 
   ngOnChanges() {
-    this.exists = this.feedsIds?.indexOf(this.feedId) !== -1;
+    this.exists = this.feedsIds?.indexOf(this.feed.feedId) !== -1;
   }
 
   handleButtonAction() {
-    if (this.feedsIds?.indexOf(this.feedId) === -1) {
+    if (this.feedsIds?.indexOf(this.feed.feedId) === -1) {
       this.handleAddFeed();
     }
   }
@@ -37,7 +38,13 @@ export class AddFeedButtonComponent implements OnInit {
     const modal = await this.modalCtrl.create({
       component: AddFeedModalComponent,
       componentProps: {
-        feedId: this.feedId
+        feedObject: {
+          feedId: this.feed.feedId,
+          title: this.feed.title,
+          visualUrl: this.feed.visualUrl,
+          iconUrl: this.feed.iconUrl,
+          index: null
+        }
       },
       breakpoints: [0, 0.5, 0.7, 1],
       initialBreakpoint: 0.7
@@ -45,7 +52,7 @@ export class AddFeedButtonComponent implements OnInit {
     modal.onDidDismiss()
       .then((data) => {
         if (data.data.collection) {
-          this.feedsIds.push(this.feedId);
+          this.feedsIds.push(this.feed.feedId);
           this.updateFeedIds.emit(true);
         }
       });
