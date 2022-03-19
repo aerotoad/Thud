@@ -55,6 +55,10 @@ export class EntryPage {
     this.articleSettings = (await this.storageService.getSettings()).articleSettings;
   }
 
+  async markAsRead() {
+    await this.storageService.addReadEntry(this.entry.id);
+  }
+
   ionViewWillLeave() {
     this.paramsSubscription.unsubscribe();
   }
@@ -64,6 +68,7 @@ export class EntryPage {
       .then((entry) => {
         this.entry = entry[0];
         this.processContent();
+        this.markAsRead();
       })
       .catch((error) => {
         this.showToast('Content cannot be loaded', 'danger');

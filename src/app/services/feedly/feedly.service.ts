@@ -51,17 +51,4 @@ export class FeedlyService {
     });
   }
 
-  getFeedInformation(feedId: string): Promise<any> {
-    return new Promise(async (resolve, reject) => {
-      const encodedId = encodeURIComponent(feedId);
-      const response = await Http.get({
-        url: `${this.BASE_URL}/v3/feeds/${encodedId}`,
-      });
-      if (response.status !== 200) {
-        reject(response.data);
-      }
-      resolve(response.data);
-    });
-  }
-
 }
