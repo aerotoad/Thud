@@ -49,7 +49,6 @@ export class EntryPage {
       });
 
     this.loadSettings();
-    this.markAsRead();
   }
 
   async loadSettings() {
@@ -57,7 +56,7 @@ export class EntryPage {
   }
 
   async markAsRead() {
-    this.storageService.addReadEntry(this.entry.id);
+    await this.storageService.addReadEntry(this.entry.id);
   }
 
   ionViewWillLeave() {
@@ -69,6 +68,7 @@ export class EntryPage {
       .then((entry) => {
         this.entry = entry[0];
         this.processContent();
+        this.markAsRead();
       })
       .catch((error) => {
         this.showToast('Content cannot be loaded', 'danger');

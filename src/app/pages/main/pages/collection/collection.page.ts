@@ -15,6 +15,8 @@ export class CollectionPage {
 
   public selectedCollection: Collection;
 
+  public readEntries: string[];
+
   public paramsSubscription: Subscription;
 
   constructor(
@@ -26,15 +28,22 @@ export class CollectionPage {
   ionViewWillEnter() {
     this.paramsSubscription = this.route.queryParams
       .subscribe(params => {
-        if (params.collectionId) {
+        if (params.collectionId && params.collectionId !== this.selectedCollection?.id) {
           this.loadCollections(params.collectionId);
+          this.loadReadEntries();
+        } else {
+          this.loadCollections();
+          this.loadReadEntries();
         }
       });
-    this.loadCollections();
   }
 
   ionViewDidLeave() {
     this.paramsSubscription.unsubscribe();
+  }
+
+  async loadReadEntries() {
+    this.readEntries = await this.storageService.getReadEntries();
   }
 
   async loadCollections(selectedCollectionId?: string) {
