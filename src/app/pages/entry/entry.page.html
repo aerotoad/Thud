@@ -82,6 +82,10 @@
       <ion-button *ngIf="entry?.alternate[0].href" (click)="openOrigin(entry.alternate[0].href)">
         <ion-icon slot="icon-only" name="share-outline"></ion-icon>
       </ion-button>
+      <ion-button (click)="bookmarkEntry()">
+        <ion-icon slot="icon-only" name="bookmark-outline" *ngIf="!bookmarked"></ion-icon>
+        <ion-icon slot="icon-only" name="bookmark" *ngIf="bookmarked"></ion-icon>
+      </ion-button>
       <ion-button (click)="openArticleSettings()">
         <ion-icon slot="icon-only" name="settings-outline"></ion-icon>
       </ion-button>

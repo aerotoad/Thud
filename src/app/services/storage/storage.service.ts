@@ -4,6 +4,7 @@ import FeedCache from '../../models/FeedCache';
 import * as moment from 'moment';
 import Collection from 'src/app/models/Collection';
 import Settings from 'src/app/models/Settings';
+import Bookmark from 'src/app/models/Bookmark';
 
 @Injectable({
   providedIn: 'root'
@@ -30,6 +31,9 @@ export class StorageService {
 
       const readEntries = await Storage.get({ key: 'readEntries' });
       if (!readEntries.value) await Storage.set({ key: 'readEntries', value: JSON.stringify([]) });
+
+      const bookmarks = await Storage.get({ key: 'bookmarks' });
+      if (!bookmarks.value) await Storage.set({ key: 'bookmarks', value: JSON.stringify([]) });
 
       resolve(true);
     });
@@ -183,6 +187,58 @@ export class StorageService {
         await this.setReadEntries(readEntries);
       }
       resolve(readEntries);
+    });
+  }
+
+  setBookmarks(bookmarks: Bookmark[]): Promise<Bookmark[]> {
+    return new Promise(async (resolve) => {
+      await Storage.set({ key: 'bookmarks', value: JSON.stringify(bookmarks) });
+      resolve(bookmarks);
+    });
+  }
+
+  getBookmarks(): Promise<Bookmark[]> {
+    return new Promise(async (resolve) => {
+      const bookmarks = await Storage.get({ key: 'bookmarks' });
+      resolve(JSON.parse(bookmarks.value));
+    });
+  }
+
+  addBookmark(bookmark: Bookmark): Promise<Bookmark> {
+    return new Promise(async (resolve) => {
+      const bookmarks = await this.getBookmarks();
+      bookmarks.push(bookmark);
+      // If bookmarks is more than 100, remove the oldest bookmark
+      if (bookmarks.length > 100) bookmarks.shift();
+      await this.setBookmarks(bookmarks);
+      resolve(bookmark);
+    });
+  }
+
+  deleteBookmark(bookmark: Bookmark): Promise<Bookmark> {
+    return new Promise(async (resolve) => {
+      const bookmarks = await this.getBookmarks();
+      const index = bookmarks.findIndex(item => item.entryId === bookmark.entryId);
+      bookmarks.splice(index, 1);
+      await this.setBookmarks(bookmarks);
+      resolve(bookmark);
+    });
+  }
+
+  deleteBookmarkByEntryId(entryId: string): Promise<Bookmark> {
+    return new Promise(async (resolve) => {
+      const bookmarks = await this.getBookmarks();
+      const index = bookmarks.findIndex(item => item.entryId === entryId);
+      bookmarks.splice(index, 1);
+      await this.setBookmarks(bookmarks);
+      resolve(bookmarks[index]);
+    });
+  }
+
+  bookmarkExists(entryId: string): Promise<boolean> {
+    return new Promise(async (resolve) => {
+      const bookmarks = await this.getBookmarks();
+      resolve(bookmarks.findIndex(item => item.entryId === entryId) > -1);
     });
   }
 
