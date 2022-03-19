@@ -49,10 +49,15 @@ export class EntryPage {
       });
 
     this.loadSettings();
+    this.markAsRead();
   }
 
   async loadSettings() {
     this.articleSettings = (await this.storageService.getSettings()).articleSettings;
+  }
+
+  async markAsRead() {
+    this.storageService.addReadEntry(this.entry.id);
   }
 
   ionViewWillLeave() {
