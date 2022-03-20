@@ -10,6 +10,10 @@
 </ion-header>
 
 <ion-content>
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
   <!-- Collections scrollable list -->
   <div class="w-full h-12 overflow-x-auto overflow-y-hidden flex flex-row pt-3 px-7">
     <div *ngFor="let collection of (collections | orderByIndex)" class="mr-7 shrink-0 relative active:text-sky-500" (click)="navigateToCollection(collection)">
