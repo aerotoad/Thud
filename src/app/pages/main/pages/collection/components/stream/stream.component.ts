@@ -17,6 +17,7 @@ export class StreamComponent implements OnInit {
   @Input() collectionId: string;
   @Input() readEntries: string[];
   @Input() iconUrl: string;
+  @Input() cacheTimeout: number;
   
   public stream: Stream;
 
@@ -42,18 +43,19 @@ export class StreamComponent implements OnInit {
   }
 
   loadStream(feedId: string) {
+    console.log(this.cacheTimeout);
     // Check if there is a cache for this feed
     this.storageService.getCacheByFeedId(feedId)
-      .then((cache: FeedCache) => {
+      .then(async (cache: FeedCache) => {
         if (cache) {
-          // Check if cache is no older than 1 hour
-          if (moment().diff(moment.unix(cache.fetchedAt), 'hours') < 1) {
+          // Check if cache is no older than cacheTimeout
+          if (moment().diff(moment.unix(cache.fetchedAt), 'seconds') < this.cacheTimeout) {
             this.stream = cache.content;
           } else {
-            console.log('Cache is older than 1 hour, fetching stream');
+            console.log('Cache is older than cacheTimeout, fetching stream: ' + feedId);
             console.log('Cache diff: ' + moment().diff(moment.unix(cache.fetchedAt), 'hours'));
-            // Cache is older than 1 hour, fetch new content
-            this.fetchStream(feedId);
+            // Cache is older than cacheTimeout, fetch new content
+            await this.fetchStream(feedId);
           }
         } else {
           // No cache, fetch new content
@@ -62,19 +64,23 @@ export class StreamComponent implements OnInit {
       });
   }
 
-  fetchStream(feedId: string): void {
-    this.feedlyService.getFeedStream(feedId)
+  fetchStream(feedId: string): Promise<boolean> {
+    return new Promise((resolve, reject) => {
+      this.feedlyService.getFeedStream(feedId)
       .then(async (stream: Stream) => {
         // Save cache
         await this.storageService.setCacheByFeedId(feedId, stream);
         // Set stream
         this.stream = stream;
+        resolve(true);
       })
       .catch((error) => {
         this.stream = null;
         this.error = true;
         console.error(error);
+        reject(false);
       });
+    });
   }
 
   openEntry(entryId: string) {
