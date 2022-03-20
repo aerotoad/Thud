@@ -21,7 +21,7 @@
   <!-- Collection Streams -->
   <div class="w-full h-fit mt-5 mb-20">
     <app-stream *ngFor="let feed of (selectedCollection?.feedList | orderByIndex)" 
-    [feedId]="feed.feedId" [collectionId]="selectedCollection.id" [iconUrl]="feed.iconUrl" [readEntries]="readEntries"></app-stream>
+    [feedId]="feed.feedId" [collectionId]="selectedCollection.id" [iconUrl]="feed.iconUrl" [readEntries]="readEntries" [cacheTimeout]="settings.cacheTimeout"></app-stream>
   </div>
 
 </ion-content>

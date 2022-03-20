@@ -25,9 +25,6 @@ export class StorageService {
 
       const collections = await Storage.get({ key: 'collections' });
       if (!collections.value) await Storage.set({ key: 'collections', value: JSON.stringify([]) });
-      
-      const cache = await Storage.get({ key: 'cache' });
-      if (!cache.value) await Storage.set({ key: 'cache', value: JSON.stringify([]) });
 
       const readEntries = await Storage.get({ key: 'readEntries' });
       if (!readEntries.value) await Storage.set({ key: 'readEntries', value: JSON.stringify([]) });
@@ -119,39 +116,52 @@ export class StorageService {
 
   getCacheByFeedId(feedId: string): Promise<FeedCache> {
     return new Promise(async (resolve) => {
-      const cache = await Storage.get({ key: 'cache' });
-      const cacheList: FeedCache[] = JSON.parse(cache.value);
-      const cacheItem: FeedCache = cacheList.find(item => item.feedId === feedId);
-      resolve(cacheItem);
+      const feedCache = await Storage.get({ key: `cache_${feedId}` })
+      resolve(JSON.parse(feedCache.value));
     });
   }
 
   setCacheByFeedId(feedId: string, content: any): Promise<FeedCache> {
+    //return new Promise(async (resolve) => {
+    //  const cache = await Storage.get({ key: 'cache' });
+    //  const cacheList: FeedCache[] = JSON.parse(cache.value);
+    //  const cacheItem: FeedCache = cacheList.find(item => item.feedId === feedId);
+    //  if (cacheItem) {
+    //    cacheItem.content = content;
+    //    cacheItem.fetchedAt = moment().unix();
+    //  } else {
+    //    cacheList.push({ feedId, fetchedAt: moment().unix(), content });
+    //  }
+    //  await Storage.set({ key: 'cache', value: JSON.stringify(cacheList) });
+    //  resolve(cacheItem);
+    //});
+
     return new Promise(async (resolve) => {
-      const cache = await Storage.get({ key: 'cache' });
-      const cacheList: FeedCache[] = JSON.parse(cache.value);
-      const cacheItem: FeedCache = cacheList.find(item => item.feedId === feedId);
-      if (cacheItem) {
+      const cache = await Storage.get({ key: `cache_${feedId}` });
+      let cacheItem: FeedCache = JSON.parse(cache.value);
+
+      // If cache is empty, create new cache item
+      if (!cacheItem) {
+        cacheItem = {
+          feedId,
+          fetchedAt: moment().unix(),
+          content
+        };
+      } else {
+        // If cache is not empty, update cache item
         cacheItem.content = content;
         cacheItem.fetchedAt = moment().unix();
-      } else {
-        cacheList.push({ feedId, fetchedAt: moment().unix(), content });
       }
-      await Storage.set({ key: 'cache', value: JSON.stringify(cacheList) });
+      // Save cache item
+      await Storage.set({ key: `cache_${feedId}`, value: JSON.stringify(cacheItem) });
       resolve(cacheItem);
     });
   }
 
-  deleteCacheByFeedId(feedId: string): Promise<FeedCache> {
+  deleteCacheByFeedId(feedId: string): Promise<boolean> {
     return new Promise(async (resolve) => {
-      const cache = await Storage.get({ key: 'cache' });
-      const cacheList: FeedCache[] = JSON.parse(cache.value);
-      const cacheItem: FeedCache = cacheList.find(item => item.feedId === feedId);
-      if (cacheItem) {
-        cacheList.splice(cacheList.indexOf(cacheItem), 1);
-        await Storage.set({ key: 'cache', value: JSON.stringify(cacheList) });
-      }
-      resolve(cacheItem);
+      await Storage.remove({ key: `cache_${feedId}` });
+      resolve(true);
     });
   }
 

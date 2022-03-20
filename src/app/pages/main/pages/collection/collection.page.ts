@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import Collection from 'src/app/models/Collection';
 import { StorageService } from 'src/app/services/storage/storage.service';
 import { Subscription } from 'rxjs';
+import Settings from 'src/app/models/Settings';
 
 @Component({
   selector: 'app-collection',
@@ -19,13 +20,19 @@ export class CollectionPage {
 
   public paramsSubscription: Subscription;
 
+  public settings: Settings;
+
   constructor(
     private storageService: StorageService,
     private route: ActivatedRoute,
     private router: Router
   ) { }
 
-  ionViewWillEnter() {
+  async ionViewWillEnter() {
+    // Load settings
+    this.settings = await this.storageService.getSettings();
+
+    // Load feeds based on query params
     this.paramsSubscription = this.route.queryParams
       .subscribe(params => {
         if (params.collectionId) {

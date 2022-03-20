@@ -12,8 +12,6 @@ export class EntryComponent {
 
   constructor() { }
 
-  ngOnInit() {
-    console.log(this.bookmark);
-  }
+  ngOnInit() {}
 
 }
