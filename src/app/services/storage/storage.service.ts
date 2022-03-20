@@ -5,6 +5,7 @@ import * as moment from 'moment';
 import Collection from 'src/app/models/Collection';
 import Settings from 'src/app/models/Settings';
 import Bookmark from 'src/app/models/Bookmark';
+import { v4 as uuidv4 } from 'uuid';
 
 @Injectable({
   providedIn: 'root'
@@ -24,7 +25,16 @@ export class StorageService {
       }) });
 
       const collections = await Storage.get({ key: 'collections' });
-      if (!collections.value) await Storage.set({ key: 'collections', value: JSON.stringify([]) });
+
+      if (!collections.value) {
+        const defaultCollection: Collection = {
+          id: uuidv4(),
+          name: 'Home',
+          feedList: [],
+          index: 0
+        };
+         await Storage.set({ key: 'collections', value: JSON.stringify([defaultCollection]) });
+      }
 
       const readEntries = await Storage.get({ key: 'readEntries' });
       if (!readEntries.value) await Storage.set({ key: 'readEntries', value: JSON.stringify([]) });
