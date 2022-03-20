@@ -95,7 +95,7 @@ It offered an incredible user experience for the time and a convenient way to vi
 
 Then LinkedIn [bought it](https://www.theverge.com/2013/4/11/4214206/linkedin-buys-news-reader-pulse-for-a-reported-90-million) and shortly after [ruined it](https://www.theverge.com/2015/6/17/8793547/linkedin-pulse-news-reader-app-update).
 
-Ever since that terrible day I've wandered the barren landscape of the app stores waiting for a worthy contender. I've tried it all: the feedly official app, different feedly clients like Inoreader, Flipboard, Google News and Apple News. I even tried some Microsoft news apps ¯\_(ツ)_/¯.
+Ever since that terrible day I've wandered the barren landscape of the app stores waiting for a worthy contender. I've tried it all: the feedly official app, different feedly clients like Inoreader, Flipboard, Google News and Apple News. I even tried some Microsoft news apps :weary:.
 
 And yet, to this day, I haven't been able to find a replacement that offers a similar user experience... so I decided to take the matter into my own hands and code it myself.
 
