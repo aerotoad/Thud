@@ -122,19 +122,6 @@ export class StorageService {
   }
 
   setCacheByFeedId(feedId: string, content: any): Promise<FeedCache> {
-    //return new Promise(async (resolve) => {
-    //  const cache = await Storage.get({ key: 'cache' });
-    //  const cacheList: FeedCache[] = JSON.parse(cache.value);
-    //  const cacheItem: FeedCache = cacheList.find(item => item.feedId === feedId);
-    //  if (cacheItem) {
-    //    cacheItem.content = content;
-    //    cacheItem.fetchedAt = moment().unix();
-    //  } else {
-    //    cacheList.push({ feedId, fetchedAt: moment().unix(), content });
-    //  }
-    //  await Storage.set({ key: 'cache', value: JSON.stringify(cacheList) });
-    //  resolve(cacheItem);
-    //});
 
     return new Promise(async (resolve) => {
       const cache = await Storage.get({ key: `cache_${feedId}` });

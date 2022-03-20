@@ -43,7 +43,6 @@ export class StreamComponent implements OnInit {
   }
 
   loadStream(feedId: string) {
-    console.log(this.cacheTimeout);
     // Check if there is a cache for this feed
     this.storageService.getCacheByFeedId(feedId)
       .then(async (cache: FeedCache) => {
@@ -52,8 +51,6 @@ export class StreamComponent implements OnInit {
           if (moment().diff(moment.unix(cache.fetchedAt), 'seconds') < this.cacheTimeout) {
             this.stream = cache.content;
           } else {
-            console.log('Cache is older than cacheTimeout, fetching stream: ' + feedId);
-            console.log('Cache diff: ' + moment().diff(moment.unix(cache.fetchedAt), 'hours'));
             // Cache is older than cacheTimeout, fetch new content
             await this.fetchStream(feedId);
           }
