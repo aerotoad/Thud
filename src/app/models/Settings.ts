@@ -3,6 +3,7 @@ export default interface Settings {
   theme: 'light' | 'dark' | 'auto' | undefined;
   articleSettings: ArticleSettings;
   cacheTimeout: number;
+  introVersion?: number;
 }
 
 export interface CollectionLastReload {

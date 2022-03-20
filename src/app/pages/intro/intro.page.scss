@@ -1,0 +1,22 @@
+ion-content {
+  --background: var(--fixed-light) !important;
+}
+
+.swiper {
+  height: 100%;
+  display:inline-flex;
+  ::ng-deep.swiper-wrapper {
+    height: 100%;
+    display:inline-flex;
+    .swiper-slide {
+      height: 100% !important;
+    }
+  }
+}
+
+.paginator-active {
+  background-color: #3b82f6 !important;
+  width: 0.7rem !important;
+  height: 0.7rem !important;
+  margin-top: -2px;
+}

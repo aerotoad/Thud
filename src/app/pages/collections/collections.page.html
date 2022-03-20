@@ -1,0 +1,57 @@
+<ion-header>
+  <ion-toolbar class="main-toolbar">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/"></ion-back-button>
+    </ion-buttons>
+    <ion-title>
+      <span class="font-bold text-white drop-shadow-sm">Manage collections</span>
+    </ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="createCollection()">
+        <ion-label>Add</ion-label>
+        <ion-icon slot="end" name="add-circle-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <ion-list-header mode="ios" class="mt-1">
+    <ion-label>
+      Collections
+    </ion-label>
+    <ion-button (click)="startReorder()" *ngIf="!reorder && collections && collections.length > 1">
+      Reorder
+    </ion-button>
+    <ion-button (click)="endReorder()" *ngIf="reorder && collections && collections.length > 1">
+      Save order
+    </ion-button>
+  </ion-list-header>
+
+  <div class="pt-1 mb-20" *ngIf="collections && collections.length > 0">
+    <ion-reorder-group [disabled]="!reorder" (ionItemReorder)="drop($event)">
+      <ion-item *ngFor="let collection of (collections | orderByIndex)" lines="full">
+        <ion-icon name="file-tray-full" slot="start" *ngIf="!reorder"></ion-icon>
+        <ion-reorder slot="start"></ion-reorder>
+        <ion-label>
+          <h2>{{ collection.name }}</h2>
+          <p>
+            {{ collection.description }}
+            <span class="italic font-light opacity-70" *ngIf="!collection.description">No description</span>
+          </p>
+        </ion-label>
+        <ion-button slot="end" color="dark" fill="clear" (click)="openCollectionFeeds(collection)">
+          <ion-icon class="py-1" slot="icon-only" name="cog-outline"></ion-icon>
+        </ion-button>
+        <ion-button slot="end" color="dark" fill="clear" (click)="editCollection(collection)">
+          <ion-icon class="py-1" slot="icon-only" name="create-outline"></ion-icon>
+        </ion-button>
+        <ion-button slot="end" color="danger" fill="clear" (click)="confirmDeleteCollection(collection)">
+          <ion-icon class="py-1" slot="icon-only" name="trash"></ion-icon>
+        </ion-button>
+      </ion-item>
+    </ion-reorder-group>
+  </div>
+
+</ion-content>

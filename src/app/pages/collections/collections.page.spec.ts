@@ -1,19 +1,19 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
 
-import { ViewWebsiteModalComponent } from './view-website-modal.component';
+import { CollectionsPage } from './collections.page';
 
-describe('ViewWebsiteModalComponent', () => {
-  let component: ViewWebsiteModalComponent;
-  let fixture: ComponentFixture<ViewWebsiteModalComponent>;
+describe('CollectionsPage', () => {
+  let component: CollectionsPage;
+  let fixture: ComponentFixture<CollectionsPage>;
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ ViewWebsiteModalComponent ],
+      declarations: [ CollectionsPage ],
       imports: [IonicModule.forRoot()]
     }).compileComponents();
 
-    fixture = TestBed.createComponent(ViewWebsiteModalComponent);
+    fixture = TestBed.createComponent(CollectionsPage);
     component = fixture.componentInstance;
     fixture.detectChanges();
   }));

@@ -5,19 +5,40 @@ ion-content {
   &.default {
     --background: #f9f9f9 !important;
     h1, h2, h3, h4, h5, h6, p, a, span, button, input, textarea, select {
-      color: var(--ion-text-color);
+      color: #1e293b
+    }
+    .metadata {
+      background-color: rgba(252, 252, 252, 0.2);
+    }
+    .open-external-button {
+      --border-color: #1e293b;
+      --color: #1e293b;
     }
   }
   &.lightbrown {
     --background: #d8cdbd !important;
     h1, h2, h3, h4, h5, h6, p, a, span, button, input, textarea, select {
-      color: var(--ion-text-color);
+      color: #1e293b
+    }
+    .metadata {
+      background-color: rgba(252, 252, 252, 0.2);
+    }
+    .open-external-button {
+      --border-color: #1e293b;
+      --color: #1e293b;
     }
   }
   &.lightgrey {
     --background: #bebebe !important;
     h1, h2, h3, h4, h5, h6, p, a, span, button, input, textarea, select {
-      color: var(--ion-text-color);
+      color: #1e293b
+    }
+    .metadata {
+      background-color: rgba(252, 252, 252, 0.2);
+    }
+    .open-external-button {
+      --border-color: #1e293b;
+      --color: #1e293b;
     }
   }
   &.mediumgrey {

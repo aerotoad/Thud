@@ -1,0 +1,85 @@
+<ion-content>
+
+  <div class="w-full h-full relative">
+    <swiper [config]="swiperConfig" (slideChange)="onSlideChange($event)" (swiper)="startSwiper($event)" class="h-full w-full" #introSwiper>
+      <ng-template swiperSlide>
+        <div class="w-full h-full bg-slate-300 relative">
+          <div class="absolute bottom-3/4 w-full">
+            <div class="w-full text-center">
+              <h1 class="text-3xl font-semibold mb-2 drop-shadow-md px-4">Welcome to Thud.</h1>
+              <p class="font-normal px-4">Keep all your feeds in a single place.</p>
+              <p class="font-normal px-4">Accessible and easy to use.</p>
+            </div>
+          </div>
+
+          <div class="absolute bottom-14 w-full h-3/5 flex justify-center">
+            <div class="overflow-hidden rounded-t-3xl w-5/6 drop-shadow-lg">
+              <img src="assets/images/shot-screen.jpg">
+            </div>
+          </div>
+        </div>
+      </ng-template>
+    
+      <ng-template swiperSlide>
+        <div class="w-full h-full bg-zinc-300 relative">
+          <div class="absolute bottom-3/4 w-full">
+            <div class="w-full text-center">
+              <h1 class="text-3xl font-semibold mb-2 drop-shadow-md px-4">Seamless reading experience.</h1>
+              <p class="font-normal px-4">Customize the reading screen to fit your needs.</p>
+              <p class="font-normal px-4">View the original site whenever you want.</p>
+            </div>
+          </div>
+          
+          <div class="absolute bottom-14 w-full h-3/5 flex justify-center">
+            <div class="overflow-hidden rounded-t-3xl w-5/6 drop-shadow-lg">
+              <img src="assets/images/shot-read.jpg">
+            </div>
+          </div>
+        </div>
+      </ng-template>
+     
+      <ng-template swiperSlide>
+        <div class="w-full h-full bg-stone-300 relative">
+          <div class="absolute bottom-3/4 w-full">
+            <div class="w-full text-center">
+              <h1 class="text-3xl font-semibold mb-2 drop-shadow-md px-4">Add your favourite content.</h1>
+              <p class="font-normal px-4">Find your preferred news outlets.</p>
+              <p class="font-normal px-4">Discover new sources.</p>
+            </div>
+          </div>
+          
+          <div class="absolute bottom-14 w-full h-3/5 flex justify-center">
+            <div class="overflow-hidden rounded-t-3xl w-5/6 drop-shadow-lg">
+              <img src="assets/images/shot-discover.jpg">
+            </div>
+          </div>
+        </div>
+      </ng-template>
+    </swiper>
+
+
+    <div class="absolute bottom-0 w-full h-10 flex items-start">
+      <div class="h-fit w-2/5 flex items-start -mt-3">
+        <ion-button color="dark" fill="clear" (click)="finish()" *ngIf="currentSlide !== 2">
+          Skip
+        </ion-button>
+      </div>
+      <div class="h-full w-1/5 flex items-start justify-center">
+        <div class="w-fit flex flex-row mt-1">
+          <div *ngFor="let item of [1,2,3]; let i = index" [ngClass]="{'paginator-active': currentSlide === i}"
+            class="w-2 h-2 rounded-full bg-slate-500 mx-1"></div>
+        </div>
+      </div>
+      <div class="h-fit w-2/5 flex items-start justify-end -mt-3">
+        <ion-button color="primary" fill="clear" (click)="nextSlide()" *ngIf="currentSlide !== 2">
+          Next
+        </ion-button>
+        <ion-button color="primary" fill="clear" (click)="finish()" *ngIf="currentSlide === 2">
+          Get started
+        </ion-button>
+      </div>
+    </div>
+
+  </div>
+
+</ion-content>

@@ -4,6 +4,8 @@ import FeedCache from '../../models/FeedCache';
 import * as moment from 'moment';
 import Collection from 'src/app/models/Collection';
 import Settings from 'src/app/models/Settings';
+import Bookmark from 'src/app/models/Bookmark';
+import { v4 as uuidv4 } from 'uuid';
 
 @Injectable({
   providedIn: 'root'
@@ -23,10 +25,22 @@ export class StorageService {
       }) });
 
       const collections = await Storage.get({ key: 'collections' });
-      if (!collections.value) await Storage.set({ key: 'collections', value: JSON.stringify([]) });
-      
-      const cache = await Storage.get({ key: 'cache' });
-      if (!cache.value) await Storage.set({ key: 'cache', value: JSON.stringify([]) });
+
+      if (!collections.value) {
+        const defaultCollection: Collection = {
+          id: uuidv4(),
+          name: 'Home',
+          feedList: [],
+          index: 0
+        };
+         await Storage.set({ key: 'collections', value: JSON.stringify([defaultCollection]) });
+      }
+
+      const readEntries = await Storage.get({ key: 'readEntries' });
+      if (!readEntries.value) await Storage.set({ key: 'readEntries', value: JSON.stringify([]) });
+
+      const bookmarks = await Storage.get({ key: 'bookmarks' });
+      if (!bookmarks.value) await Storage.set({ key: 'bookmarks', value: JSON.stringify([]) });
 
       resolve(true);
     });
@@ -56,7 +70,7 @@ export class StorageService {
   getCollectionByFeedId(feedId: string): Promise<Collection> {
     return new Promise(async (resolve) => {
       const collections = await this.getCollections();
-      const collection: Collection = collections.find(item => item.feedIds.includes(feedId));
+      const collection: Collection = collections.find(collection => collection.feedList.some(feedIdItem => feedIdItem.feedId === feedId));
       resolve(collection);
     });
   }
@@ -102,8 +116,8 @@ export class StorageService {
       const collections = await this.getCollections();
       const feedIds: string[] = [];
       collections.forEach(collection => {
-        collection.feedIds.forEach(feedId => {
-          if (!feedIds.includes(feedId)) feedIds.push(feedId);
+        collection.feedList.forEach((collectionFeed) => {
+          if (!feedIds.includes(collectionFeed.feedId)) feedIds.push(collectionFeed.feedId)
         });
       });
       resolve(feedIds);
@@ -112,39 +126,39 @@ export class StorageService {
 
   getCacheByFeedId(feedId: string): Promise<FeedCache> {
     return new Promise(async (resolve) => {
-      const cache = await Storage.get({ key: 'cache' });
-      const cacheList: FeedCache[] = JSON.parse(cache.value);
-      const cacheItem: FeedCache = cacheList.find(item => item.feedId === feedId);
-      resolve(cacheItem);
+      const feedCache = await Storage.get({ key: `cache_${feedId}` })
+      resolve(JSON.parse(feedCache.value));
     });
   }
 
   setCacheByFeedId(feedId: string, content: any): Promise<FeedCache> {
+
     return new Promise(async (resolve) => {
-      const cache = await Storage.get({ key: 'cache' });
-      const cacheList: FeedCache[] = JSON.parse(cache.value);
-      const cacheItem: FeedCache = cacheList.find(item => item.feedId === feedId);
-      if (cacheItem) {
+      const cache = await Storage.get({ key: `cache_${feedId}` });
+      let cacheItem: FeedCache = JSON.parse(cache.value);
+
+      // If cache is empty, create new cache item
+      if (!cacheItem) {
+        cacheItem = {
+          feedId,
+          fetchedAt: moment().unix(),
+          content
+        };
+      } else {
+        // If cache is not empty, update cache item
         cacheItem.content = content;
         cacheItem.fetchedAt = moment().unix();
-      } else {
-        cacheList.push({ feedId, fetchedAt: moment().unix(), content });
       }
-      await Storage.set({ key: 'cache', value: JSON.stringify(cacheList) });
+      // Save cache item
+      await Storage.set({ key: `cache_${feedId}`, value: JSON.stringify(cacheItem) });
       resolve(cacheItem);
     });
   }
 
-  deleteCacheByFeedId(feedId: string): Promise<FeedCache> {
+  deleteCacheByFeedId(feedId: string): Promise<boolean> {
     return new Promise(async (resolve) => {
-      const cache = await Storage.get({ key: 'cache' });
-      const cacheList: FeedCache[] = JSON.parse(cache.value);
-      const cacheItem: FeedCache = cacheList.find(item => item.feedId === feedId);
-      if (cacheItem) {
-        cacheList.splice(cacheList.indexOf(cacheItem), 1);
-        await Storage.set({ key: 'cache', value: JSON.stringify(cacheList) });
-      }
-      resolve(cacheItem);
+      await Storage.remove({ key: `cache_${feedId}` });
+      resolve(true);
     });
   }
 
@@ -152,6 +166,86 @@ export class StorageService {
     return new Promise(async (resolve) => {
       await Storage.set({ key: 'cache', value: JSON.stringify([]) });
       resolve(true);
+    });
+  }
+
+  getReadEntries(): Promise<string[]> {
+    return new Promise(async (resolve) => {
+      const readEntries = await Storage.get({ key: 'readEntries' });
+      resolve(JSON.parse(readEntries.value));
+    });
+  }
+
+  setReadEntries(readEntries: string[]): Promise<string[]> {
+    return new Promise(async (resolve) => {
+      await Storage.set({ key: 'readEntries', value: JSON.stringify(readEntries) });
+      resolve(readEntries);
+    });
+  }
+
+  addReadEntry(entryId: string): Promise<string[]> {
+    return new Promise(async (resolve) => {
+      const readEntries = await this.getReadEntries();
+      if (!readEntries.includes(entryId)) {
+        // Add entry
+        readEntries.push(entryId);
+        // If readEntries is more than 100, remove the oldest entry
+        if (readEntries.length > 100) readEntries.shift();
+        await this.setReadEntries(readEntries);
+      }
+      resolve(readEntries);
+    });
+  }
+
+  setBookmarks(bookmarks: Bookmark[]): Promise<Bookmark[]> {
+    return new Promise(async (resolve) => {
+      await Storage.set({ key: 'bookmarks', value: JSON.stringify(bookmarks) });
+      resolve(bookmarks);
+    });
+  }
+
+  getBookmarks(): Promise<Bookmark[]> {
+    return new Promise(async (resolve) => {
+      const bookmarks = await Storage.get({ key: 'bookmarks' });
+      resolve(JSON.parse(bookmarks.value));
+    });
+  }
+
+  addBookmark(bookmark: Bookmark): Promise<Bookmark> {
+    return new Promise(async (resolve) => {
+      const bookmarks = await this.getBookmarks();
+      bookmarks.push(bookmark);
+      // If bookmarks is more than 100, remove the oldest bookmark
+      if (bookmarks.length > 100) bookmarks.shift();
+      await this.setBookmarks(bookmarks);
+      resolve(bookmark);
+    });
+  }
+
+  deleteBookmark(bookmark: Bookmark): Promise<Bookmark> {
+    return new Promise(async (resolve) => {
+      const bookmarks = await this.getBookmarks();
+      const index = bookmarks.findIndex(item => item.entryId === bookmark.entryId);
+      bookmarks.splice(index, 1);
+      await this.setBookmarks(bookmarks);
+      resolve(bookmark);
+    });
+  }
+
+  deleteBookmarkByEntryId(entryId: string): Promise<Bookmark> {
+    return new Promise(async (resolve) => {
+      const bookmarks = await this.getBookmarks();
+      const index = bookmarks.findIndex(item => item.entryId === entryId);
+      bookmarks.splice(index, 1);
+      await this.setBookmarks(bookmarks);
+      resolve(bookmarks[index]);
+    });
+  }
+
+  bookmarkExists(entryId: string): Promise<boolean> {
+    return new Promise(async (resolve) => {
+      const bookmarks = await this.getBookmarks();
+      resolve(bookmarks.findIndex(item => item.entryId === entryId) > -1);
     });
   }
 

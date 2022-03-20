@@ -7,14 +7,20 @@ import { IonicModule } from '@ionic/angular';
 import { BookmarksPageRoutingModule } from './bookmarks-routing.module';
 
 import { BookmarksPage } from './bookmarks.page';
+import { EntryComponent } from './components/entry/entry.component';
+import { PipesModule } from 'src/app/pipes/pipes.module';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    BookmarksPageRoutingModule
+    BookmarksPageRoutingModule,
+    PipesModule
   ],
-  declarations: [BookmarksPage]
+  declarations: [
+    BookmarksPage,
+    EntryComponent
+  ]
 })
 export class BookmarksPageModule {}

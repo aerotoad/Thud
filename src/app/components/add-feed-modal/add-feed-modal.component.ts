@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { ModalController, ToastController } from '@ionic/angular';
-import Collection from 'src/app/models/Collection';
+import Collection, { CollectionFeed } from 'src/app/models/Collection';
 import { StorageService } from 'src/app/services/storage/storage.service';
 import { AddCollectionComponent } from '../add-collection/add-collection.component';
 
@@ -11,7 +11,7 @@ import { AddCollectionComponent } from '../add-collection/add-collection.compone
 })
 export class AddFeedModalComponent {
 
-  @Input() feedId: string;
+  @Input() feedObject: CollectionFeed;
 
   public collections: Collection[];
   
@@ -31,9 +31,11 @@ export class AddFeedModalComponent {
 
   async addFeedToCollection(collection: Collection) {
     // Check if feed is already in collection
-    if (collection.feedIds.includes(this.feedId) === false) {
-      collection.feedIds.push(this.feedId);
+    if (!collection.feedList.some(feed => feed.feedId === this.feedObject.feedId)) {
+      this.feedObject.index = collection.feedList.length;
+      collection.feedList.push(this.feedObject);
     }
+
     // Save collection
     await this.storageService.updateCollection(collection);
     // Show toast

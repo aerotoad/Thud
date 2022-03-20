@@ -1,5 +1,5 @@
 
-<ion-button fill="clear" (click)="handleButtonAction()" [color]="color" [disabled]="exists">
+<ion-button fill="clear" (click)="handleButtonAction()" [class]="color" [disabled]="exists">
   <ion-icon slot="icon-only" name="add" *ngIf="!exists"></ion-icon>
   <ion-icon slot="icon-only" name="checkmark-circle-outline" color="primary" *ngIf="exists"></ion-icon>
 </ion-button>

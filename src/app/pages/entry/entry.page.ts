@@ -4,12 +4,13 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ModalController, ToastController } from '@ionic/angular';
 import { Subscription } from 'rxjs';
 import { ArticleSettingsModalComponent } from 'src/app/components/article-settings-modal/article-settings-modal.component';
-import { ViewWebsiteModalComponent } from 'src/app/components/view-website-modal/view-website-modal.component';
 import Entry from 'src/app/models/Entry';
 import { ArticleSettings } from 'src/app/models/Settings';
 import { FeedlyService } from 'src/app/services/feedly/feedly.service';
 import { StorageService } from 'src/app/services/storage/storage.service';
 import { Share } from '@capacitor/share';
+import { Browser } from '@capacitor/browser';
+import Bookmark from 'src/app/models/Bookmark';
 
 @Component({
   selector: 'app-entry',
@@ -24,6 +25,9 @@ export class EntryPage {
   public articleSettings: ArticleSettings;
   
   public collectionId: string;
+  public fromBookmarks: boolean;
+
+  public bookmarked: boolean = false;
 
   public paramsSubscription: Subscription;
 
@@ -46,6 +50,9 @@ export class EntryPage {
         if (params.collectionId) {
           this.collectionId = params.collectionId;
         }
+        if (params.fromBookmarks) {
+          this.fromBookmarks = true;
+        }
       });
 
     this.loadSettings();
@@ -53,6 +60,14 @@ export class EntryPage {
 
   async loadSettings() {
     this.articleSettings = (await this.storageService.getSettings()).articleSettings;
+  }
+
+  async markAsRead() {
+    await this.storageService.addReadEntry(this.entry.id);
+  }
+
+  async getBookmark() {
+    this.bookmarked = await this.storageService.bookmarkExists(this.entry.id);
   }
 
   ionViewWillLeave() {
@@ -63,8 +78,9 @@ export class EntryPage {
     this.feedlyService.getEntry(entryId)
       .then((entry) => {
         this.entry = entry[0];
-        console.log(this.entry);
         this.processContent();
+        this.getBookmark();
+        this.markAsRead();
       })
       .catch((error) => {
         this.showToast('Content cannot be loaded', 'danger');
@@ -99,17 +115,7 @@ export class EntryPage {
   }
 
   async openOrigin() {
-    const modal = await this.modalCtrl.create({
-      component: ViewWebsiteModalComponent,
-      componentProps: {
-        url: this.entry.alternate[0].href
-      },
-    });
-    await modal.present();
-  }
-
-  openExternal(url: string) {
-    window.open(url, '_system', 'location=yes');
+    Browser.open({ url: this.entry.alternate[0].href });
   }
 
   async openArticleSettings() {
@@ -132,19 +138,40 @@ export class EntryPage {
     });
   }
 
+  async bookmarkEntry() {
+    if (!this.bookmarked) {
+      const bookmark: Bookmark = {
+        entryId: this.entry.id,
+        title: this.entry.title,
+        visualUrl: this.entry.visual.url,
+        published: this.entry.published
+      }
+      await this.storageService.addBookmark(bookmark);
+      this.bookmarked = true;
+      this.showToast('Bookmark added', null, 'top');
+    } else {
+      await this.storageService.deleteBookmarkByEntryId(this.entry.id);
+      this.bookmarked = false;
+      this.showToast('Bookmark removed', null, 'top');
+    }
+  }
+
   goBack() {
     if (this.collectionId) {
       this.router.navigate(['/main/collection'], { replaceUrl: true, queryParams: { collectionId: this.collectionId } });
+    } else if (this.fromBookmarks) {
+      this.router.navigate(['/main/bookmarks'], { replaceUrl: true });
     } else {
       this.router.navigate(['/main/collection'], { replaceUrl: true });
     }
   }
 
-  async showToast(message: string, color: string) {
+  async showToast(message: string, color?: string, position?: 'top' | 'bottom') {
     const toast = await this.toastCtrl.create({
       message: message,
       duration: 2000,
-      color: color
+      color: color,
+      position: position ?? 'bottom'
     });
     toast.present();
   }
