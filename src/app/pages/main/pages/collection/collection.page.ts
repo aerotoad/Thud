@@ -28,9 +28,13 @@ export class CollectionPage {
   ionViewWillEnter() {
     this.paramsSubscription = this.route.queryParams
       .subscribe(params => {
-        if (params.collectionId && params.collectionId !== this.selectedCollection?.id) {
-          this.loadCollections(params.collectionId);
-          this.loadReadEntries();
+        if (params.collectionId) {
+          if (params.collectionId !== this.selectedCollection?.id) {
+            this.loadCollections(params.collectionId);
+            this.loadReadEntries();
+          } else {
+            this.loadReadEntries();
+          }
         } else {
           this.loadCollections();
           this.loadReadEntries();
