@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import Collection from 'src/app/models/Collection';
+import Collection, { CollectionFeed } from 'src/app/models/Collection';
 import { StorageService } from 'src/app/services/storage/storage.service';
 import { Subscription } from 'rxjs';
 import Settings from 'src/app/models/Settings';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-collection',
@@ -75,5 +76,52 @@ export class CollectionPage {
     this.router.navigate(['/main/collection'], { replaceUrl: true, queryParams: { collectionId: collection.id } });
   }
 
+
+  async doRefresh(event) {
+    const lastReloads = this.settings.collectionLastReloads;
+    // Get the last reload time of the selected collection
+    const lastReload = lastReloads.find(lastReload => lastReload.collectionId === this.selectedCollection.id);
+    // If the collection has never been reloaded, set the last reload time to now
+    if (!lastReload) {
+
+      lastReloads.push({ collectionId: this.selectedCollection.id, lastReload: moment().unix() });
+      // Delete cache of the feeds
+      await this.deleteCollectionFeedsCache(this.selectedCollection.feedList);
+      // Reload the collection
+      this.loadCollections(this.selectedCollection.id);
+      this.storageService.setSettings(this.settings);
+      event.target.complete();
+
+    } else {
+
+      // If last reload happened more than 5 minutes ago, reload the collection
+      if (moment().diff(moment.unix(lastReload.lastReload), 'minutes') > 5) {
+        // Delete cache of the feeds
+      await this.deleteCollectionFeedsCache(this.selectedCollection.feedList);
+
+        // Update the last reload time
+        lastReload.lastReload = moment().unix();
+        // Reload the collection
+        this.loadCollections(this.selectedCollection.id);
+        this.storageService.setSettings(this.settings);
+        event.target.complete();
+        
+      } else {
+        event.target.complete();
+      }
+    }
+  }
+
+  deleteCollectionFeedsCache(collectionFeeeds: CollectionFeed[]) {
+    return new Promise((resolve) => {
+      // Resolve only when all feeds have been deleted
+      const deleteFeeds = collectionFeeeds.map(async (feed: CollectionFeed) => {
+        await this.storageService.deleteCacheByFeedId(feed.feedId);
+      });
+      Promise.all(deleteFeeds).then(() => { 
+        resolve(true);
+      });
+    });
+  }
 
 }
