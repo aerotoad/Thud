@@ -26,8 +26,8 @@
 <!-- PROJECT LOGO -->
 <br />
 <div align="center">
-  <a href="https://github.com/github_username/repo_name">
-    <img src="images/logo.png" alt="Logo" width="80" height="80">
+  <a href="https://github.com/aerotoad/Thud">
+    <img src="readme-images/icon.png" alt="Logo" width="150" height="150">
   </a>
 
 <h3 align="center">Thud.</h3>
@@ -85,7 +85,11 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
+<div align="center">
+
 [![Product Name Screen Shot][product-screenshot]](https://example.com)
+  
+</div>
 
 Thud. is a **free** and **open source** news reader for Android and iOS inspired by the original design of Pulse News.
 
@@ -231,4 +235,4 @@ Project Link: [https://github.com/aerotoad/Thud](https://github.com/aerotoad/Thu
 [license-shield]: https://img.shields.io/github/license/aerotoad/Thud
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=flat&logo=linkedin&colorB=555
 [linkedin-url]: https://www.linkedin.com/in/bazaga/
-[product-screenshot]: images/screenshot.png
+[product-screenshot]: readme-images/screenshot.png
