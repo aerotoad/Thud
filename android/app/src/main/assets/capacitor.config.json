@@ -1,6 +1,12 @@
 {
-	"appId": "io.ionic.starter",
+	"appId": "com.aerotoad.thud",
 	"appName": "Thud",
 	"webDir": "www",
-	"bundledWebRuntime": false
+	"bundledWebRuntime": false,
+	"plugins": {
+		"SplashScreen": {
+			"androidScaleType": "CENTER_CROP",
+			"backgroundColor": "#475569"
+		}
+	}
 }
