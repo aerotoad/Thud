@@ -40,4 +40,21 @@
     </ion-item>
   </ion-reorder-group>
 
+  <!-- Empty state -->
+  <div class="w-full" *ngIf="collection.feedList && collection.feedList.length === 0">
+    <div class="mt-20 px-6 w-full flex items-center justify-center">
+      <div class="w-fit h-fit">
+        <img src="assets/images/undraw_list.svg" class="w-1/2 m-auto">
+        <div class="text-center mt-10">
+          <p class="text-2xl font-semibold">No feeds in this collection</p>
+          <p>¿Why don't you add some?</p>
+          <ion-button fill="outline" color="primary" class="mt-6" (click)="openSearch()">
+            Expore feeds
+            <ion-icon slot="end" name="planet-outline"></ion-icon>
+          </ion-button>
+        </div>
+      </div>
+    </div>
+  </div>
+
 </ion-content>

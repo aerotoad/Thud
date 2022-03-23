@@ -16,4 +16,16 @@
     </div>
   </div>
 
+  <!-- Empty state -->
+  <div class="w-full" *ngIf="bookmarks && bookmarks?.length === 0">
+    <div class="mt-20 px-10 w-full flex items-center justify-center">
+      <div class="w-fit h-fit">
+        <img src="assets/images/undraw_checking.svg" class="w-1/2 m-auto">
+        <div class="text-center mt-10">
+          <p class="text-2xl font-semibold">You don't have any bookmarks</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
 </ion-content>
