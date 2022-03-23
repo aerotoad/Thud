@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+import { Router } from '@angular/router';
 import { AlertController, ModalController } from '@ionic/angular';
 import Collection, { CollectionFeed } from 'src/app/models/Collection';
 import { FeedlyService } from 'src/app/services/feedly/feedly.service';
@@ -18,7 +19,8 @@ export class CollectionFeedsModalComponent {
   constructor(
     private modalCtrl: ModalController,
     private storageService: StorageService,
-    private alertCtrl: AlertController
+    private alertCtrl: AlertController,
+    private router: Router
   ) { }
 
   close() {
@@ -82,6 +84,11 @@ export class CollectionFeedsModalComponent {
     const itemMove = this.collection.feedList.splice(event.detail.from, 1)[0];
     this.collection.feedList.splice(event.detail.to, 0, itemMove);
     event.target.complete();
+  }
+
+  openSearch() {
+    this.router.navigate(['/main/search'], { replaceUrl: true });
+    this.modalCtrl.dismiss();
   }
 
 }
