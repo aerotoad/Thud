@@ -12,7 +12,7 @@ import { StorageService } from 'src/app/services/storage/storage.service';
 })
 export class CollectionsPage {
 
-  public collections: Collection[] = [];
+  public collections: Collection[];
 
   public reorder: boolean = false;
 
