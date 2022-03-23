@@ -124,4 +124,8 @@ export class CollectionPage {
     });
   }
 
+  openSearch() {
+    this.router.navigate(['/main/search'], { replaceUrl: true });
+  }
+
 }
