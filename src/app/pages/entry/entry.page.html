@@ -79,7 +79,7 @@
       <ion-button *ngIf="entry?.alternate[0].href" (click)="shareEntry()">
         <ion-icon slot="icon-only" name="share-social-outline"></ion-icon>
       </ion-button>
-      <ion-button *ngIf="entry?.alternate[0].href" (click)="openOrigin(entry.alternate[0].href)">
+      <ion-button *ngIf="entry?.alternate[0].href" (click)="openOrigin()">
         <ion-icon slot="icon-only" name="share-outline"></ion-icon>
       </ion-button>
       <ion-button (click)="bookmarkEntry()">

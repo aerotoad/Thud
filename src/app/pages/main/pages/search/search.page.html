@@ -23,7 +23,7 @@
           class="w-full h-full bg-transparent outline-none placeholder-white" 
           placeholder="Search feeds"
           [value]="query??null"
-          (input)="searchQuery$.next($event.target.value)">
+          (input)="updateSearchQuery($event)">
         </div>
       </div>
     </div>

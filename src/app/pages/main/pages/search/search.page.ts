@@ -30,6 +30,10 @@ export class SearchPage {
     this.getExistingFeedIds();
   }
 
+  updateSearchQuery(event: any) {
+    this.searchQuery$.next(event.target.value);
+  }
+
   async getExistingFeedIds() {
     this.feedIds = await this.storageService.getAllFeedIds();
   }
