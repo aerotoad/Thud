@@ -95,14 +95,17 @@ export class EntryPage {
       content = this.entry.content.content;
     } else if (this.entry.summary) {
       content = this.entry.summary.content;
+    } else {
+      // If no content is available, open the article in the browser
+      this.handleBrowserByDefault();
     }
 
     const parser = new DOMParser();
     const doc = parser.parseFromString(content, 'text/html');
     const images = doc.getElementsByTagName('img');
     const firstImg = images[0];
-    if (firstImg?.src === this.entry.visual?.url) {
-      firstImg.remove();
+    if (firstImg && firstImg?.src === this.entry.visual?.url) {
+      firstImg?.remove();
     }
     for(let i = 0; i<images.length; i++) {
       const img = images[i];
@@ -154,6 +157,14 @@ export class EntryPage {
       this.bookmarked = false;
       this.showToast('Bookmark removed', null, 'top');
     }
+  }
+
+  handleBrowserByDefault() {
+    Browser.open({ url: this.entry.alternate[0].href });
+    Browser.addListener('browserFinished', () => {
+      Browser.removeAllListeners();
+      this.goBack();
+    });
   }
 
   goBack() {

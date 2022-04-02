@@ -15,6 +15,8 @@
     </ion-item>
   </ion-list>
 
+
+  <!-- Skeleton content -->
   <ion-list *ngIf="!searchResults">
     <ion-item *ngFor="let skeleton of [1,2,3,4,5]">
       <ion-thumbnail slot="start">
@@ -33,4 +35,18 @@
       </ion-label>
     </ion-item>
   </ion-list>
+
+
+  <!-- No results -->
+  <div class="w-full"
+    *ngIf="searchResults && searchResults.length === 0">
+    <div class="mt-20 px-10 w-full flex items-center justify-center">
+      <div class="w-fit h-fit">
+        <img src="assets/images/undraw_search.svg" class="w-1/2 m-auto">
+        <div class="text-center mt-10">
+          <p class="text-xl font-semibold">No results</p>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

@@ -10,7 +10,7 @@ import { StorageService } from 'src/app/services/storage/storage.service';
 })
 export class BookmarksPage {
 
-  public bookmarks: Bookmark[] = [];
+  public bookmarks: Bookmark[];
 
   constructor(
     private storageService: StorageService,
