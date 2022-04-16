@@ -25,4 +25,5 @@ export interface SearchResult {
   coverColor?: string // hex color the background cover color
   score?: number; // a score indicating how relevant this feed is to the search query.
   estimatedEngagement?: number; // estimated number of users who will read this feed.
+  topics: Array<any>;
 }
