@@ -90,9 +90,7 @@ export class StreamComponent implements OnInit {
   }
 
   startPreviewTimeout(entry: Entry) {
-    console.log('startPreviewTimeout');
     this.previewTimeout = window.setTimeout(() => {
-      console.log('previewTimeout');
       this.previewEntry.emit(entry);
     }, 500);
   }

@@ -6,6 +6,7 @@ import { Subscription } from 'rxjs';
 import Settings from 'src/app/models/Settings';
 import * as moment from 'moment';
 import Entry from 'src/app/models/Entry';
+import { Haptics, ImpactStyle } from '@capacitor/haptics';
 
 @Component({
   selector: 'app-collection',
@@ -80,12 +81,12 @@ export class CollectionPage {
     this.router.navigate(['/main/collection'], { replaceUrl: true, queryParams: { collectionId: collection.id } });
   }
 
-  openEntryPreview(entry: Entry) {
+  async openEntryPreview(entry: Entry) {
+    await Haptics.impact({ style: ImpactStyle.Light });
     this.entryToPreview = entry;
   }
 
   closeEntryPreview(event: boolean) {
-    console.log('closeEntryPreview', event);
     this.entryToPreview = null;
     this.changeDetector.detectChanges();
   }

@@ -27,7 +27,6 @@ export class EntryPreviewComponent implements AfterViewInit, OnInit {
     document.dispatchEvent(e);
     const self = this;
     document.addEventListener('touchend', () => {
-      console.log('touchend');
       self.stopPreview.emit(true);
     });
   }
