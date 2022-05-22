@@ -1,0 +1,30 @@
+<div class="absolute top-0 bottom-0 left-0 right-0 z-[100] -mt-10 w-screen h-screen overflow-hidden flex items-center justify-center backdrop-blur-sm">
+  <div class="bg-white dark:bg-slate-800 w-11/12 h-auto min-h-[50%] rounded-lg overflow-hidden shadow-md relative zoomIn">
+    <ng-container *ngIf="entry">
+      <!-- Background image -->
+      <div class="absolute w-full h-full z-10 bg-slate-700 dark:!bg-slate-800">
+        <img [src]="entry.visual?.url" *ngIf="entry.visual?.url && entry.visual?.url !== 'none'"
+          class="w-full h-full aspect-square">
+      </div>
+      <!-- Title -->
+      <div
+        class="absolute w-full h-3/4 bottom-0 z-20 bg-gradient-to-t from-slate-900/90 via-slate-800/75 to-transparent p-5 overflow-hidden backdrop-blur-[3px]">
+        <p class="text-lg text-white line-clamp-3">
+          {{ entry.title }}
+        </p>
+        <p class="text-base text-white truncate">
+          {{ entry.published | epochTimeago }}
+        </p>
+        <p class="text-sm text-white line-clamp-4 pt-2">
+          {{ entrySummary }}
+        </p>
+      </div>
+      <!-- Read badge -->
+      <div class="absolute h-4 w-4 top-1 right-1 z-20 rounded-full bg-blue-700" *ngIf="entry.id | inArray: readEntries">
+        <div class="text-xs text-white mt-[2px] ml-[2px]">
+          <ion-icon name="checkmark"></ion-icon>
+        </div>
+      </div>
+    </ng-container>
+  </div>
+</div>

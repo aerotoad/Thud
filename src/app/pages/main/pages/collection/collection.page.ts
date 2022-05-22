@@ -1,10 +1,11 @@
-import { Component } from '@angular/core';
+import { ChangeDetectorRef, Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import Collection, { CollectionFeed } from 'src/app/models/Collection';
 import { StorageService } from 'src/app/services/storage/storage.service';
 import { Subscription } from 'rxjs';
 import Settings from 'src/app/models/Settings';
 import * as moment from 'moment';
+import Entry from 'src/app/models/Entry';
 
 @Component({
   selector: 'app-collection',
@@ -23,10 +24,13 @@ export class CollectionPage {
 
   public settings: Settings;
 
+  public entryToPreview: Entry;
+
   constructor(
     private storageService: StorageService,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private changeDetector: ChangeDetectorRef
   ) { }
 
   async ionViewWillEnter() {
@@ -76,6 +80,15 @@ export class CollectionPage {
     this.router.navigate(['/main/collection'], { replaceUrl: true, queryParams: { collectionId: collection.id } });
   }
 
+  openEntryPreview(entry: Entry) {
+    this.entryToPreview = entry;
+  }
+
+  closeEntryPreview(event: boolean) {
+    console.log('closeEntryPreview', event);
+    this.entryToPreview = null;
+    this.changeDetector.detectChanges();
+  }
 
   async doRefresh(event) {
     const lastReloads = this.settings.collectionLastReloads;

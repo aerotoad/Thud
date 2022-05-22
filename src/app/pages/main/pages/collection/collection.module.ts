@@ -9,6 +9,7 @@ import { CollectionPageRoutingModule } from './collection-routing.module';
 import { CollectionPage } from './collection.page';
 import { StreamComponent } from './components/stream/stream.component';
 import { PipesModule } from 'src/app/pipes/pipes.module';
+import { EntryPreviewComponent } from './components/entry-preview/entry-preview.component';
 
 @NgModule({
   imports: [
@@ -20,7 +21,8 @@ import { PipesModule } from 'src/app/pipes/pipes.module';
   ],
   declarations: [
     CollectionPage,
-    StreamComponent
+    StreamComponent,
+    EntryPreviewComponent
   ]
 })
 export class CollectionPageModule {}
