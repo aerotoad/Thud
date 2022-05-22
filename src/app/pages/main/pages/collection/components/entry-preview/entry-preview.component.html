@@ -1,5 +1,5 @@
 <div class="fixed top-0 bottom-0 left-0 right-0 z-[100] w-screen h-screen overflow-hidden flex items-center justify-center backdrop-blur-sm">
-  <div class="bg-white dark:bg-slate-800 w-11/12 h-auto min-h-[50%] rounded-lg overflow-hidden shadow-md relative zoomIn">
+  <div class="bg-slate-50 dark:bg-slate-800 w-11/12 h-auto min-h-[50%] rounded-lg overflow-hidden shadow-md relative zoomIn">
     <ng-container *ngIf="entry">
       <!-- Background image -->
       <div class="absolute w-full h-full z-10 bg-slate-700 dark:!bg-slate-800">
@@ -8,7 +8,7 @@
       </div>
       <!-- Title -->
       <div
-        class="absolute w-full h-3/4 bottom-0 z-20 bg-gradient-to-t from-slate-900/90 via-slate-800/75 to-transparent p-5 overflow-hidden backdrop-blur-[3px]">
+        class="absolute w-full h-[65%] bottom-11 z-20 bg-gradient-to-t from-slate-900/90 via-slate-800/75 to-transparent p-5 overflow-hidden backdrop-blur-[3px]">
         <p class="text-lg text-white line-clamp-3">
           {{ entry.title }}
         </p>
@@ -23,6 +23,26 @@
       <div class="absolute h-4 w-4 top-1 right-1 z-20 rounded-full bg-blue-700" *ngIf="entry.id | inArray: readEntries">
         <div class="text-xs text-white mt-[2px] ml-[2px]">
           <ion-icon name="checkmark"></ion-icon>
+        </div>
+      </div>
+
+      <!-- Options -->
+      <div class="absolute bottom-0 w-full h-11 flex flex-row bg-slate-50 dark:bg-slate-800 z-50">
+        <div class="grow flex justify-center items-center">
+          <ion-button fill="clear" color="dark" *ngIf="entry?.alternate[0].href" (click)="shareEntry()" id="share-button">
+            <ion-icon slot="icon-only" name="share-social-outline"></ion-icon>
+          </ion-button>
+        </div>
+        <div class="grow flex justify-center items-center">
+          <ion-button fill="clear" color="dark" *ngIf="entry?.alternate[0].href" (click)="openOrigin()" id="origin-button">
+            <ion-icon slot="icon-only" name="share-outline"></ion-icon>
+          </ion-button>
+        </div>
+        <div class="grow flex justify-center items-center">
+          <ion-button fill="clear" color="dark" (click)="bookmarkEntry()" id="bookmark-button">
+            <ion-icon slot="icon-only" name="bookmark-outline" *ngIf="!bookmarked"></ion-icon>
+            <ion-icon slot="icon-only" name="bookmark" *ngIf="bookmarked"></ion-icon>
+          </ion-button>
         </div>
       </div>
     </ng-container>
