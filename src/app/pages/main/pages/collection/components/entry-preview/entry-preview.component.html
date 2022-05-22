@@ -28,6 +28,11 @@
 
       <!-- Options -->
       <div class="absolute bottom-0 w-full h-11 flex flex-row bg-slate-50 dark:bg-slate-800 z-50">
+        <div class="absolute w-full h-full">
+          <div class="relative w-full h-full">
+            <div class="absolute bg-black text-white -mt-10 hidden px-2 py-1 rounded-md" id="tooltip"></div>
+          </div>
+        </div>
         <div class="grow flex justify-center items-center">
           <ion-button fill="clear" color="dark" *ngIf="entry?.alternate[0].href" (click)="shareEntry()" id="share-button">
             <ion-icon slot="icon-only" name="share-social-outline"></ion-icon>

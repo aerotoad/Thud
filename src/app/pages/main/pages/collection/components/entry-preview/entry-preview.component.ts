@@ -42,6 +42,7 @@ export class EntryPreviewComponent implements AfterViewInit, OnInit {
     const shareButton = document.getElementById('share-button');
     const bookmarkButton = document.getElementById('bookmark-button');
     const originButton = document.getElementById('origin-button');
+    const tooltip = document.getElementById('tooltip');
 
     let lastMove = { xPos: null, yPos: null };
 
@@ -65,21 +66,41 @@ export class EntryPreviewComponent implements AfterViewInit, OnInit {
     document.addEventListener('touchmove', async (event: TouchEvent) => {
       const xPos = event.touches[0].pageX;
       const yPos = event.touches[0].pageY;
-      const over = document.elementFromPoint(xPos, yPos);
+      const over = document.elementFromPoint(xPos, yPos); 
       if (over === shareButton) {
         if (lastShown !== shareButton.id) {
           await Haptics.impact({ style: ImpactStyle.Light });
+          // Get position of share button
+          const rect = shareButton.getBoundingClientRect();
+          // Position the tooltip to the center of the share button
+          tooltip.style.left = `${(rect.left + rect.width / 2)/2}px`;
+          tooltip.style.display = 'block';
+          tooltip.innerText = 'Share';
         }
-      }
-      if (over === bookmarkButton) {
+      } else if (over === bookmarkButton) {
         if (lastShown !== bookmarkButton.id) { 
           await Haptics.impact({ style: ImpactStyle.Light });
+          // Get position of bookmark button
+          const rect = bookmarkButton.getBoundingClientRect();
+          // Position the tooltip to the center of the bookmark button
+          tooltip.style.left = `${(rect.left + rect.width / 2) * 0.8}px`;
+          tooltip.style.display = 'block';
+          tooltip.innerText = 'Bookmark';
         }
-      }
-      if (over === originButton) {
+      } else if (over === originButton) {
         if (lastShown !== originButton.id) {
           await Haptics.impact({ style: ImpactStyle.Light });
+          // Get position of origin button
+          const rect = originButton.getBoundingClientRect();
+          // Get position of tooltip
+          const tooltipRect = tooltip.getBoundingClientRect();
+          // Position the tooltip to the center of the origin button
+          tooltip.style.left = `${(rect.left + rect.width / 2) * 0.60 }px`;
+          tooltip.style.display = 'block';
+          tooltip.innerText = 'Open in browser';
         }
+      } else {
+        tooltip.style.display = 'none';
       }
       lastShown = over?.id ?? null;
       lastMove = { xPos, yPos };
