@@ -5,8 +5,6 @@ import { StorageService } from 'src/app/services/storage/storage.service';
 import Stream from 'src/app/models/Stream';
 import * as moment from 'moment';
 import { Router } from '@angular/router';
-import BScroll from '@better-scroll/core';
-import PullDown from '@better-scroll/pull-down';
 import Entry from 'src/app/models/Entry';
 
 @Component({
@@ -34,9 +32,7 @@ export class StreamComponent implements OnInit {
     private feedlyService: FeedlyService,
     private storageService: StorageService,
     private router: Router
-  ) {
-    BScroll.use(PullDown);
-  }
+  ) {}
 
   ngOnInit() {}
 
