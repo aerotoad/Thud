@@ -15,6 +15,7 @@ import { Haptics, ImpactStyle } from '@capacitor/haptics';
 export class EntryPreviewComponent implements AfterViewInit, OnInit {
 
   @Input() entry: Entry;
+  @Input() iconUrl: string;
 
   @Output() stopPreview: EventEmitter<boolean> = new EventEmitter();
 
@@ -34,7 +35,7 @@ export class EntryPreviewComponent implements AfterViewInit, OnInit {
     this.bookmarked = await this.storageService.bookmarkExists(this.entry.id);
   }
 
-  ngAfterViewInit() {
+  ngAfterViewInit() { 
     const self = this;
     const e = new Event('touchstart', { bubbles: true });
     document.dispatchEvent(e);

@@ -26,6 +26,7 @@ export class CollectionPage {
   public settings: Settings;
 
   public entryToPreview: Entry;
+  public entryToPreviewIconUrl: string;
 
   constructor(
     private storageService: StorageService,
@@ -81,13 +82,15 @@ export class CollectionPage {
     this.router.navigate(['/main/collection'], { replaceUrl: true, queryParams: { collectionId: collection.id } });
   }
 
-  async openEntryPreview(entry: Entry) {
+  async openEntryPreview(entry: Entry, iconUrl: string) {
     await Haptics.impact({ style: ImpactStyle.Light });
     this.entryToPreview = entry;
+    this.entryToPreviewIconUrl = iconUrl;
   }
 
   closeEntryPreview(event: boolean) {
     this.entryToPreview = null;
+    this.entryToPreviewIconUrl = null;
     this.changeDetector.detectChanges();
   }
 

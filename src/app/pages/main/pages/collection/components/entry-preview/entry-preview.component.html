@@ -1,6 +1,16 @@
 <div class="fixed top-0 bottom-0 left-0 right-0 z-[100] w-screen h-screen overflow-hidden flex items-center justify-center backdrop-blur-sm">
-  <div class="bg-slate-50 dark:bg-slate-800 w-11/12 h-auto min-h-[50%] rounded-lg overflow-hidden shadow-md relative zoomIn">
+  <div class="bg-slate-50 dark:bg-slate-800 w-11/12 h-auto min-h-[50%] rounded-xl overflow-hidden shadow-md relative zoomIn">
     <ng-container *ngIf="entry">
+      <!-- Stream header -->
+      <div class="absolute top-0 z-50 w-2/3 h-7 bg-slate-800 dark:!bg-slate-700 rounded-br-md flex items-center">
+        <div class="w-3 h-3 mr-1 ml-3">
+          <img [src]="iconUrl" class="w-full h-full rounded-full">
+        </div>
+        <p class="text-slate-50 font-semibold px-2 text-sm truncate">
+          {{ entry.origin.title }}
+        </p>
+      </div>
+
       <!-- Background image -->
       <div class="absolute w-full h-full z-10 bg-slate-700 dark:!bg-slate-800">
         <img [src]="entry.visual?.url" *ngIf="entry.visual?.url && entry.visual?.url !== 'none'"
@@ -8,11 +18,12 @@
       </div>
       <!-- Title -->
       <div
-        class="absolute w-full h-[65%] bottom-11 z-20 bg-gradient-to-t from-slate-900/90 via-slate-800/75 to-transparent p-5 overflow-hidden backdrop-blur-[3px]">
+        class="absolute w-full bottom-11 z-20 bg-gradient-to-t from-slate-900/90 via-slate-800/75 to-transparent p-5 overflow-hidden backdrop-blur-[3px]"
+        [ngClass]="{'h-[65%]': entrySummary, 'h-[40%]': !entrySummary}">
         <p class="text-lg text-white line-clamp-3">
           {{ entry.title }}
         </p>
-        <p class="text-base text-white truncate">
+        <p class="text-sm italic text-white truncate">
           {{ entry.published | epochTimeago }}
         </p>
         <p class="text-sm text-white line-clamp-4 pt-2">
