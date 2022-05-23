@@ -30,12 +30,6 @@
           {{ entrySummary }}
         </p>
       </div>
-      <!-- Read badge -->
-      <div class="absolute h-4 w-4 top-1 right-1 z-20 rounded-full bg-blue-700" *ngIf="entry.id | inArray: readEntries">
-        <div class="text-xs text-white mt-[2px] ml-[2px]">
-          <ion-icon name="checkmark"></ion-icon>
-        </div>
-      </div>
 
       <!-- Options -->
       <div class="absolute bottom-0 w-full h-11 flex flex-row bg-slate-50 dark:bg-slate-800 z-50">
