@@ -1,10 +1,11 @@
-import { Component, Input, OnInit, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, SimpleChanges } from '@angular/core';
 import FeedCache from 'src/app/models/FeedCache';
 import { FeedlyService } from 'src/app/services/feedly/feedly.service';
 import { StorageService } from 'src/app/services/storage/storage.service';
 import Stream from 'src/app/models/Stream';
 import * as moment from 'moment';
 import { Router } from '@angular/router';
+import Entry from 'src/app/models/Entry';
 
 @Component({
   selector: 'app-stream',
@@ -18,16 +19,20 @@ export class StreamComponent implements OnInit {
   @Input() readEntries: string[];
   @Input() iconUrl: string;
   @Input() cacheTimeout: number;
+
+  @Output() previewEntry: EventEmitter<Entry> = new EventEmitter();
   
   public stream: Stream;
 
   public error: boolean = false;
 
+  public previewTimeout: number;
+
   constructor(
     private feedlyService: FeedlyService,
     private storageService: StorageService,
     private router: Router
-  ) { }
+  ) {}
 
   ngOnInit() {}
 
@@ -82,6 +87,16 @@ export class StreamComponent implements OnInit {
 
   openEntry(entryId: string) {
     this.router.navigate(['/entry'], { queryParams: { entryId: entryId, collectionId: this.collectionId } });
+  }
+
+  startPreviewTimeout(entry: Entry) {
+    this.previewTimeout = window.setTimeout(() => {
+      this.previewEntry.emit(entry);
+    }, 500);
+  }
+
+  stopPreviewTimeout() {
+    window.clearTimeout(this.previewTimeout);
   }
 
 }
