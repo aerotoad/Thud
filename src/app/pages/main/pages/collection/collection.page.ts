@@ -1,10 +1,12 @@
-import { Component } from '@angular/core';
+import { ChangeDetectorRef, Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import Collection, { CollectionFeed } from 'src/app/models/Collection';
 import { StorageService } from 'src/app/services/storage/storage.service';
 import { Subscription } from 'rxjs';
 import Settings from 'src/app/models/Settings';
 import * as moment from 'moment';
+import Entry from 'src/app/models/Entry';
+import { Haptics, ImpactStyle } from '@capacitor/haptics';
 
 @Component({
   selector: 'app-collection',
@@ -23,10 +25,14 @@ export class CollectionPage {
 
   public settings: Settings;
 
+  public entryToPreview: Entry;
+  public entryToPreviewIconUrl: string;
+
   constructor(
     private storageService: StorageService,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private changeDetector: ChangeDetectorRef
   ) { }
 
   async ionViewWillEnter() {
@@ -76,6 +82,17 @@ export class CollectionPage {
     this.router.navigate(['/main/collection'], { replaceUrl: true, queryParams: { collectionId: collection.id } });
   }
 
+  async openEntryPreview(entry: Entry, iconUrl: string) {
+    await Haptics.impact({ style: ImpactStyle.Light });
+    this.entryToPreview = entry;
+    this.entryToPreviewIconUrl = iconUrl;
+  }
+
+  closeEntryPreview(event: boolean) {
+    this.entryToPreview = null;
+    this.entryToPreviewIconUrl = null;
+    this.changeDetector.detectChanges();
+  }
 
   async doRefresh(event) {
     const lastReloads = this.settings.collectionLastReloads;

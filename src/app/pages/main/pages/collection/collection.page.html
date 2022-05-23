@@ -9,8 +9,8 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
-  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+<ion-content [scrollY]="!entryToPreview">
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)" [disabled]="entryToPreview">
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
 
@@ -25,7 +25,8 @@
   <!-- Collection Streams -->
   <div class="w-full h-fit mt-5 mb-20">
     <app-stream *ngFor="let feed of (selectedCollection?.feedList | orderByIndex)" 
-    [feedId]="feed.feedId" [collectionId]="selectedCollection.id" [iconUrl]="feed.iconUrl" [readEntries]="readEntries" [cacheTimeout]="settings.cacheTimeout"></app-stream>
+    [feedId]="feed.feedId" [collectionId]="selectedCollection.id" [iconUrl]="feed.iconUrl" [readEntries]="readEntries" [cacheTimeout]="settings.cacheTimeout"
+    (previewEntry)="openEntryPreview($event, feed.iconUrl)"></app-stream>
   </div>
 
   <!-- Empty state -->
@@ -44,5 +45,8 @@
       </div>
     </div>
   </div>
+
+  <!-- Entry preview -->
+  <app-entry-preview *ngIf="entryToPreview" [entry]="entryToPreview" [iconUrl]="entryToPreviewIconUrl" (stopPreview)="closeEntryPreview($event)"></app-entry-preview>
 
 </ion-content>
