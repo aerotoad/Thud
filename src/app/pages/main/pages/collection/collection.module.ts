@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
+import { ScrollingModule } from '@angular/cdk/scrolling';
 
 import { CollectionPageRoutingModule } from './collection-routing.module';
 
@@ -16,6 +17,7 @@ import { EntryPreviewComponent } from './components/entry-preview/entry-preview.
     CommonModule,
     FormsModule,
     IonicModule,
+    ScrollingModule,
     CollectionPageRoutingModule,
     PipesModule
   ],

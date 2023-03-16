@@ -11,31 +11,36 @@
   </div>
 
   <!-- Stream entries -->
-  <div class="w-full h-fit pb-2 overflow-x-auto overflow-y-hidden flex flex-row mt-2" *ngIf="stream">
-    <!-- Entry -->
-    <div *ngFor="let entry of stream.items" (click)="openEntry(entry.id)" (touchstart)="startPreviewTimeout(entry)" (touchend)="stopPreviewTimeout()" (touchmove)="stopPreviewTimeout()"
-    class="w-36 h-36 shrink-0 relative rounded-lg overflow-hidden shadow-md mr-1 first-of-type:ml-1 select-none">
-      <!-- Background image -->
-      <div class="absolute w-full h-full z-10 bg-slate-700 dark:!bg-slate-800">
-        <img [src]="entry.visual?.url" *ngIf="entry.visual?.url && entry.visual?.url !== 'none'" class="w-full h-full aspect-square">
-      </div>
-      <!-- Title -->
-      <div class="absolute w-full h-2/3 bottom-0 z-20 bg-gradient-to-t from-slate-900/80 via-slate-800/60 to-transparent p-2 overflow-hidden backdrop-blur-[2px]">
-        <p class="text-sm text-white line-clamp-3">
-          {{ entry.title }}
-        </p>
-        <p class="text-xs text-white truncate">
-          {{ entry.published | epochTimeago }}
-        </p>
-      </div>
-      <!-- Read badge -->
-      <div class="absolute h-4 w-4 top-1 right-1 z-20 rounded-full bg-blue-700"
-      *ngIf="entry.id | inArray: readEntries">
-        <div class="text-xs text-white mt-[2px] ml-[2px]">
-          <ion-icon name="checkmark"></ion-icon>
+  <div class="w-full h-fit pb-2 flex flex-row mt-2" *ngIf="stream">
+    <!-- Virtual scroll viewport -->
+    <cdk-virtual-scroll-viewport itemSize="150" orientation="horizontal" class="w-screen h-36 overflow-y-hidden stream-scroll-viewport">
+      <div 
+      *cdkVirtualFor="let entry of stream.items; templateCacheSize: 0" 
+      (click)="openEntry(entry.id)" (touchstart)="startPreviewTimeout(entry)" (touchend)="stopPreviewTimeout()" (touchmove)="stopPreviewTimeout()"
+      class="w-36 h-36 shrink-0 relative rounded-lg overflow-hidden shadow-md mr-1 first-of-type:ml-1 select-none"
+      >
+        <!-- Background image -->
+        <div class="absolute w-full h-full z-10 bg-slate-700 dark:!bg-slate-800">
+          <img [src]="entry.visual?.url" *ngIf="entry.visual?.url && entry.visual?.url !== 'none'" class="w-full h-full aspect-square">
+        </div>
+        <!-- Title -->
+        <div class="absolute w-full h-2/3 bottom-0 z-20 bg-gradient-to-t from-slate-900/80 via-slate-800/60 to-transparent p-2 overflow-hidden backdrop-blur-[2px]">
+          <p class="text-sm text-white line-clamp-3">
+            {{ entry.title }}
+          </p>
+          <p class="text-xs text-white truncate">
+            {{ entry.published | epochTimeago }}
+          </p>
+        </div>
+        <!-- Read badge -->
+        <div class="absolute h-4 w-4 top-1 right-1 z-20 rounded-full bg-blue-700"
+        *ngIf="entry.id | inArray: readEntries">
+          <div class="text-xs text-white mt-[2px] ml-[2px]">
+            <ion-icon name="checkmark"></ion-icon>
+          </div>
         </div>
       </div>
-    </div> 
+    </cdk-virtual-scroll-viewport>
   </div>
 
   <!-- Loading skeleton -->
