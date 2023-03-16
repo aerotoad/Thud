@@ -11,6 +11,7 @@ const routes: Routes = [
       {
         path: '',
         redirectTo: 'collection',
+        pathMatch: 'full'
       },
       {
         path: 'collection',
