@@ -28,7 +28,8 @@ export class SettingsPage {
       fontSize: 12,
       brightness: 0,
       fontFamily: 'sans',
-      background: 'default'
+      background: 'default',
+      useSystemBrowser: false
     } as ArticleSettings;
   }
 

@@ -74,6 +74,16 @@
           </ion-segment-button>
         </ion-segment>
       </div>
+
+      <ion-item lines="full"></ion-item>
+      <ion-item lines="none" *ngIf="articleSettings">
+        <ion-icon slot="start" name="browsers-outline"></ion-icon>
+        <ion-label class="">
+          <h2>Use system browser</h2>
+          <p>Disable in-app browser for articles</p>
+        </ion-label>
+        <ion-toggle slot="end" (ionChange)="saveSettings()" [(ngModel)]="articleSettings.useSystemBrowser"></ion-toggle>
+      </ion-item>
   
     </ion-list>
   </div>

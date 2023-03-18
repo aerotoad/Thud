@@ -16,4 +16,5 @@ export interface ArticleSettings {
   brightness?: number;
   fontFamily?: 'serif' | 'sans' | 'mono';
   background?: 'default' | 'lightbrown' | 'lightgrey' | 'mediumgrey' | 'darkgrey';
+  useSystemBrowser?: boolean;
 }

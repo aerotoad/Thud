@@ -118,7 +118,12 @@ export class EntryPage {
   }
 
   async openOrigin() {
-    Browser.open({ url: this.entry.alternate[0].href });
+    if (!this.articleSettings.useSystemBrowser) {
+      Browser.open({ url: this.entry.alternate[0].href });
+    } else {
+      // Open in system browser
+      window.open(this.entry.alternate[0].href, '_system');
+    }
   }
 
   async openArticleSettings() {

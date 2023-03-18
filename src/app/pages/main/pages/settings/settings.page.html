@@ -151,7 +151,7 @@
         <ion-icon slot="start" name="text-outline"></ion-icon>
         <ion-label>Font family</ion-label>
       </ion-item>
-      <div class="w-full px-3 py-2" *ngIf="articleSettings" (ionChange)="saveSettings()">
+      <div class="w-full px-3 pt-2" *ngIf="articleSettings" (ionChange)="saveSettings()">
         <ion-segment mode="ios" [(ngModel)]="articleSettings.fontFamily">
           <ion-segment-button value="serif">
             <span class="font-serif font-medium">Serif</span>
@@ -166,6 +166,16 @@
           </ion-segment-button>
         </ion-segment>
       </div>
+
+      <ion-item lines="full"></ion-item>
+      <ion-item lines="none" *ngIf="articleSettings">
+        <ion-icon slot="start" name="browsers-outline"></ion-icon>
+        <ion-label class="">
+          <h2>Use system browser</h2>
+          <p>Disable in-app browser for articles</p>
+        </ion-label>
+        <ion-toggle slot="end" (ionChange)="saveSettings()" [(ngModel)]="articleSettings.useSystemBrowser"></ion-toggle>
+      </ion-item>
 
     </ion-list>
   </section>
