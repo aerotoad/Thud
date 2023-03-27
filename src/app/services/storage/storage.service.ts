@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Storage } from '@capacitor/storage';
+import { Preferences as Storage } from '@capacitor/preferences';
 import FeedCache from '../../models/FeedCache';
 import * as moment from 'moment';
 import Collection from 'src/app/models/Collection';
