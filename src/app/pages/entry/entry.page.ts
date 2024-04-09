@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { DomSanitizer, SafeHtml, SafeResourceUrl, SafeUrl } from '@angular/platform-browser';
+import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ModalController, ToastController, IonicModule } from '@ionic/angular';
 import { Subscription } from 'rxjs';
@@ -15,15 +15,15 @@ import { EpochTimeagoPipe } from '../../pipes/epoch-timeago/epoch-timeago.pipe';
 import { NgClass } from '@angular/common';
 
 @Component({
-    selector: 'app-entry',
-    templateUrl: './entry.page.html',
-    styleUrls: ['./entry.page.scss'],
-    standalone: true,
-    imports: [
-        IonicModule,
-        NgClass,
-        EpochTimeagoPipe,
-    ],
+  selector: 'app-entry',
+  templateUrl: './entry.page.html',
+  styleUrls: ['./entry.page.scss'],
+  standalone: true,
+  imports: [
+    IonicModule,
+    NgClass,
+    EpochTimeagoPipe,
+  ],
 })
 export class EntryPage {
 

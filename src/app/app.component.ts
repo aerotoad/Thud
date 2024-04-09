@@ -13,6 +13,7 @@ import { IonicModule } from '@ionic/angular';
 export class AppComponent implements OnInit {
 
   public storageService = inject(StorageService);
+  public environmentInjector = inject(EnvironmentInjector);
 
   async ngOnInit() {
     await this.storageService.initialize();
