@@ -9,9 +9,8 @@ describe('ArticleSettingsModalComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ ArticleSettingsModalComponent ],
-      imports: [IonicModule.forRoot()]
-    }).compileComponents();
+    imports: [IonicModule.forRoot(), ArticleSettingsModalComponent]
+}).compileComponents();
 
     fixture = TestBed.createComponent(ArticleSettingsModalComponent);
     component = fixture.componentInstance;

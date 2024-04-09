@@ -1,12 +1,23 @@
-import { Component, OnInit } from '@angular/core';
-import { NavigationEnd, Router } from '@angular/router';
+import { Component, EnvironmentInjector, OnInit, inject } from '@angular/core';
+import { NavigationEnd, Router, RouterLink } from '@angular/router';
+import { NgClass } from '@angular/common';
+import { IonicModule } from '@ionic/angular';
 
 @Component({
   selector: 'app-main',
   templateUrl: './main.page.html',
   styleUrls: ['./main.page.scss'],
+  standalone: true,
+  imports: [
+    IonicModule,
+    RouterLink,
+    NgClass,
+  ],
 })
 export class MainPage implements OnInit {
+
+  public environmentInjector = inject(EnvironmentInjector);
+  public router = inject(Router);
 
   public tabs: Array<any> = [
     {
@@ -34,10 +45,6 @@ export class MainPage implements OnInit {
       isActive: false
     },
   ];
-
-  constructor(
-    private router: Router
-  ) { }
 
   ngOnInit() {
     this.router.events.subscribe((event) => {

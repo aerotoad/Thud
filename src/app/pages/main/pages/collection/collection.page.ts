@@ -7,11 +7,22 @@ import Settings from 'src/app/models/Settings';
 import * as moment from 'moment';
 import Entry from 'src/app/models/Entry';
 import { Haptics, ImpactStyle } from '@capacitor/haptics';
+import { OrderByIndexPipe } from '../../../../pipes/order-by-index/order-by-index.pipe';
+import { EntryPreviewComponent } from './components/entry-preview/entry-preview.component';
+import { StreamComponent } from './components/stream/stream.component';
+import { IonicModule } from '@ionic/angular';
 
 @Component({
   selector: 'app-collection',
   templateUrl: './collection.page.html',
   styleUrls: ['./collection.page.scss'],
+  standalone: true,
+  imports: [
+    IonicModule,
+    StreamComponent,
+    EntryPreviewComponent,
+    OrderByIndexPipe,
+  ],
 })
 export class CollectionPage {
 

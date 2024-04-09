@@ -6,11 +6,17 @@ import Stream from 'src/app/models/Stream';
 import * as moment from 'moment';
 import { Router } from '@angular/router';
 import Entry from 'src/app/models/Entry';
+import { EpochTimeagoPipe } from '../../../../../../pipes/epoch-timeago/epoch-timeago.pipe';
+import { InArrayPipe } from '../../../../../../pipes/in-array/in-array.pipe';
+import { IonicModule } from '@ionic/angular';
+import { CdkVirtualScrollViewport, CdkFixedSizeVirtualScroll, CdkVirtualForOf } from '@angular/cdk/scrolling';
 
 @Component({
   selector: 'app-stream',
   templateUrl: './stream.component.html',
-  styleUrls: ['./stream.component.scss']
+  styleUrls: ['./stream.component.scss'],
+  standalone: true,
+  imports: [CdkVirtualScrollViewport, CdkFixedSizeVirtualScroll, CdkVirtualForOf, IonicModule, InArrayPipe, EpochTimeagoPipe]
 })
 export class StreamComponent implements OnInit {
 

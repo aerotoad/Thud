@@ -9,9 +9,8 @@ describe('CollectionFeedsModalComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ CollectionFeedsModalComponent ],
-      imports: [IonicModule.forRoot()]
-    }).compileComponents();
+    imports: [IonicModule.forRoot(), CollectionFeedsModalComponent]
+}).compileComponents();
 
     fixture = TestBed.createComponent(CollectionFeedsModalComponent);
     component = fixture.componentInstance;

@@ -1,12 +1,22 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import Settings, { ArticleSettings } from 'src/app/models/Settings';
 import { StorageService } from 'src/app/services/storage/storage.service';
+import { NgClass } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { IonicModule } from '@ionic/angular';
 
 @Component({
   selector: 'app-settings',
   templateUrl: './settings.page.html',
   styleUrls: ['./settings.page.scss'],
+  standalone: true,
+  imports: [
+    IonicModule,
+    RouterLink,
+    FormsModule,
+    NgClass,
+  ],
 })
 export class SettingsPage {
 

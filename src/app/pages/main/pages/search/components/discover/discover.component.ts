@@ -1,13 +1,18 @@
 import { ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { ToastController } from '@ionic/angular';
+import { ToastController, IonicModule } from '@ionic/angular';
 import SearchQuery, { SearchResult } from 'src/app/models/SearchQuery';
 import { FeedlyService } from 'src/app/services/feedly/feedly.service';
 import { SwiperOptions } from 'swiper';
+import { NgClass, SlicePipe } from '@angular/common';
+import { AddFeedButtonComponent } from '../add-feed-button/add-feed-button.component';
+import { SwiperModule } from 'swiper/angular';
 
 @Component({
   selector: 'app-discover',
   templateUrl: './discover.component.html',
-  styleUrls: ['./discover.component.scss']
+  styleUrls: ['./discover.component.scss'],
+  standalone: true,
+  imports: [SwiperModule, AddFeedButtonComponent, NgClass, IonicModule, SlicePipe]
 })
 export class DiscoverComponent implements OnInit {
 

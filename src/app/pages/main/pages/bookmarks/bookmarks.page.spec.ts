@@ -9,9 +9,8 @@ describe('BookmarksPage', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ BookmarksPage ],
-      imports: [IonicModule.forRoot()]
-    }).compileComponents();
+    imports: [IonicModule.forRoot(), BookmarksPage]
+}).compileComponents();
 
     fixture = TestBed.createComponent(BookmarksPage);
     component = fixture.componentInstance;

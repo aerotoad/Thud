@@ -9,9 +9,8 @@ describe('AddFeedButtonComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ AddFeedButtonComponent ],
-      imports: [IonicModule.forRoot()]
-    }).compileComponents();
+    imports: [IonicModule.forRoot(), AddFeedButtonComponent]
+}).compileComponents();
 
     fixture = TestBed.createComponent(AddFeedButtonComponent);
     component = fixture.componentInstance;

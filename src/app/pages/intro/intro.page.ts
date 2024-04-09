@@ -3,11 +3,20 @@ import { Router } from '@angular/router';
 import Settings from 'src/app/models/Settings';
 import { StorageService } from 'src/app/services/storage/storage.service';
 import Swiper, { SwiperOptions } from 'swiper';
+import { NgClass } from '@angular/common';
+import { SwiperModule } from 'swiper/angular';
+import { IonicModule } from '@ionic/angular';
 
 @Component({
-  selector: 'app-intro',
-  templateUrl: './intro.page.html',
-  styleUrls: ['./intro.page.scss'],
+    selector: 'app-intro',
+    templateUrl: './intro.page.html',
+    styleUrls: ['./intro.page.scss'],
+    standalone: true,
+    imports: [
+        IonicModule,
+        SwiperModule,
+        NgClass,
+    ],
 })
 export class IntroPage {
 

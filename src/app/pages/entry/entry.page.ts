@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { DomSanitizer, SafeHtml, SafeResourceUrl, SafeUrl } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ModalController, ToastController } from '@ionic/angular';
+import { ModalController, ToastController, IonicModule } from '@ionic/angular';
 import { Subscription } from 'rxjs';
 import { ArticleSettingsModalComponent } from 'src/app/components/article-settings-modal/article-settings-modal.component';
 import Entry from 'src/app/models/Entry';
@@ -11,11 +11,19 @@ import { StorageService } from 'src/app/services/storage/storage.service';
 import { Share } from '@capacitor/share';
 import { Browser } from '@capacitor/browser';
 import Bookmark from 'src/app/models/Bookmark';
+import { EpochTimeagoPipe } from '../../pipes/epoch-timeago/epoch-timeago.pipe';
+import { NgClass } from '@angular/common';
 
 @Component({
-  selector: 'app-entry',
-  templateUrl: './entry.page.html',
-  styleUrls: ['./entry.page.scss'],
+    selector: 'app-entry',
+    templateUrl: './entry.page.html',
+    styleUrls: ['./entry.page.scss'],
+    standalone: true,
+    imports: [
+        IonicModule,
+        NgClass,
+        EpochTimeagoPipe,
+    ],
 })
 export class EntryPage {
 

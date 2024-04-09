@@ -1,7 +1,8 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
 @Pipe({
-  name: 'inArray'
+    name: 'inArray',
+    standalone: true
 })
 export class InArrayPipe implements PipeTransform {
 

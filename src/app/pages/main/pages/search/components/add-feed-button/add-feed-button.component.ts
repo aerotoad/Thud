@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { ModalController } from '@ionic/angular';
+import { ModalController, IonicModule } from '@ionic/angular';
 import { AddFeedModalComponent } from 'src/app/components/add-feed-modal/add-feed-modal.component';
 import { SearchResult } from 'src/app/models/SearchQuery';
 
@@ -7,6 +7,8 @@ import { SearchResult } from 'src/app/models/SearchQuery';
   selector: 'app-add-feed-button',
   templateUrl: './add-feed-button.component.html',
   styleUrls: ['./add-feed-button.component.scss'],
+  standalone: true,
+  imports: [IonicModule],
 })
 export class AddFeedButtonComponent implements OnInit {
 

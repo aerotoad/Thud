@@ -9,9 +9,8 @@ describe('StreamComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ StreamComponent ],
-      imports: [IonicModule.forRoot()]
-    }).compileComponents();
+    imports: [IonicModule.forRoot(), StreamComponent]
+}).compileComponents();
 
     fixture = TestBed.createComponent(StreamComponent);
     component = fixture.componentInstance;
