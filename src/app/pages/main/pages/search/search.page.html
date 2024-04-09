@@ -9,37 +9,38 @@
     <div class="w-full px-3">
       <div class="bg-slate-700 w-full h-14 rounded-lg text-white">
         <div class="h-full w-10 absolute left-5 top-0">
-          <div class="h-full w-full flex items-center justify-center text-2xl hover:bg-slate-800 rounded-full" *ngIf="!query">
-            <ion-icon name="search"></ion-icon>
-          </div>
-          <div class="h-full w-full flex items-center justify-center text-2xl hover:bg-slate-800 rounded-full" *ngIf="query"
-          (click)="searchQuery$.next(null);query=null">
-            <ion-icon name="close"></ion-icon>
-          </div>
+          @if (!query) {
+            <div class="h-full w-full flex items-center justify-center text-2xl hover:bg-slate-800 rounded-full">
+              <ion-icon name="search"></ion-icon>
+            </div>
+          } @else {
+            <div class="h-full w-full flex items-center justify-center text-2xl hover:bg-slate-800 rounded-full"
+              (click)="searchQuery$.next(null);query=null">
+              <ion-icon name="close"></ion-icon>
+            </div>
+          }
         </div>
         <div class="h-full w-full pl-14 pr-5">
           <input
-          type="text"
-          class="w-full h-full bg-transparent outline-none placeholder-white" 
-          placeholder="Search feeds"
-          [value]="query??null"
-          (input)="updateSearchQuery($event)">
+            type="text"
+            class="w-full h-full bg-transparent outline-none placeholder-white"
+            placeholder="Search feeds"
+            [value]="query??null"
+            (input)="updateSearchQuery($event)">
+          </div>
         </div>
       </div>
-    </div>
-  </ion-toolbar>
-</ion-header>
+    </ion-toolbar>
+  </ion-header>
 
-<ion-content>
-  
-  <!-- Search results -->
-  <ng-container *ngIf="query">
-    <app-search-results [feedIds]="feedIds" [searchQuery]="query" (updateFeedIds)="getExistingFeedIds()"></app-search-results>
-  </ng-container>
+  <ion-content>
 
-  <!-- Discover content -->
-  <ng-container *ngIf="!query">
-    <app-discover [feedIds]="feedIds" (updateFeedIds)="getExistingFeedIds()"></app-discover>
-  </ng-container>
+    @if (query) {
+      <!-- Search results -->
+      <app-search-results [feedIds]="feedIds" [searchQuery]="query" (updateFeedIds)="getExistingFeedIds()"/>
+    } @else {
+      <!-- Discover content -->
+      <app-discover [feedIds]="feedIds" (updateFeedIds)="getExistingFeedIds()"/>
+    }
 
-</ion-content>
+  </ion-content>

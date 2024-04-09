@@ -1,52 +1,62 @@
 <div class="w-full mb-14">
   <ion-list>
-    <ion-item *ngFor="let searchResult of searchResults" lines="full">
-      <ion-thumbnail slot="start">
-        <img [src]="searchResult.visualUrl ?? searchResult.iconUrl">
-        <ion-skeleton-text *ngIf="!searchResult.visualUrl && !searchResult.iconUrl"></ion-skeleton-text>
-      </ion-thumbnail>
-      <ion-label>
-        <h2>{{searchResult.title}}</h2>
-        <p>{{searchResult.description}}</p>
-      </ion-label>
-      <ion-buttons slot="end">
-        <app-add-feed-button [feed]="searchResult" [feedsIds]="feedIds" (updateFeedIds)="doUpdateFeedIds()"></app-add-feed-button>
-      </ion-buttons>
-    </ion-item>
+    @for (searchResult of searchResults; track searchResult) {
+      <ion-item lines="full">
+        <ion-thumbnail slot="start">
+          <img [src]="searchResult.visualUrl ?? searchResult.iconUrl">
+          @if (!searchResult.visualUrl && !searchResult.iconUrl) {
+            <ion-skeleton-text></ion-skeleton-text>
+          }
+        </ion-thumbnail>
+        <ion-label>
+          <h2>{{searchResult.title}}</h2>
+          <p>{{searchResult.description}}</p>
+        </ion-label>
+        <ion-buttons slot="end">
+          <app-add-feed-button [feed]="searchResult" [feedsIds]="feedIds" (updateFeedIds)="doUpdateFeedIds()"></app-add-feed-button>
+        </ion-buttons>
+      </ion-item>
+    }
   </ion-list>
 
 
   <!-- Skeleton content -->
-  <ion-list *ngIf="!searchResults">
-    <ion-item *ngFor="let skeleton of [1,2,3,4,5]">
-      <ion-thumbnail slot="start">
-        <ion-skeleton-text animated></ion-skeleton-text>
-      </ion-thumbnail>
-      <ion-label>
-        <h3>
-          <ion-skeleton-text animated style="width: 50%"></ion-skeleton-text>
-        </h3>
-        <p>
-          <ion-skeleton-text animated style="width: 80%"></ion-skeleton-text>
-        </p>
-        <p>
-          <ion-skeleton-text animated style="width: 60%"></ion-skeleton-text>
-        </p>
-      </ion-label>
-    </ion-item>
-  </ion-list>
+  @if (!searchResults) {
+    <ion-list>
+      @for (skeleton of [1,2,3,4,5]; track skeleton) {
+        <ion-item>
+          <ion-thumbnail slot="start">
+            <ion-skeleton-text animated></ion-skeleton-text>
+          </ion-thumbnail>
+          <ion-label>
+            <h3>
+              <ion-skeleton-text animated style="width: 50%"></ion-skeleton-text>
+            </h3>
+            <p>
+              <ion-skeleton-text animated style="width: 80%"></ion-skeleton-text>
+            </p>
+            <p>
+              <ion-skeleton-text animated style="width: 60%"></ion-skeleton-text>
+            </p>
+          </ion-label>
+        </ion-item>
+      }
+    </ion-list>
+  }
 
 
   <!-- No results -->
-  <div class="w-full"
-    *ngIf="searchResults && searchResults.length === 0">
-    <div class="mt-20 px-10 w-full flex items-center justify-center">
-      <div class="w-fit h-fit">
-        <img src="assets/images/undraw_search.svg" class="w-1/2 m-auto">
-        <div class="text-center mt-10">
-          <p class="text-xl font-semibold">No results</p>
+  @if (searchResults && searchResults.length === 0) {
+    <div class="w-full"
+      >
+      <div class="mt-20 px-10 w-full flex items-center justify-center">
+        <div class="w-fit h-fit">
+          <img src="assets/images/undraw_search.svg" class="w-1/2 m-auto">
+          <div class="text-center mt-10">
+            <p class="text-xl font-semibold">No results</p>
+          </div>
         </div>
       </div>
     </div>
-  </div>
+  }
 </div>

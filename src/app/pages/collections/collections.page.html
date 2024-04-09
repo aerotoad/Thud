@@ -21,55 +21,69 @@
     <ion-label>
       Collections
     </ion-label>
-    <ion-button (click)="startReorder()" *ngIf="!reorder && collections && collections.length > 1">
-      Reorder
-    </ion-button>
-    <ion-button (click)="endReorder()" *ngIf="reorder && collections && collections.length > 1">
-      Save order
-    </ion-button>
+    @if (!reorder && collections && collections.length > 1) {
+      <ion-button (click)="startReorder()">
+        Reorder
+      </ion-button>
+    }
+    @if (reorder && collections && collections.length > 1) {
+      <ion-button (click)="endReorder()">
+        Save order
+      </ion-button>
+    }
   </ion-list-header>
 
-  <div class="pt-1 mb-20" *ngIf="collections && collections.length > 0">
-    <ion-reorder-group [disabled]="!reorder" (ionItemReorder)="drop($event)">
-      <ion-item *ngFor="let collection of (collections | orderByIndex)" lines="full">
-        <ion-icon name="file-tray-full" slot="start" *ngIf="!reorder"></ion-icon>
-        <ion-reorder slot="start"></ion-reorder>
-        <ion-label>
-          <h2>{{ collection.name }}</h2>
-          <p>
-            {{ collection.description }}
-            <span class="italic font-light opacity-70" *ngIf="!collection.description">No description</span>
-          </p>
-        </ion-label>
-        <ion-button slot="end" color="dark" fill="clear" (click)="openCollectionFeeds(collection)">
-          <ion-icon class="py-1" slot="icon-only" name="cog-outline"></ion-icon>
-        </ion-button>
-        <ion-button slot="end" color="dark" fill="clear" (click)="editCollection(collection)">
-          <ion-icon class="py-1" slot="icon-only" name="create-outline"></ion-icon>
-        </ion-button>
-        <ion-button slot="end" color="danger" fill="clear" (click)="confirmDeleteCollection(collection)">
-          <ion-icon class="py-1" slot="icon-only" name="trash"></ion-icon>
-        </ion-button>
-      </ion-item>
-    </ion-reorder-group>
-  </div>
+  @if (collections && collections.length > 0) {
+    <div class="pt-1 mb-20">
+      <ion-reorder-group [disabled]="!reorder" (ionItemReorder)="drop($event)">
+        @for (collection of (collections | orderByIndex); track collection) {
+          <ion-item lines="full">
+            @if (!reorder) {
+              <ion-icon name="file-tray-full" slot="start"></ion-icon>
+            }
+            <ion-reorder slot="start"></ion-reorder>
+            <ion-label>
+              <h2>{{ collection.name }}</h2>
+              <p>
+                {{ collection.description }}
+                @if (!collection.description) {
+                  <span class="italic font-light opacity-70">No description</span>
+                }
+              </p>
+            </ion-label>
+            <ion-button slot="end" color="dark" fill="clear" (click)="openCollectionFeeds(collection)">
+              <ion-icon class="py-1" slot="icon-only" name="cog-outline"></ion-icon>
+            </ion-button>
+            <ion-button slot="end" color="dark" fill="clear" (click)="editCollection(collection)">
+              <ion-icon class="py-1" slot="icon-only" name="create-outline"></ion-icon>
+            </ion-button>
+            <ion-button slot="end" color="danger" fill="clear" (click)="confirmDeleteCollection(collection)">
+              <ion-icon class="py-1" slot="icon-only" name="trash"></ion-icon>
+            </ion-button>
+          </ion-item>
+        }
+      </ion-reorder-group>
+    </div>
+  }
 
   <!-- Empty state -->
-  <div class="w-full"
-    *ngIf="collections && collections?.length === 0">
-    <div class="mt-20 px-6 w-full flex items-center justify-center">
-      <div class="w-fit h-fit">
-        <img src="assets/images/undraw_list.svg" class="w-1/2 m-auto">
-        <div class="text-center mt-10">
-          <p class="text-2xl font-semibold">You don’t have any collections</p>
-          <p>¿Why don’t you add one?</p>
-          <ion-button fill="outline" color="primary" class="mt-6" (click)="createCollection()">
-            Add collection
-            <ion-icon slot="end" name="add-circle-outline"></ion-icon>
-          </ion-button>
+  @if (collections && collections?.length === 0) {
+    <div class="w-full"
+      >
+      <div class="mt-20 px-6 w-full flex items-center justify-center">
+        <div class="w-fit h-fit">
+          <img src="assets/images/undraw_list.svg" class="w-1/2 m-auto">
+          <div class="text-center mt-10">
+            <p class="text-2xl font-semibold">You don’t have any collections</p>
+            <p>¿Why don’t you add one?</p>
+            <ion-button fill="outline" color="primary" class="mt-6" (click)="createCollection()">
+              Add collection
+              <ion-icon slot="end" name="add-circle-outline"></ion-icon>
+            </ion-button>
+          </div>
         </div>
       </div>
     </div>
-  </div>
+  }
 
 </ion-content>
