@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
-import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot, UrlTree } from '@angular/router';
+import { ActivatedRouteSnapshot, Router, RouterStateSnapshot, UrlTree } from '@angular/router';
 import { Observable } from 'rxjs';
 import { StorageService } from 'src/app/services/storage/storage.service';
 
 @Injectable({
   providedIn: 'root'
 })
-export class IntroGuard implements CanActivate {
+export class IntroGuard  {
 
   constructor(
     private storageService: StorageService,
