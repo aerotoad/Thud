@@ -1,4 +1,4 @@
-import { Component, EnvironmentInjector, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { NavigationEnd, Router, RouterLink } from '@angular/router';
 import { NgClass } from '@angular/common';
 import { IonicModule } from '@ionic/angular';
@@ -16,7 +16,6 @@ import { IonicModule } from '@ionic/angular';
 })
 export class MainPage implements OnInit {
 
-  public environmentInjector = inject(EnvironmentInjector);
   public router = inject(Router);
 
   public tabs: Array<any> = [

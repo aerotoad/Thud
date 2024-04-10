@@ -1,4 +1,4 @@
-import { Component, EnvironmentInjector, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import Settings from './models/Settings';
 import { StorageService } from './services/storage/storage.service';
 import { IonicModule } from '@ionic/angular';
@@ -13,7 +13,6 @@ import { IonicModule } from '@ionic/angular';
 export class AppComponent implements OnInit {
 
   public storageService = inject(StorageService);
-  public environmentInjector = inject(EnvironmentInjector);
 
   async ngOnInit() {
     await this.storageService.initialize();
