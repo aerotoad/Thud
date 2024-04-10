@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { ReplaySubject, Subject } from 'rxjs';
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { StorageService } from 'src/app/services/storage/storage.service';
@@ -19,14 +19,12 @@ import { IonicModule } from '@ionic/angular';
 })
 export class SearchPage {
 
+  public storageService = inject(StorageService);
+
   public searchQuery$: Subject<string> = new ReplaySubject();
   public query: string;
 
   public feedIds: string[];
-
-  constructor(
-    private storageService: StorageService
-  ) { }
 
   ionViewWillEnter() {
     this.searchQuery$.pipe(

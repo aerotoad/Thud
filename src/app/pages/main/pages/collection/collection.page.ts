@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component } from '@angular/core';
+import { ChangeDetectorRef, Component, inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import Collection, { CollectionFeed } from 'src/app/models/Collection';
 import { StorageService } from 'src/app/services/storage/storage.service';
@@ -26,6 +26,11 @@ import { IonicModule } from '@ionic/angular';
 })
 export class CollectionPage {
 
+  public storageService = inject(StorageService);
+  public router = inject(Router);
+  public route = inject(ActivatedRoute);
+  public changeDetector = inject(ChangeDetectorRef);
+
   public collections: Collection[];
 
   public selectedCollection: Collection;
@@ -38,13 +43,6 @@ export class CollectionPage {
 
   public entryToPreview: Entry;
   public entryToPreviewIconUrl: string;
-
-  constructor(
-    private storageService: StorageService,
-    private route: ActivatedRoute,
-    private router: Router,
-    private changeDetector: ChangeDetectorRef
-  ) { }
 
   async ionViewWillEnter() {
     // Load settings

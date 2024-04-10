@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, ViewChild, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import Settings from 'src/app/models/Settings';
 import { StorageService } from 'src/app/services/storage/storage.service';
@@ -20,6 +20,10 @@ import { IonicModule } from '@ionic/angular';
 })
 export class IntroPage {
 
+  public storageService = inject(StorageService);
+  public router = inject(Router);
+  public changeDetector = inject(ChangeDetectorRef);
+
   private settings: Settings;
 
   public swiperConfig: SwiperOptions = {
@@ -28,12 +32,6 @@ export class IntroPage {
   public swiper: Swiper;
 
   public currentSlide: number = 0;
-    
-  constructor(
-    private storageService: StorageService,
-    private changeDetector: ChangeDetectorRef,
-    private router: Router
-  ) { }
 
   async ionViewWillEnter() {
     this.settings = await this.storageService.getSettings();

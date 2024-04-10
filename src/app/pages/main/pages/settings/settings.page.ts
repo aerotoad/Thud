@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import Settings, { ArticleSettings } from 'src/app/models/Settings';
 import { StorageService } from 'src/app/services/storage/storage.service';
@@ -20,15 +20,13 @@ import { IonicModule } from '@ionic/angular';
 })
 export class SettingsPage {
 
+  public storageService = inject(StorageService);
+  public router = inject(Router);
+
   public settings: Settings;
   public articleSettings: ArticleSettings;
 
   public cacheTimeoutMinutes: number = 60;
-
-  constructor(
-    private storageService: StorageService,
-    private router: Router,
-  ) { }
 
   async ionViewWillEnter() {
     this.settings = await this.storageService.getSettings();

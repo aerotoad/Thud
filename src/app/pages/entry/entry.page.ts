@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ModalController, ToastController, IonicModule } from '@ionic/angular';
@@ -27,6 +27,14 @@ import { NgClass } from '@angular/common';
 })
 export class EntryPage {
 
+  public feedlyService = inject(FeedlyService);
+  public route = inject(ActivatedRoute);
+  public router = inject(Router);
+  public toastCtrl = inject(ToastController);
+  public sanitizer = inject(DomSanitizer);
+  public modalCtrl = inject(ModalController);
+  public storageService = inject(StorageService);
+
   public entry: Entry;
   public content: SafeHtml;
 
@@ -38,16 +46,6 @@ export class EntryPage {
   public bookmarked: boolean = false;
 
   public paramsSubscription: Subscription;
-
-  constructor(
-    private feedlyService: FeedlyService,
-    private route: ActivatedRoute,
-    private router: Router,
-    private toastCtrl: ToastController,
-    private sanitizer: DomSanitizer,
-    private modalCtrl: ModalController,
-    private storageService: StorageService
-  ) { }
   
   async ionViewWillEnter() {
     this.paramsSubscription = this.route.queryParams
