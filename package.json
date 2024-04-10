@@ -34,7 +34,7 @@
     "@capacitor/status-bar": "^4.1.1",
     "@ionic/angular": "^7.8.4",
     "@ionic/angular-server": "^7.8.4",
-    "moment": "^2.29.1",
+    "dayjs": "^1.11.10",
     "rxjs": "^7.5.0",
     "swiper": "^8.0.7",
     "tslib": "^2.2.0",

@@ -3,7 +3,7 @@ import FeedCache from 'src/app/models/FeedCache';
 import { FeedlyService } from 'src/app/services/feedly/feedly.service';
 import { StorageService } from 'src/app/services/storage/storage.service';
 import Stream from 'src/app/models/Stream';
-import * as moment from 'moment';
+import * as dayjs from 'dayjs'
 import { Router } from '@angular/router';
 import Entry from 'src/app/models/Entry';
 import { EpochTimeagoPipe } from '../../../../../../pipes/epoch-timeago/epoch-timeago.pipe';
@@ -16,7 +16,14 @@ import { CdkVirtualScrollViewport, CdkFixedSizeVirtualScroll, CdkVirtualForOf } 
   templateUrl: './stream.component.html',
   styleUrls: ['./stream.component.scss'],
   standalone: true,
-  imports: [CdkVirtualScrollViewport, CdkFixedSizeVirtualScroll, CdkVirtualForOf, IonicModule, InArrayPipe, EpochTimeagoPipe]
+  imports: [
+    CdkVirtualScrollViewport, 
+    CdkFixedSizeVirtualScroll, 
+    CdkVirtualForOf, 
+    IonicModule, 
+    InArrayPipe, 
+    EpochTimeagoPipe
+  ]
 })
 export class StreamComponent implements OnInit {
 
@@ -59,7 +66,7 @@ export class StreamComponent implements OnInit {
       .then(async (cache: FeedCache) => {
         if (cache) {
           // Check if cache is no older than cacheTimeout
-          if (moment().diff(moment.unix(cache.fetchedAt), 'seconds') < this.cacheTimeout) {
+          if (dayjs().diff(dayjs.unix(cache.fetchedAt), 'seconds') < this.cacheTimeout) {
             this.stream = cache.content;
           } else {
             // Cache is older than cacheTimeout, fetch new content

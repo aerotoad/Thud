@@ -6,6 +6,10 @@ import { BrowserModule, bootstrapApplication } from '@angular/platform-browser';
 import { IonicRouteStrategy, IonicModule } from '@ionic/angular';
 import { RouteReuseStrategy, provideRouter } from '@angular/router';
 import { APP_ROUTES } from './app/app.routes';
+import * as dayjs from 'dayjs';
+import * as relativeTime from 'dayjs/plugin/relativeTime';
+
+dayjs.extend(relativeTime);
 
 if (environment.production) {
   enableProdMode();

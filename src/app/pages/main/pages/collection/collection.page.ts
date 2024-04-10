@@ -4,7 +4,7 @@ import Collection, { CollectionFeed } from 'src/app/models/Collection';
 import { StorageService } from 'src/app/services/storage/storage.service';
 import { Subscription } from 'rxjs';
 import Settings from 'src/app/models/Settings';
-import * as moment from 'moment';
+import * as dayjs from 'dayjs';
 import Entry from 'src/app/models/Entry';
 import { Haptics, ImpactStyle } from '@capacitor/haptics';
 import { OrderByIndexPipe } from '../../../../pipes/order-by-index/order-by-index.pipe';
@@ -110,7 +110,7 @@ export class CollectionPage {
     // If the collection has never been reloaded, set the last reload time to now
     if (!lastReload) {
 
-      lastReloads.push({ collectionId: this.selectedCollection.id, lastReload: moment().unix() });
+      lastReloads.push({ collectionId: this.selectedCollection.id, lastReload: dayjs().unix() });
       // Delete cache of the feeds
       await this.deleteCollectionFeedsCache(this.selectedCollection.feedList);
       // Reload the collection
@@ -121,12 +121,12 @@ export class CollectionPage {
     } else {
 
       // If last reload happened more than 5 minutes ago, reload the collection
-      if (moment().diff(moment.unix(lastReload.lastReload), 'minutes') > 5) {
+      if (dayjs().diff(dayjs.unix(lastReload.lastReload), 'minutes') > 5) {
         // Delete cache of the feeds
       await this.deleteCollectionFeedsCache(this.selectedCollection.feedList);
 
         // Update the last reload time
-        lastReload.lastReload = moment().unix();
+        lastReload.lastReload = dayjs().unix();
         // Reload the collection
         this.loadCollections(this.selectedCollection.id);
         this.storageService.setSettings(this.settings);
