@@ -29,9 +29,16 @@
   <!-- Collection Streams -->
   <div class="w-full h-fit mt-5 mb-20">
     @for (feed of (selectedCollection?.feedList | orderByIndex); track feed) {
-      <app-stream
-        [feedId]="feed.feedId" [collectionId]="selectedCollection.id" [iconUrl]="feed.iconUrl" [readEntries]="readEntries" [cacheTimeout]="settings.cacheTimeout"
-      (previewEntry)="openEntryPreview($event, feed.iconUrl)"></app-stream>
+      <div class="overflow-hidden will-change-transform">
+        <app-stream
+          [feedId]="feed.feedId" 
+          [collectionId]="selectedCollection.id" 
+          [iconUrl]="feed.iconUrl" 
+          [readEntries]="readEntries" 
+          [cacheTimeout]="settings.cacheTimeout"
+          (previewEntry)="openEntryPreview($event, feed.iconUrl)"
+        />
+      </div>
     }
   </div>
 

@@ -10,6 +10,7 @@ import { EpochTimeagoPipe } from '../../../../../../pipes/epoch-timeago/epoch-ti
 import { InArrayPipe } from '../../../../../../pipes/in-array/in-array.pipe';
 import { IonicModule } from '@ionic/angular';
 import { CdkVirtualScrollViewport, CdkFixedSizeVirtualScroll, CdkVirtualForOf } from '@angular/cdk/scrolling';
+import { StreamItemComponent } from './components/stream-item/stream-item.component';
 
 @Component({
   selector: 'app-stream',
@@ -17,6 +18,7 @@ import { CdkVirtualScrollViewport, CdkFixedSizeVirtualScroll, CdkVirtualForOf } 
   styleUrls: ['./stream.component.scss'],
   standalone: true,
   imports: [
+    StreamItemComponent,
     CdkVirtualScrollViewport, 
     CdkFixedSizeVirtualScroll, 
     CdkVirtualForOf, 

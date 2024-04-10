@@ -21,7 +21,7 @@ import { IonicModule } from '@ionic/angular';
     IonicModule,
     StreamComponent,
     EntryPreviewComponent,
-    OrderByIndexPipe,
+    OrderByIndexPipe
   ],
 })
 export class CollectionPage {
