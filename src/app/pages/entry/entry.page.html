@@ -14,48 +14,49 @@
   'font-serif': articleSettings?.fontFamily === 'serif',
   'font-mono': articleSettings?.fontFamily === 'mono'
 }">
-
-  @if (entry) {
-    <div class="mx-6">
-      <!-- Entry header -->
-      @if (entry.visual && entry.visual?.url !== 'none') {
-        <div class="mt-8">
-          <img [src]="entry.visual.url" class="w-full rounded-xl shadow-sm">
+  <div class="entry-content">
+    @if (entry) {
+      <div class="mx-6">
+        <!-- Entry header -->
+        @if (entry.visual && entry.visual?.url !== 'none') {
+          <div class="mt-8">
+            <img [src]="entry.visual.url" class="w-full rounded-xl shadow-sm">
+          </div>
+        }
+        <!-- Entry origin -->
+        @if (entry.origin.title) {
+          <h3 class="!text-blue-500 text-sm font-semibold mt-7 mb-2 truncate uppercase entry-origin">
+            {{ entry.origin.title }}
+          </h3>
+        }
+        <!-- Entry title -->
+        <div class="text-2xl font-bold">
+          <p>{{ entry.title }}</p>
         </div>
-      }
-      <!-- Entry origin -->
-      @if (entry.origin.title) {
-        <h3 class="!text-blue-500 text-sm font-semibold mt-7 mb-2 truncate uppercase entry-origin">
-          {{ entry.origin.title }}
-        </h3>
-      }
-      <!-- Entry title -->
-      <div class="text-2xl font-bold">
-        <p>{{ entry.title }}</p>
-      </div>
-      <!-- Metadata container -->
-      <div class="bg-white dark:bg-slate-700 metadata w-full rounded-md h-fit flex flex-col border border-slate-50 dark:border-slate-800 shadow-sm py-2 px-4 mt-3 mb-7">
-        <h2 class="text-slate-800 dark:text-slate-100">
-          <span class="text-base font-medium">{{ entry.author }}</span>
-        </h2>
-        <p class="text-slate-500 text-sm dark:text-slate-300">
-          {{ entry.published | epochTimeago }}
-        </p>
-      </div>
-      <!-- Entry content -->
-      <div class="mb-5">
-        <p [innerHTML]="content" class="content-wrapper"></p>
-      </div>
-      <!-- Open in app button-->
-      @if (entry?.alternate[0].href) {
-        <div class="w-full text-center mb-5">
-          <ion-button fill="outline" class="open-external-button" (click)="openOrigin()">
-            Open website
-          </ion-button>
+        <!-- Metadata container -->
+        <div class="bg-white dark:bg-slate-700 metadata w-full rounded-md h-fit flex flex-col border border-slate-50 dark:border-slate-800 shadow-sm py-2 px-4 mt-3 mb-7">
+          <h2 class="text-slate-800 dark:text-slate-100">
+            <span class="text-base font-medium">{{ entry.author }}</span>
+          </h2>
+          <p class="text-slate-500 text-sm dark:text-slate-300">
+            {{ entry.published | epochTimeago }}
+          </p>
         </div>
-      }
-    </div>
-  }
+        <!-- Entry content -->
+        <div class="mb-5">
+          <p [innerHTML]="content" class="content-wrapper"></p>
+        </div>
+        <!-- Open in app button-->
+        @if (entry?.alternate[0].href) {
+          <div class="w-full text-center mb-5">
+            <ion-button fill="outline" class="open-external-button" (click)="openOrigin()">
+              Open website
+            </ion-button>
+          </div>
+        }
+      </div>
+    }
+  </div>
 
   <!-- Skeleton -->
   @if (!entry) {

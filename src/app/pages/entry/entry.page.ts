@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, ViewEncapsulation, inject } from '@angular/core';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ModalController, ToastController, IonicModule } from '@ionic/angular';
@@ -25,6 +25,7 @@ import { Platform } from '@ionic/angular/standalone';
     NgClass,
     EpochTimeagoPipe,
   ],
+  encapsulation: ViewEncapsulation.None
 })
 export class EntryPage {
 

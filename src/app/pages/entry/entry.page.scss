@@ -2,72 +2,93 @@ ion-content {
   &::part(scroll) {
     height: 100%;
   }
+
+  .entry-content {
+    a {
+      color: var(--ion-color-primary);
+      text-decoration: underline;
+    }
+  }
+
   &.default {
     --background: #f9f9f9 !important;
-    h1, h2, h3, h4, h5, h6, p, a, span, button, input, textarea, select {
-      color: #1e293b
-    }
-    .metadata {
-      background-color: rgba(252, 252, 252, 0.2);
-    }
-    .open-external-button {
-      --border-color: #1e293b;
-      --color: #1e293b;
+    .entry-content {
+      h1, h2, h3, h4, h5, h6, p, button, input, textarea, select {
+        color: #1e293b
+      }
+      .metadata {
+        background-color: rgba(252, 252, 252, 0.2);
+      }
+      .open-external-button {
+        --border-color: #1e293b;
+        --color: #1e293b;
+      }
     }
   }
   &.lightbrown {
     --background: #d8cdbd !important;
-    h1, h2, h3, h4, h5, h6, p, a, span, button, input, textarea, select {
-      color: #1e293b
-    }
-    .metadata {
-      background-color: rgba(252, 252, 252, 0.2);
-    }
-    .open-external-button {
-      --border-color: #1e293b;
-      --color: #1e293b;
+    .entry-content {
+      h1, h2, h3, h4, h5, h6, p, button, input, textarea, select {
+        color: #1e293b
+      }
+      .metadata {
+        background-color: rgba(252, 252, 252, 0.2);
+      }
+      .open-external-button {
+        --border-color: #1e293b;
+        --color: #1e293b;
+      }
     }
   }
   &.lightgrey {
     --background: #bebebe !important;
-    h1, h2, h3, h4, h5, h6, p, a, span, button, input, textarea, select {
-      color: #1e293b
-    }
-    .metadata {
-      background-color: rgba(252, 252, 252, 0.2);
-    }
-    .open-external-button {
-      --border-color: #1e293b;
-      --color: #1e293b;
+    .entry-content {
+      h1, h2, h3, h4, h5, h6, p, button, input, textarea, select {
+        color: #1e293b
+      }
+      .metadata {
+        background-color: rgba(252, 252, 252, 0.2);
+      }
+      .open-external-button {
+        --border-color: #1e293b;
+        --color: #1e293b;
+      }
     }
   }
   &.mediumgrey {
     --background: #838383 !important;
-    h1, h2, h3, h4, h5, h6, p, a, span, button, input, textarea, select {
-      color: #fff;
-    }
-    .metadata {
-      background-color: rgb(51 65 85 / 0.2);
-    }
-    .open-external-button {
-      --border-color: #fff;
-      --color: #fff;
-    }
-    .entry-origin {
-      color: rgb(30, 64, 175) !important;
+    .entry-content {
+      h1, h2, h3, h4, h5, h6, p, button, input, textarea, select {
+        color: #fff;
+      }
+      .metadata {
+        background-color: rgb(51 65 85 / 0.2);
+      }
+      .open-external-button {
+        --border-color: #fff;
+        --color: #fff;
+      }
+      .entry-origin {
+        color: rgb(30, 64, 175) !important;
+      }
+      a {
+        color: rgb(30, 64, 175) !important;
+      }
     }
   }
   &.darkgrey {
     --background: #303030 !important;
-    h1, h2, h3, h4, h5, h6, p, a, span, button, input, textarea, select {
-      color: #fff;
-    }
-    .metadata {
-      background-color: rgb(51 65 85 / var(--tw-bg-opacity));
-    }
-    .open-external-button {
-      --border-color: #fff;
-      --color: #fff;
+    .entry-content {
+      h1, h2, h3, h4, h5, h6, p, button, input, textarea, select {
+        color: #fff;
+      }
+      .metadata {
+        background-color: rgb(51 65 85 / var(--tw-bg-opacity));
+      }
+      .open-external-button {
+        --border-color: #fff;
+        --color: #fff;
+      }
     }
   }
 
