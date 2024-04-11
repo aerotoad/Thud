@@ -1,4 +1,4 @@
-import { Component, ViewEncapsulation, inject } from '@angular/core';
+import { Component, ViewEncapsulation, inject, signal } from '@angular/core';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ModalController, ToastController, IonicModule } from '@ionic/angular';
@@ -39,6 +39,7 @@ export class EntryPage {
   public platform = inject(Platform);
 
   public entry: Entry;
+  public entryTitle = signal<string>('');
   public content: SafeHtml;
 
   public articleSettings: ArticleSettings;
@@ -93,6 +94,7 @@ export class EntryPage {
     this.feedlyService.getEntry(entryId)
       .then((entry) => {
         this.entry = entry[0];
+        this.processTitle();
         this.processContent();
         this.getBookmark();
         this.markAsRead();
@@ -102,6 +104,14 @@ export class EntryPage {
         this.goBack();
         console.error(error);
       });
+  }
+
+  processTitle() {
+    const title = this.entry.title;
+
+    const titleFormatter = document.createElement('textarea');
+    titleFormatter.innerHTML = title;
+    this.entryTitle.set(titleFormatter.value);
   }
 
   processContent() {
