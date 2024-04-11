@@ -1,0 +1,11 @@
+.stream-scroll-viewport {
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
+  &::ng-deep .cdk-virtual-scroll-content-wrapper {
+    display: flex;
+    flex-direction: row;
+  }
+}

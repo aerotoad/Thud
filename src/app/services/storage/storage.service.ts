@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { Storage } from '@capacitor/storage';
+import { Preferences as Storage } from '@capacitor/preferences';
 import FeedCache from '../../models/FeedCache';
-import * as moment from 'moment';
+import * as dayjs from 'dayjs';
 import Collection from 'src/app/models/Collection';
 import Settings from 'src/app/models/Settings';
 import Bookmark from 'src/app/models/Bookmark';
@@ -141,13 +141,13 @@ export class StorageService {
       if (!cacheItem) {
         cacheItem = {
           feedId,
-          fetchedAt: moment().unix(),
+          fetchedAt: dayjs().unix(),
           content
         };
       } else {
         // If cache is not empty, update cache item
         cacheItem.content = content;
-        cacheItem.fetchedAt = moment().unix();
+        cacheItem.fetchedAt = dayjs().unix();
       }
       // Save cache item
       await Storage.set({ key: `cache_${feedId}`, value: JSON.stringify(cacheItem) });

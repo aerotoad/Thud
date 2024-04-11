@@ -1,6 +1,6 @@
 <div class="fixed top-0 bottom-0 left-0 right-0 z-[100] w-screen h-screen overflow-hidden flex items-center justify-center backdrop-blur-sm">
   <div class="bg-slate-50 dark:bg-slate-800 w-11/12 h-auto min-h-[50%] rounded-xl overflow-hidden shadow-md relative zoomIn">
-    <ng-container *ngIf="entry">
+    @if (entry) {
       <!-- Stream header -->
       <div class="absolute top-0 z-50 w-2/3 h-7 bg-slate-800 dark:!bg-slate-700 rounded-br-md flex items-center">
         <div class="w-3 h-3 mr-1 ml-3">
@@ -10,11 +10,12 @@
           {{ entry.origin.title }}
         </p>
       </div>
-
       <!-- Background image -->
       <div class="absolute w-full h-full z-10 bg-slate-700 dark:!bg-slate-800">
-        <img [src]="entry.visual?.url" *ngIf="entry.visual?.url && entry.visual?.url !== 'none'"
-          class="w-full h-full aspect-square">
+        @if (entry.visual?.url && entry.visual?.url !== 'none') {
+          <img [src]="entry.visual?.url"
+            class="w-full h-full aspect-square">
+        }
       </div>
       <!-- Title -->
       <div
@@ -30,7 +31,6 @@
           {{ entrySummary }}
         </p>
       </div>
-
       <!-- Options -->
       <div class="absolute bottom-0 w-full h-11 flex flex-row bg-slate-50 dark:bg-slate-800 z-50">
         <div class="absolute w-full h-full">
@@ -39,22 +39,29 @@
           </div>
         </div>
         <div class="grow flex justify-center items-center">
-          <ion-button fill="clear" color="dark" *ngIf="entry?.alternate[0].href" (click)="shareEntry()" id="share-button">
-            <ion-icon slot="icon-only" name="share-social-outline"></ion-icon>
-          </ion-button>
+          @if (entry?.alternate[0].href) {
+            <ion-button fill="clear" color="dark" (click)="shareEntry()" id="share-button">
+              <ion-icon slot="icon-only" name="share-social-outline"></ion-icon>
+            </ion-button>
+          }
         </div>
         <div class="grow flex justify-center items-center">
-          <ion-button fill="clear" color="dark" *ngIf="entry?.alternate[0].href" (click)="openOrigin()" id="origin-button">
-            <ion-icon slot="icon-only" name="share-outline"></ion-icon>
-          </ion-button>
+          @if (entry?.alternate[0].href) {
+            <ion-button fill="clear" color="dark" (click)="openOrigin()" id="origin-button">
+              <ion-icon slot="icon-only" name="share-outline"></ion-icon>
+            </ion-button>
+          }
         </div>
         <div class="grow flex justify-center items-center">
           <ion-button fill="clear" color="dark" (click)="bookmarkEntry()" id="bookmark-button">
-            <ion-icon slot="icon-only" name="bookmark-outline" *ngIf="!bookmarked"></ion-icon>
-            <ion-icon slot="icon-only" name="bookmark" *ngIf="bookmarked"></ion-icon>
+            @if (bookmarked) {
+              <ion-icon slot="icon-only" name="bookmark"></ion-icon>
+            } @else {
+              <ion-icon slot="icon-only" name="bookmark-outline"></ion-icon>
+            }
           </ion-button>
         </div>
       </div>
-    </ng-container>
+    }
   </div>
 </div>

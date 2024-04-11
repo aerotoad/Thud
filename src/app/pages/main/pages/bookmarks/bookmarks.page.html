@@ -9,23 +9,27 @@
 <ion-content>
 
   <div class="mt-2 mb-20">
-    <div class="h-full w-full flex flex-col">
-      <div *ngFor="let bookmark of bookmarks" class="w-full h-44">
-        <app-entry-card [bookmark]="bookmark" (click)="openEntry(bookmark.entryId)"></app-entry-card>
-      </div>
+    <div class="h-full w-full flex flex-row flex-wrap">
+      @for (bookmark of bookmarks; track bookmark) {
+        <div class="h-[200px] w-[200px]">
+          <app-entry-card [bookmark]="bookmark" (click)="openEntry(bookmark.entryId)"></app-entry-card>
+        </div>
+      }
     </div>
   </div>
 
   <!-- Empty state -->
-  <div class="w-full" *ngIf="bookmarks && bookmarks?.length === 0">
-    <div class="mt-20 px-10 w-full flex items-center justify-center">
-      <div class="w-fit h-fit">
-        <img src="assets/images/undraw_checking.svg" class="w-1/2 m-auto">
-        <div class="text-center mt-10">
-          <p class="text-2xl font-semibold">You don't have any bookmarks</p>
+  @if (bookmarks && bookmarks?.length === 0) {
+    <div class="w-full">
+      <div class="mt-20 px-10 w-full flex items-center justify-center">
+        <div class="w-fit h-fit">
+          <img src="assets/images/undraw_checking.svg" class="w-1/2 m-auto">
+          <div class="text-center mt-10">
+            <p class="text-2xl font-semibold">You don't have any bookmarks</p>
+          </div>
         </div>
       </div>
     </div>
-  </div>
+  }
 
 </ion-content>

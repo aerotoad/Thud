@@ -19,7 +19,7 @@
           </div>
         </div>
       </ng-template>
-    
+
       <ng-template swiperSlide>
         <div class="w-full h-full bg-zinc-300 relative">
           <div class="absolute bottom-3/4 w-full">
@@ -29,7 +29,7 @@
               <p class="font-normal px-4">View the original site whenever you want.</p>
             </div>
           </div>
-          
+
           <div class="absolute bottom-14 w-full h-3/5 flex justify-center">
             <div class="overflow-hidden rounded-t-3xl w-5/6 drop-shadow-lg">
               <img src="assets/images/shot-read.jpg">
@@ -37,7 +37,7 @@
           </div>
         </div>
       </ng-template>
-     
+
       <ng-template swiperSlide>
         <div class="w-full h-full bg-stone-300 relative">
           <div class="absolute bottom-3/4 w-full">
@@ -47,7 +47,7 @@
               <p class="font-normal px-4">Discover new sources.</p>
             </div>
           </div>
-          
+
           <div class="absolute bottom-14 w-full h-3/5 flex justify-center">
             <div class="overflow-hidden rounded-t-3xl w-5/6 drop-shadow-lg">
               <img src="assets/images/shot-discover.jpg">
@@ -60,23 +60,31 @@
 
     <div class="absolute bottom-0 w-full h-10 flex items-start">
       <div class="h-fit w-2/5 flex items-start -mt-3">
-        <ion-button color="dark" fill="clear" (click)="finish()" *ngIf="currentSlide !== 2">
-          Skip
-        </ion-button>
+        @if (currentSlide !== 2) {
+          <ion-button color="dark" fill="clear" (click)="finish()">
+            Skip
+          </ion-button>
+        }
       </div>
       <div class="h-full w-1/5 flex items-start justify-center">
         <div class="w-fit flex flex-row mt-1">
-          <div *ngFor="let item of [1,2,3]; let i = index" [ngClass]="{'paginator-active': currentSlide === i}"
+          @for (item of [1,2,3]; track item; let i = $index) {
+            <div [ngClass]="{'paginator-active': currentSlide === i}"
             class="w-2 h-2 rounded-full bg-slate-500 mx-1"></div>
+          }
         </div>
       </div>
       <div class="h-fit w-2/5 flex items-start justify-end -mt-3">
-        <ion-button color="primary" fill="clear" (click)="nextSlide()" *ngIf="currentSlide !== 2">
-          Next
-        </ion-button>
-        <ion-button color="primary" fill="clear" (click)="finish()" *ngIf="currentSlide === 2">
-          Get started
-        </ion-button>
+        @if (currentSlide !== 2) {
+          <ion-button color="primary" fill="clear" (click)="nextSlide()">
+            Next
+          </ion-button>
+        }
+        @if (currentSlide === 2) {
+          <ion-button color="primary" fill="clear" (click)="finish()">
+            Get started
+          </ion-button>
+        }
       </div>
     </div>
 

@@ -14,58 +14,68 @@
   'font-serif': articleSettings?.fontFamily === 'serif',
   'font-mono': articleSettings?.fontFamily === 'mono'
 }">
-
-  <div *ngIf="entry" class="mx-6">
-    <!-- Entry header -->
-    <div class="mt-8" *ngIf="entry.visual && entry.visual?.url !== 'none'">
-      <img [src]="entry.visual.url" class="w-full rounded-xl shadow-sm">
-    </div>
-
-    <!-- Entry origin -->
-    <h3 *ngIf="entry.origin.title" class="!text-blue-500 text-sm font-semibold mt-7 mb-2 truncate uppercase entry-origin">
-      {{ entry.origin.title }}
-    </h3>
-
-    <!-- Entry title -->
-    <div class="text-2xl font-bold">
-      <p>{{ entry.title }}</p>
-    </div>
-
-    <!-- Metadata container -->
-    <div class="bg-white dark:bg-slate-700 metadata w-full rounded-md h-fit flex flex-col border border-slate-50 dark:border-slate-800 shadow-sm py-2 px-4 mt-3 mb-7">
-      <h2 class="text-slate-800 dark:text-slate-100">
-        <span class="text-base font-medium">{{ entry.author }}</span>
-      </h2>
-      <p class="text-slate-500 text-sm dark:text-slate-300">
-        {{ entry.published | epochTimeago }}
-      </p>
-    </div>
-
-    <!-- Entry content -->
-    <div class="mb-5">
-      <p [innerHTML]="content" class="content-wrapper"></p>
-    </div>
-
-    <!-- Open in app button-->
-    <div class="w-full text-center mb-5" *ngIf="entry?.alternate[0].href">
-      <ion-button fill="outline" class="open-external-button" (click)="openOrigin()">
-        Open website
-      </ion-button>
-    </div>
+  <div class="entry-content">
+    @if (entry) {
+      <div class="mx-6">
+        <!-- Entry header -->
+        @if (entry.visual && entry.visual?.url !== 'none') {
+          <div class="mt-8">
+            <img [src]="entry.visual.url" class="w-full rounded-xl shadow-sm">
+          </div>
+        }
+        <!-- Entry origin -->
+        @if (entry.origin.title) {
+          <h3 class="!text-blue-500 text-sm font-semibold mt-7 mb-2 truncate uppercase entry-origin">
+            {{ entry.origin.title }}
+          </h3>
+        }
+        <!-- Entry title -->
+        <div class="text-2xl font-bold">
+          <p>{{ entry.title }}</p>
+        </div>
+        <!-- Metadata container -->
+        <div class="bg-white dark:bg-slate-700 metadata w-full rounded-md h-fit flex flex-col border border-slate-50 dark:border-slate-800 shadow-sm py-2 px-4 mt-3 mb-7">
+          <h2 class="text-slate-800 dark:text-slate-100">
+            <span class="text-base font-medium">{{ entry.author }}</span>
+          </h2>
+          <p class="text-slate-500 text-sm dark:text-slate-300">
+            {{ entry.published | epochTimeago }}
+          </p>
+        </div>
+        <!-- Entry content -->
+        <div class="mb-5">
+          <p [innerHTML]="content" class="content-wrapper"></p>
+        </div>
+        <!-- Open in app button-->
+        @if (entry?.alternate[0].href) {
+          <div class="w-full text-center mb-5">
+            <ion-button fill="outline" class="open-external-button" (click)="openOrigin()">
+              Open website
+            </ion-button>
+          </div>
+        }
+      </div>
+    }
   </div>
 
   <!-- Skeleton -->
-  <div *ngIf="!entry" class="w-full h-full px-6 animate-pulse overflow-hidden">
-    <div class="w-full h-44 bg-black bg-opacity-20 mt-8 rounded-lg"></div>
-    <p class="w-1/2 h-5 mt-7 mb-4 bg-black bg-opacity-20"></p>
-    <p class="w-full h-8 bg-black bg-opacity-20"></p>
-    <p class="w-2/3 h-8 mt-2 bg-black bg-opacity-20"></p>
-    <div class="w-full h-20 bg-black bg-opacity-20 rounded-md shadow-sm mt-5 mb-7"></div>
-    <p class="w-full h-4 mt-2 bg-black bg-opacity-20" *ngFor="let skeleton of [1,2,3]"></p>
-    <p class="w-2/3 h-4 mt-2 bg-black bg-opacity-20"></p>
-    <p class="w-full h-4 mt-2 bg-black bg-opacity-20" *ngFor="let skeleton of [1,2,3]"></p>
-    <p class="w-1/2 h-4 mt-2 bg-black bg-opacity-20"></p>
-  </div>
+  @if (!entry) {
+    <div class="w-full h-full px-6 animate-pulse overflow-hidden">
+      <div class="w-full h-44 bg-black bg-opacity-20 mt-8 rounded-lg"></div>
+      <p class="w-1/2 h-5 mt-7 mb-4 bg-black bg-opacity-20"></p>
+      <p class="w-full h-8 bg-black bg-opacity-20"></p>
+      <p class="w-2/3 h-8 mt-2 bg-black bg-opacity-20"></p>
+      <div class="w-full h-20 bg-black bg-opacity-20 rounded-md shadow-sm mt-5 mb-7"></div>
+      @for (skeleton of [1,2,3]; track skeleton) {
+        <p class="w-full h-4 mt-2 bg-black bg-opacity-20"></p>
+      }
+      <p class="w-2/3 h-4 mt-2 bg-black bg-opacity-20"></p>
+      @for (skeleton of [1,2,3]; track skeleton) {
+        <p class="w-full h-4 mt-2 bg-black bg-opacity-20"></p>
+      }
+      <p class="w-1/2 h-4 mt-2 bg-black bg-opacity-20"></p>
+    </div>
+  }
 
 </ion-content>
 <ion-footer>
@@ -76,15 +86,23 @@
       </ion-button>
     </ion-buttons>
     <ion-buttons slot="end">
-      <ion-button *ngIf="entry?.alternate[0].href" (click)="shareEntry()">
-        <ion-icon slot="icon-only" name="share-social-outline"></ion-icon>
-      </ion-button>
-      <ion-button *ngIf="entry?.alternate[0].href" (click)="openOrigin()">
-        <ion-icon slot="icon-only" name="share-outline"></ion-icon>
-      </ion-button>
+      @if (entry?.alternate[0].href) {
+        <ion-button (click)="shareEntry()">
+          <ion-icon slot="icon-only" name="share-social-outline"></ion-icon>
+        </ion-button>
+      }
+      @if (entry?.alternate[0].href) {
+        <ion-button (click)="openOrigin()">
+          <ion-icon slot="icon-only" name="share-outline"></ion-icon>
+        </ion-button>
+      }
       <ion-button (click)="bookmarkEntry()">
-        <ion-icon slot="icon-only" name="bookmark-outline" *ngIf="!bookmarked"></ion-icon>
-        <ion-icon slot="icon-only" name="bookmark" *ngIf="bookmarked"></ion-icon>
+        @if (!bookmarked) {
+          <ion-icon slot="icon-only" name="bookmark-outline"></ion-icon>
+        }
+        @if (bookmarked) {
+          <ion-icon slot="icon-only" name="bookmark"></ion-icon>
+        }
       </ion-button>
       <ion-button (click)="openArticleSettings()">
         <ion-icon slot="icon-only" name="settings-outline"></ion-icon>

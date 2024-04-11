@@ -2,11 +2,20 @@ import { Component } from '@angular/core';
 import Settings from 'src/app/models/Settings';
 import { ArticleSettings } from 'src/app/models/Settings';
 import { StorageService } from 'src/app/services/storage/storage.service';
+import { FormsModule } from '@angular/forms';
+import { NgClass } from '@angular/common';
+import { IonicModule } from '@ionic/angular';
 
 @Component({
-  selector: 'app-article-settings-modal',
-  templateUrl: './article-settings-modal.component.html',
-  styleUrls: ['./article-settings-modal.component.scss'],
+    selector: 'app-article-settings-modal',
+    templateUrl: './article-settings-modal.component.html',
+    styleUrls: ['./article-settings-modal.component.scss'],
+    standalone: true,
+    imports: [
+        IonicModule,
+        NgClass,
+        FormsModule,
+    ],
 })
 export class ArticleSettingsModalComponent {
 
@@ -24,7 +33,8 @@ export class ArticleSettingsModalComponent {
       fontSize: 12,
       brightness: 0,
       fontFamily: 'sans',
-      background: 'default'
+      background: 'default',
+      useSystemBrowser: false
     } as ArticleSettings;
   }
 

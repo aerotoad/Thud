@@ -1,12 +1,31 @@
-import { enableProdMode } from '@angular/core';
-import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
+import { enableProdMode, importProvidersFrom } from '@angular/core';
 
-import { AppModule } from './app/app.module';
 import { environment } from './environments/environment';
+import { AppComponent } from './app/app.component';
+import { BrowserModule, bootstrapApplication } from '@angular/platform-browser';
+import { IonicRouteStrategy, IonicModule } from '@ionic/angular';
+import { RouteReuseStrategy, provideRouter } from '@angular/router';
+import { APP_ROUTES } from './app/app.routes';
+import * as dayjs from 'dayjs';
+import * as relativeTime from 'dayjs/plugin/relativeTime';
+
+dayjs.extend(relativeTime);
 
 if (environment.production) {
   enableProdMode();
 }
 
-platformBrowserDynamic().bootstrapModule(AppModule)
-  .catch(err => console.log(err));
+bootstrapApplication(AppComponent, {
+  providers: [
+    provideRouter(APP_ROUTES),
+    importProvidersFrom(
+      BrowserModule, 
+      IonicModule.forRoot(),
+    ),
+    { 
+      provide: RouteReuseStrategy, 
+      useClass: IonicRouteStrategy 
+    }
+  ]
+})
+.catch(err => console.log(err));

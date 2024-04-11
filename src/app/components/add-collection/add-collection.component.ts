@@ -1,13 +1,16 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { LoadingController, ModalController, ToastController } from '@ionic/angular';
+import { LoadingController, ModalController, ToastController, IonicModule } from '@ionic/angular';
 import Collection from 'src/app/models/Collection';
 import { StorageService } from 'src/app/services/storage/storage.service';
 import { v4 as uuidv4 } from 'uuid';
+import { FormsModule } from '@angular/forms';
 
 @Component({
-  selector: 'app-add-collection',
-  templateUrl: './add-collection.component.html',
-  styleUrls: ['./add-collection.component.scss'],
+    selector: 'app-add-collection',
+    templateUrl: './add-collection.component.html',
+    styleUrls: ['./add-collection.component.scss'],
+    standalone: true,
+    imports: [IonicModule, FormsModule],
 })
 export class AddCollectionComponent implements OnInit {
 

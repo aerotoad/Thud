@@ -1,13 +1,15 @@
 import { Component, Input } from '@angular/core';
-import { ModalController, ToastController } from '@ionic/angular';
+import { ModalController, ToastController, IonicModule } from '@ionic/angular';
 import Collection, { CollectionFeed } from 'src/app/models/Collection';
 import { StorageService } from 'src/app/services/storage/storage.service';
 import { AddCollectionComponent } from '../add-collection/add-collection.component';
 
 @Component({
-  selector: 'app-add-feed-modal',
-  templateUrl: './add-feed-modal.component.html',
-  styleUrls: ['./add-feed-modal.component.scss'],
+    selector: 'app-add-feed-modal',
+    templateUrl: './add-feed-modal.component.html',
+    styleUrls: ['./add-feed-modal.component.scss'],
+    standalone: true,
+    imports: [IonicModule],
 })
 export class AddFeedModalComponent {
 

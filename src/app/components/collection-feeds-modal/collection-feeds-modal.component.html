@@ -17,44 +17,53 @@
     <ion-label>
       Feeds
     </ion-label>
-    <ion-button (click)="startReorder()" *ngIf="!reorder && collection.feedList && collection.feedList.length > 1">
-      Reorder
-    </ion-button>
-    <ion-button (click)="endReorder()" *ngIf="reorder && collection.feedList && collection.feedList.length > 1">
-      Save order
-    </ion-button>
+    @if (collection.feedList && collection.feedList.length > 1) {
+      @if(!reorder) {
+        <ion-button (click)="startReorder()">
+          Reorder
+        </ion-button>
+      } @else {
+        <ion-button (click)="endReorder()">
+          Save order
+        </ion-button>
+      }
+    }
   </ion-list-header>
 
   <ion-reorder-group [disabled]="!reorder" class="pt-5 mb-20" (ionItemReorder)="drop($event)">
-    <ion-item *ngFor="let feed of (collection.feedList | orderByIndex)" lines="full">
-      <ion-reorder slot="start"></ion-reorder>
-      <ion-thumbnail slot="start">
-        <img [src]="feed.visualUrl ?? feed.iconUrl" class="rounded-md">
-      </ion-thumbnail>
-      <ion-label>
-        {{ feed.title }}
-      </ion-label>
-      <ion-button slot="end" color="danger" fill="clear" (click)="confirmDeleteFeed(feed)">
-        <ion-icon name="trash"></ion-icon>
-      </ion-button>
-    </ion-item>
+    @for (feed of (collection.feedList | orderByIndex); track feed) {
+      <ion-item lines="full">
+        <ion-reorder slot="start"></ion-reorder>
+        <ion-thumbnail slot="start">
+          <img [src]="feed.visualUrl ?? feed.iconUrl" class="rounded-md">
+        </ion-thumbnail>
+        <ion-label>
+          {{ feed.title }}
+        </ion-label>
+        <ion-button slot="end" color="danger" fill="clear" (click)="confirmDeleteFeed(feed)">
+          <ion-icon name="trash"></ion-icon>
+        </ion-button>
+      </ion-item>
+    }
   </ion-reorder-group>
 
   <!-- Empty state -->
-  <div class="w-full" *ngIf="collection.feedList && collection.feedList.length === 0">
-    <div class="mt-20 px-6 w-full flex items-center justify-center">
-      <div class="w-fit h-fit">
-        <img src="assets/images/undraw_list.svg" class="w-1/2 m-auto">
-        <div class="text-center mt-10">
-          <p class="text-2xl font-semibold">No feeds in this collection</p>
-          <p>¿Why don’t you add some?</p>
-          <ion-button fill="outline" color="primary" class="mt-6" (click)="openSearch()">
-            Explore feeds
-            <ion-icon slot="end" name="planet-outline"></ion-icon>
-          </ion-button>
+  @if (collection.feedList && collection.feedList.length === 0) {
+    <div class="w-full">
+      <div class="mt-20 px-6 w-full flex items-center justify-center">
+        <div class="w-fit h-fit">
+          <img src="assets/images/undraw_list.svg" class="w-1/2 m-auto">
+          <div class="text-center mt-10">
+            <p class="text-2xl font-semibold">No feeds in this collection</p>
+            <p>¿Why don’t you add some?</p>
+            <ion-button fill="outline" color="primary" class="mt-6" (click)="openSearch()">
+              Explore feeds
+              <ion-icon slot="end" name="planet-outline"></ion-icon>
+            </ion-button>
+          </div>
         </div>
       </div>
     </div>
-  </div>
+  }
 
 </ion-content>

@@ -13,68 +13,84 @@
         <div
           class="article-color-palette default border-2 border-slate-100 w-1/5 aspect-square rounded-full mx-3 shadow-sm"
           [ngClass]="{'border-4 border-blue-500': articleSettings?.background === 'default' || !articleSettings?.background}"
-          (click)="setArticleTheme('default')"></div>
-  
+        (click)="setArticleTheme('default')"></div>
+
         <div
           class="article-color-palette lightbrown border-2 border-slate-100 w-1/5 aspect-square rounded-full mx-3 shadow-sm"
           [ngClass]="{'border-4 border-blue-500': articleSettings?.background === 'lightbrown'}"
-          (click)="setArticleTheme('lightbrown')"></div>
-  
+        (click)="setArticleTheme('lightbrown')"></div>
+
         <div
           class="article-color-palette lightgrey border-2 border-slate-100 w-1/5 aspect-square rounded-full mx-3 shadow-sm"
           [ngClass]="{'border-4 border-blue-500': articleSettings?.background === 'lightgrey'}"
-          (click)="setArticleTheme('lightgrey')"></div>
-  
+        (click)="setArticleTheme('lightgrey')"></div>
+
         <div
           class="article-color-palette mediumgrey border-2 border-slate-100 w-1/5 aspect-square rounded-full mx-3 shadow-sm"
           [ngClass]="{'border-4 border-blue-500': articleSettings?.background === 'mediumgrey'}"
-          (click)="setArticleTheme('mediumgrey')"></div>
-  
+        (click)="setArticleTheme('mediumgrey')"></div>
+
         <div
           class="article-color-palette darkgrey border-2 border-slate-100 w-1/5 aspect-square rounded-full mx-3 shadow-sm"
           [ngClass]="{'border-4 border-blue-500': articleSettings?.background === 'darkgrey'}"
-          (click)="setArticleTheme('darkgrey')"></div>
+        (click)="setArticleTheme('darkgrey')"></div>
       </div>
       <ion-item lines="full"></ion-item>
-  
+
       <ion-item lines="none">
         <ion-icon name="expand-outline" slot="start"></ion-icon>
         <ion-label>
           <h2>Font size</h2>
         </ion-label>
       </ion-item>
-      <ion-item lines="full" *ngIf="articleSettings">
-        <ion-range min="10" max="15" step="1" snaps="true" color="primary" [pin]="true" [debounce]="400"
-          [(ngModel)]="articleSettings.fontSize" (ionChange)="saveSettings()">
-          <ion-label slot="start">
-            <span class="text-xs font-bold">A</span>
-          </ion-label>
-          <ion-label slot="end">
-            <span class="text-2xl font-bold">A</span>
-          </ion-label>
-        </ion-range>
-      </ion-item>
-  
+      @if (articleSettings) {
+        <ion-item lines="full">
+          <ion-range min="10" max="15" step="1" snaps="true" color="primary" [pin]="true" [debounce]="400"
+            [(ngModel)]="articleSettings.fontSize" (ionChange)="saveSettings()">
+            <ion-label slot="start">
+              <span class="text-xs font-bold">A</span>
+            </ion-label>
+            <ion-label slot="end">
+              <span class="text-2xl font-bold">A</span>
+            </ion-label>
+          </ion-range>
+        </ion-item>
+      }
+
       <ion-item lines="none">
         <ion-icon slot="start" name="text-outline"></ion-icon>
         <ion-label>Font family</ion-label>
       </ion-item>
-      <div class="w-full px-3 py-2" *ngIf="articleSettings" (ionChange)="saveSettings()">
-        <ion-segment mode="ios" [(ngModel)]="articleSettings.fontFamily">
-          <ion-segment-button value="serif">
-            <span class="font-serif font-medium">Serif</span>
-          </ion-segment-button>
-          <ion-segment-button value="sans">
-            <span class="font-sans font-medium">Sans-serif</span>
-          </ion-segment-button>
-          <ion-segment-button value="mono">
-            <span class="font-mono font-medium">
-              Monospace
-            </span>
-          </ion-segment-button>
-        </ion-segment>
-      </div>
-  
+      @if (articleSettings) {
+        <div class="w-full px-3 py-2" (ionChange)="saveSettings()">
+          <ion-segment mode="ios" [(ngModel)]="articleSettings.fontFamily">
+            <ion-segment-button value="serif">
+              <span class="font-serif font-medium">Serif</span>
+            </ion-segment-button>
+            <ion-segment-button value="sans">
+              <span class="font-sans font-medium">Sans-serif</span>
+            </ion-segment-button>
+            <ion-segment-button value="mono">
+              <span class="font-mono font-medium">
+                Monospace
+              </span>
+            </ion-segment-button>
+          </ion-segment>
+        </div>
+      }
+
+      <ion-item lines="full"></ion-item>
+      @if (articleSettings) {
+        <ion-item lines="none">
+          <ion-icon slot="start" name="browsers-outline"></ion-icon>
+          <ion-label class="">
+            <h2>Use system browser</h2>
+            <p>Disable in-app browser for articles</p>
+          </ion-label>
+          <ion-toggle slot="end" (ionChange)="saveSettings()" [(ngModel)]="articleSettings.useSystemBrowser"></ion-toggle>
+        </ion-item>
+      }
+
     </ion-list>
   </div>
 </ion-content>

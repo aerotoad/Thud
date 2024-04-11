@@ -1,24 +1,32 @@
-import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, inject } from '@angular/core';
+import { Router, RouterLink } from '@angular/router';
 import Settings, { ArticleSettings } from 'src/app/models/Settings';
 import { StorageService } from 'src/app/services/storage/storage.service';
+import { NgClass } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { IonicModule } from '@ionic/angular';
 
 @Component({
   selector: 'app-settings',
   templateUrl: './settings.page.html',
   styleUrls: ['./settings.page.scss'],
+  standalone: true,
+  imports: [
+    IonicModule,
+    RouterLink,
+    FormsModule,
+    NgClass,
+  ],
 })
 export class SettingsPage {
+
+  public storageService = inject(StorageService);
+  public router = inject(Router);
 
   public settings: Settings;
   public articleSettings: ArticleSettings;
 
   public cacheTimeoutMinutes: number = 60;
-
-  constructor(
-    private storageService: StorageService,
-    private router: Router,
-  ) { }
 
   async ionViewWillEnter() {
     this.settings = await this.storageService.getSettings();
@@ -28,7 +36,8 @@ export class SettingsPage {
       fontSize: 12,
       brightness: 0,
       fontFamily: 'sans',
-      background: 'default'
+      background: 'default',
+      useSystemBrowser: false
     } as ArticleSettings;
   }
 

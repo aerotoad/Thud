@@ -2,7 +2,8 @@ import { Pipe, PipeTransform } from '@angular/core';
 import Collection, { CollectionFeed } from 'src/app/models/Collection';
 
 @Pipe({
-  name: 'orderByIndex'
+    name: 'orderByIndex',
+    standalone: true
 })
 export class OrderByIndexPipe implements PipeTransform {
 

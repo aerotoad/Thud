@@ -1,12 +1,15 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output } from '@angular/core';
-import { ToastController } from '@ionic/angular';
+import { ToastController, IonicModule } from '@ionic/angular';
 import SearchQuery, { SearchResult } from 'src/app/models/SearchQuery';
 import { FeedlyService } from 'src/app/services/feedly/feedly.service';
+import { AddFeedButtonComponent } from '../add-feed-button/add-feed-button.component';
 
 @Component({
   selector: 'app-search-results',
   templateUrl: './search-results.component.html',
   styleUrls: ['./search-results.component.scss'],
+  standalone: true,
+  imports: [IonicModule, AddFeedButtonComponent],
 })
 export class SearchResultsComponent implements OnInit, OnChanges {
 

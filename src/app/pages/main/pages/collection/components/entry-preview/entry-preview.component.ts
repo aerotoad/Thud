@@ -3,14 +3,22 @@ import Entry from 'src/app/models/Entry';
 import { Share } from '@capacitor/share';
 import { Browser } from '@capacitor/browser';
 import Bookmark from 'src/app/models/Bookmark';
-import { ToastController } from '@ionic/angular';
+import { ToastController, IonicModule } from '@ionic/angular';
 import { StorageService } from 'src/app/services/storage/storage.service';
 import { Haptics, ImpactStyle } from '@capacitor/haptics';
+import { EpochTimeagoPipe } from '../../../../../../pipes/epoch-timeago/epoch-timeago.pipe';
+import { NgClass } from '@angular/common';
 
 @Component({
   selector: 'app-entry-preview',
   templateUrl: './entry-preview.component.html',
   styleUrls: ['./entry-preview.component.scss'],
+  standalone: true,
+  imports: [
+    NgClass,
+    IonicModule,
+    EpochTimeagoPipe,
+  ],
 })
 export class EntryPreviewComponent implements AfterViewInit, OnInit {
 

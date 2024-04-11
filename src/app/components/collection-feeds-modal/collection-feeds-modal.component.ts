@@ -1,14 +1,17 @@
 import { Component, Input } from '@angular/core';
 import { Router } from '@angular/router';
-import { AlertController, ModalController } from '@ionic/angular';
+import { AlertController, ModalController, IonicModule } from '@ionic/angular';
 import Collection, { CollectionFeed } from 'src/app/models/Collection';
 import { FeedlyService } from 'src/app/services/feedly/feedly.service';
 import { StorageService } from 'src/app/services/storage/storage.service';
+import { OrderByIndexPipe } from '../../pipes/order-by-index/order-by-index.pipe';
 
 @Component({
-  selector: 'app-collection-feeds-modal',
-  templateUrl: './collection-feeds-modal.component.html',
-  styleUrls: ['./collection-feeds-modal.component.scss'],
+    selector: 'app-collection-feeds-modal',
+    templateUrl: './collection-feeds-modal.component.html',
+    styleUrls: ['./collection-feeds-modal.component.scss'],
+    standalone: true,
+    imports: [IonicModule, OrderByIndexPipe],
 })
 export class CollectionFeedsModalComponent {
 

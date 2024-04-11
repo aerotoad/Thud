@@ -1,7 +1,7 @@
-import { Component } from '@angular/core';
-import { DomSanitizer, SafeHtml, SafeResourceUrl, SafeUrl } from '@angular/platform-browser';
+import { Component, ViewEncapsulation, inject } from '@angular/core';
+import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ModalController, ToastController } from '@ionic/angular';
+import { ModalController, ToastController, IonicModule } from '@ionic/angular';
 import { Subscription } from 'rxjs';
 import { ArticleSettingsModalComponent } from 'src/app/components/article-settings-modal/article-settings-modal.component';
 import Entry from 'src/app/models/Entry';
@@ -11,13 +11,32 @@ import { StorageService } from 'src/app/services/storage/storage.service';
 import { Share } from '@capacitor/share';
 import { Browser } from '@capacitor/browser';
 import Bookmark from 'src/app/models/Bookmark';
+import { EpochTimeagoPipe } from '../../pipes/epoch-timeago/epoch-timeago.pipe';
+import { NgClass } from '@angular/common';
+import { Platform } from '@ionic/angular/standalone';
 
 @Component({
   selector: 'app-entry',
   templateUrl: './entry.page.html',
   styleUrls: ['./entry.page.scss'],
+  standalone: true,
+  imports: [
+    IonicModule,
+    NgClass,
+    EpochTimeagoPipe,
+  ],
+  encapsulation: ViewEncapsulation.None
 })
 export class EntryPage {
+
+  public feedlyService = inject(FeedlyService);
+  public route = inject(ActivatedRoute);
+  public router = inject(Router);
+  public toastCtrl = inject(ToastController);
+  public sanitizer = inject(DomSanitizer);
+  public modalCtrl = inject(ModalController);
+  public storageService = inject(StorageService);
+  public platform = inject(Platform);
 
   public entry: Entry;
   public content: SafeHtml;
@@ -30,16 +49,6 @@ export class EntryPage {
   public bookmarked: boolean = false;
 
   public paramsSubscription: Subscription;
-
-  constructor(
-    private feedlyService: FeedlyService,
-    private route: ActivatedRoute,
-    private router: Router,
-    private toastCtrl: ToastController,
-    private sanitizer: DomSanitizer,
-    private modalCtrl: ModalController,
-    private storageService: StorageService
-  ) { }
   
   async ionViewWillEnter() {
     this.paramsSubscription = this.route.queryParams
@@ -56,6 +65,12 @@ export class EntryPage {
       });
 
     this.loadSettings();
+  }
+
+  ionViewDidEnter() {
+    this.platform.backButton.subscribeWithPriority(10, () => {
+      this.goBack();
+    });
   }
 
   async loadSettings() {
@@ -118,7 +133,12 @@ export class EntryPage {
   }
 
   async openOrigin() {
-    Browser.open({ url: this.entry.alternate[0].href });
+    if (!this.articleSettings.useSystemBrowser) {
+      Browser.open({ url: this.entry.alternate[0].href });
+    } else {
+      // Open in system browser
+      window.open(this.entry.alternate[0].href, '_system');
+    }
   }
 
   async openArticleSettings() {
