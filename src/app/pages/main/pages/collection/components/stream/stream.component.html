@@ -3,7 +3,7 @@
   <!-- Stream header -->
   <div class="w-1/2 h-[28px] bg-slate-800 dark:!bg-slate-700 rounded-tr-md flex items-center">
     <div class="w-3 h-3 mx-1">
-      <img [src]="iconUrl" class="w-full h-full rounded-full">
+      <img [src]="iconUrl()" class="w-full h-full rounded-full">
     </div>
     <p class="text-slate-50 font-semibold px-2 text-sm truncate">
       {{ stream?.title }}
@@ -23,7 +23,7 @@
           (touchmove)="stopPreviewTimeout()"
           class="w-[145px] h-[145px] shrink-0 relative rounded-lg overflow-hidden shadow-md mr-1 first-of-type:ml-1 select-none will-change-transform"
         >
-          <app-stream-item [entry]="entry" [readEntries]="readEntries"/>
+          <app-stream-item [entry]="entry" [readEntries]="readEntries()"/>
         </div>
       </cdk-virtual-scroll-viewport>
     </div>

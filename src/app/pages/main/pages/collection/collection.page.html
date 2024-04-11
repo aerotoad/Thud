@@ -37,6 +37,7 @@
           [readEntries]="readEntries" 
           [cacheTimeout]="settings.cacheTimeout"
           (previewEntry)="openEntryPreview($event, feed.iconUrl)"
+          (reloading)="resetStreamScrollPosition(feed.feedId)"
         />
       </div>
     }

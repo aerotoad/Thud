@@ -13,6 +13,7 @@ import { Browser } from '@capacitor/browser';
 import Bookmark from 'src/app/models/Bookmark';
 import { EpochTimeagoPipe } from '../../pipes/epoch-timeago/epoch-timeago.pipe';
 import { NgClass } from '@angular/common';
+import { Platform } from '@ionic/angular/standalone';
 
 @Component({
   selector: 'app-entry',
@@ -34,6 +35,7 @@ export class EntryPage {
   public sanitizer = inject(DomSanitizer);
   public modalCtrl = inject(ModalController);
   public storageService = inject(StorageService);
+  public platform = inject(Platform);
 
   public entry: Entry;
   public content: SafeHtml;
@@ -62,6 +64,12 @@ export class EntryPage {
       });
 
     this.loadSettings();
+  }
+
+  ionViewDidEnter() {
+    this.platform.backButton.subscribeWithPriority(10, () => {
+      this.goBack();
+    });
   }
 
   async loadSettings() {
