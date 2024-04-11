@@ -9,9 +9,9 @@
 <ion-content>
 
   <div class="mt-2 mb-20">
-    <div class="h-full w-full flex flex-col">
+    <div class="h-full w-full flex flex-row flex-wrap">
       @for (bookmark of bookmarks; track bookmark) {
-        <div class="w-full h-44">
+        <div class="h-[200px] w-[200px]">
           <app-entry-card [bookmark]="bookmark" (click)="openEntry(bookmark.entryId)"></app-entry-card>
         </div>
       }
