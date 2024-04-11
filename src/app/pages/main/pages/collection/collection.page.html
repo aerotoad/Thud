@@ -1,21 +1,19 @@
-<ion-header>
+<ion-header mode="ios" collapse="fade" [translucent]="true">
   <ion-toolbar class="main-toolbar">
-    <ion-buttons slot="start">
-      <ion-menu-button class="text-white drop-shadow-sm"></ion-menu-button>
-    </ion-buttons>
-    <ion-title>
-      <span class="font-bold text-white drop-shadow-sm">Thud.</span>
+    <ion-title mode="ios">
+      <span class="font-sans font-bold drop-shadow-sm title">Thud.</span>
     </ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [scrollY]="!entryToPreview">
+<ion-content [scrollY]="!entryToPreview" [fullscreen]="true">
+
   <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)" [disabled]="entryToPreview">
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
 
   <!-- Collections scrollable list -->
-  <div class="w-full h-12 overflow-x-auto overflow-y-hidden flex flex-row pt-3 px-7">
+  <div class="w-full h-12 overflow-x-auto overflow-y-hidden flex flex-row pt-2 px-5">
     @for (collection of (collections | orderByIndex); track collection) {
       <div class="mr-7 shrink-0 relative active:text-sky-500" (click)="navigateToCollection(collection)">
         <p class="font-bold text-2xl">{{ collection.name }}</p>
