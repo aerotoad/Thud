@@ -13,9 +13,9 @@ import { IonicModule } from '@ionic/angular';
     styleUrls: ['./intro.page.scss'],
     standalone: true,
     imports: [
-        IonicModule,
-        SwiperModule,
-        NgClass,
+      IonicModule,
+      SwiperModule,
+      NgClass,
     ],
 })
 export class IntroPage {

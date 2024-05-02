@@ -1,4 +1,4 @@
-import { Component, ViewEncapsulation, inject } from '@angular/core';
+import { Component, ViewEncapsulation, inject, signal } from '@angular/core';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ModalController, ToastController, IonicModule } from '@ionic/angular';
@@ -39,6 +39,7 @@ export class EntryPage {
   public platform = inject(Platform);
 
   public entry: Entry;
+  public entryTitle = signal<string>('');
   public content: SafeHtml;
 
   public articleSettings: ArticleSettings;
@@ -93,6 +94,7 @@ export class EntryPage {
     this.feedlyService.getEntry(entryId)
       .then((entry) => {
         this.entry = entry[0];
+        this.processTitle();
         this.processContent();
         this.getBookmark();
         this.markAsRead();
@@ -102,6 +104,14 @@ export class EntryPage {
         this.goBack();
         console.error(error);
       });
+  }
+
+  processTitle() {
+    const title = this.entry.title;
+
+    const titleFormatter = document.createElement('textarea');
+    titleFormatter.innerHTML = title;
+    this.entryTitle.set(titleFormatter.value);
   }
 
   processContent() {
@@ -144,7 +154,7 @@ export class EntryPage {
   async openArticleSettings() {
     const modal = await this.modalCtrl.create({
       component: ArticleSettingsModalComponent,
-      breakpoints: [0, 0.5, 0.7, 1],
+      breakpoints: [0, 0.7, 1],
       initialBreakpoint: 0.7,
     });
     modal.onDidDismiss().then(() => {
@@ -155,7 +165,7 @@ export class EntryPage {
  
   async shareEntry() {
     await Share.share({
-      text: `[Via Thud.] ${this.entry.title}`,
+      text: `[Via Thud.] ${this.entryTitle()}`,
       url: this.entry.alternate[0].href,
       dialogTitle: 'Share with buddies',
     });
@@ -165,7 +175,7 @@ export class EntryPage {
     if (!this.bookmarked) {
       const bookmark: Bookmark = {
         entryId: this.entry.id,
-        title: this.entry.title,
+        title: this.entryTitle(),
         visualUrl: this.entry.visual.url,
         published: this.entry.published
       }

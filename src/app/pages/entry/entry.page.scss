@@ -8,6 +8,11 @@ ion-content {
       color: var(--ion-color-primary);
       text-decoration: underline;
     }
+
+    p {
+      padding-top: 4px;
+      padding-bottom: 4px;
+    }
   }
 
   &.default {
