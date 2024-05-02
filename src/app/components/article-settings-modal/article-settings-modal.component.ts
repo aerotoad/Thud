@@ -12,9 +12,9 @@ import { IonicModule } from '@ionic/angular';
     styleUrls: ['./article-settings-modal.component.scss'],
     standalone: true,
     imports: [
-        IonicModule,
-        NgClass,
-        FormsModule,
+      IonicModule,
+      NgClass,
+      FormsModule,
     ],
 })
 export class ArticleSettingsModalComponent {

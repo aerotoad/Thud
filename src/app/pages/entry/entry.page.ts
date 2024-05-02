@@ -154,7 +154,7 @@ export class EntryPage {
   async openArticleSettings() {
     const modal = await this.modalCtrl.create({
       component: ArticleSettingsModalComponent,
-      breakpoints: [0, 0.5, 0.7, 1],
+      breakpoints: [0, 0.7, 1],
       initialBreakpoint: 0.7,
     });
     modal.onDidDismiss().then(() => {
